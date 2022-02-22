@@ -51,19 +51,32 @@ def getSeconds():
     seconds = int(round(time.time()))
     return seconds
 
-def block_time():
+def blockcypher_height():
     global block_time
-    global block_height
+    global blockcypher_height
     try:
-        block_cypher = blockcypher.get_latest_block_height(coin_symbol='btc')
-        block_height = repr(block_cypher)
+        # block_cypher = blockcypher.get_latest_blockcypher_height(coin_symbol='btc')
+        block_cypher = blockcypher.get_latest_blockcypher_height()
+        # logger.info(block_cypher)
+        blockcypher_height = repr(block_cypher)
         f = open("BLOCK_TIME", "w")
-        f.write("" + block_height + "\n")
+        f.write("" + blockcypher_height + "\n")
         f.close()
-        return block_height
+        return blockcypher_height
     except:
         return 0
         pass
+
+def mempool_height():
+    # curl -sSL "https://mempool.space/api/blocks/tip/height"
+    if (MEMPOOL_LOGGER): logger.info(url)
+    url = "https://mempool.space/api/blocks/tip/height"
+    try:
+        request = requests.get(url, stream=True)
+    except:
+        return 0
+        pass
+    return request.text
 
 def BTC_TIME():
     global btc_time
@@ -109,15 +122,6 @@ def tweet_block_time():
     else:
         logger.info('tweetblock_time() FAILURE')
 
-def getMempoolAPI(url,DATA):
-    if (MEMPOOL_LOGGER): logger.info(url)
-    with open(DATA, 'wb') as f:
-        request = requests.get(url, stream=True)
-        f.writelines(request.iter_content(1024))
-        response = getData(DATA)
-        if (MEMPOOL_LOGGER): logger.info(getData(DATA))
-        if (MEMPOOL_LOGGER): logger.info(response)
-
 def searchGPGR(GPGR):
     try:
         global r
@@ -147,10 +151,6 @@ def searchGPGS(GPGS):
     except:
         logger.info("GPGS SEARCH FAILED!")
         pass
-
-
-getMempoolAPI('https://mempool.space/api/v1/difficulty-adjustment', DIFFICULTY)
-getMempoolAPI('https://mempool.space/api/blocks/tip/height',        BLOCK_TIP_HEIGHT)
 
 if (TIME_LOGGER): logger.info(block_time())
 if (TIME_LOGGER): logger.info(getMillis())
@@ -286,13 +286,16 @@ logger.info(GPGR)
 GPGS='BB06757B' #SENDER
 logger.info(GPGS)
 MESSAGE='text human readable message'
-if (LOGGER): logger.info(HEX_MESSAGE_DIGEST(GPGR, MESSAGE, GPGS))
+if (HEX_LOGGER): logger.info(HEX_MESSAGE_DIGEST(GPGR, MESSAGE, GPGS))
 HEX_MESSAGE_DIGEST(GPGR, MESSAGE, GPGS)
 # logger.info(str(message_header()))
 # test_hash_lib()
 # tweet_block_time()
-message_header()
-tweet_message()
+# message_header()
+# tweet_message()
 # searchGPGR(GPGR)
 # searchGPGS(GPGS)
+# logger.info(block_time())
+# getMempoolAPI('https://mempool.space/api/v1/difficulty-adjustment', DIFFICULTY)
+logger.info(mempool_height())
 
