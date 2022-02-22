@@ -19,13 +19,12 @@ This document describes the ox20bf protocol message structure and related operat
 ## Protocol - Field definitions
 
 `:` - message field delimiter:q
-
 --
 
-`GPGR` - gnupg (short/long) id of the reciever of a message
+`GPGR` - gnupg (long/short key ID) of the reciever of a message
 --
 
-`GPGS` - gnupg (short/long) id of the sender of a message
+`GPGS` - gnupg (long/short key ID) of the sender of a message
 --
 
 ##### Example - ping short format

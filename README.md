@@ -1,4 +1,5 @@
-<H1>[🐝](https://keys.openpgp.org/vks/v1/by-fingerprint/E616FA7221A1613E5B99206297966C06BB06757B)[🥕](https://keys.openpgp.org/vks/v1/by-fingerprint/57C5E8BB2F2746C3474B8A511421BF6C4DC9817F)[Github ](http://github.com/0x20bf-org) [Twitter](https://twitter.com/0x20bf_org)
+<H3>[🐝](https://keys.openpgp.org/vks/v1/by-fingerprint/E616FA7221A1613E5B99206297966C06BB06757B)[🥕](https://keys.openpgp.org/vks/v1/by-fingerprint/57C5E8BB2F2746C3474B8A511421BF6C4DC9817F)[Github ](http://github.com/0x20bf-org) [Twitter](https://twitter.com/0x20bf_org)
+
 ---
 
 [0x20bf.org](https://github.com/0x20bf-org) \<[admin@0x20bf.org](mailto:admin@0x20bf.org)\>
@@ -18,14 +19,13 @@ This document describes the ox20bf protocol message structure and related operat
 
 ## Protocol - Field definitions
 
-`:` - message field delimiter:q
-
+`:` - message field delimiter
 --
 
-`GPGR` - gnupg (short/long) id of the reciever of a message
+`GPGR` - gnupg (long/short key ID) of the reciever of a message
 --
 
-`GPGS` - gnupg (short/long) id of the sender of a message
+`GPGS` - gnupg (long/short key ID) of the sender of a message
 --
 
 ##### Example - ping short format
