@@ -18,27 +18,37 @@ This document describes the ox20bf protocol message structure and related operat
 
 ## Protocol - Field definitions
 
-`:` - message field delimiter:q
---
+### message field delimiter
+`:` - message field delimiter
 
+### gnupg (long/short key ID) of the reciever of a message
 `GPGR` - gnupg (long/short key ID) of the reciever of a message
---
 
+### gnupg (long/short key ID) of the sender of a message
 `GPGS` - gnupg (long/short key ID) of the sender of a message
---
 
 ##### Example - ping short format
-`:GPGR:GPGS:` :\<recipient\>:\<sender\>:
---
+`:GPGR:GPGS:` `:<recipient>:<sender>:`
 
+### algorithm field
+`:ALGO:` indicates encryption algorithm used for message encryption  
+##### Example
+`:RSA:AES256:SHA256:ZIP:`
+##### gnupg supported algorithms:
+```Pubkey: RSA, ELG, DSA, ECDH, ECDSA, EDDSA
+Cipher: IDEA, 3DES, CAST5, BLOWFISH, AES, AES192, AES256, TWOFISH,
+        CAMELLIA128, CAMELLIA192, CAMELLIA256
+Hash: SHA1, RIPEMD160, SHA256, SHA384, SHA512, SHA224
+Compression: Uncompressed, ZIP, ZLIB, BZIP2
+```
+When messages are sent in the blind, by default: [--include-certs](https://www.gnupg.org/documentation/manuals/gnupg/CMS-Options.html#CMS-Options) or [--auto-key-import](https://www.gnupg.org/documentation/manuals/gnupg/GPG-Configuration-Options.html) will be used.
+
+### time fields
 `:BTC_TIME:` - a Bitcoin block height in the "time chain".
---
 
 `:UNIX_TIME_SECONDS:` - UTC Time in seconds
---
 
 `:UNIX_TIME_MILLIS:` - UTC Time in milliseconds
---
 
 ##### Example - ping time chain format
 `:GPGR:GPGS:BTC_TIME:` :\<recipient\>:\<sender\>:\<block height\>

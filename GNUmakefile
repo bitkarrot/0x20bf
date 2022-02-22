@@ -207,12 +207,9 @@ git-add: remove
 	git add --ignore-errors GNUmakefile
 	git add --ignore-errors README.md
 	git add --ignore-errors sources/*.md
-	git add --ignore-errors sources/*.html
 	git add --ignore-errors TIME
 	git add --ignore-errors GLOBAL
-	#git add --ignore-errors CNAME
 	git add --ignore-errors *.py
-	#git add --ignore-errors sources/*.py
 	git add --ignore-errors index.html
 	git add --ignore-errors .gitignore
 	git add --ignore-errors .github
@@ -288,7 +285,7 @@ automate: touch-time git-add
 	./.github/workflows/automate.sh
 
 .PHONY: docs
-docs: git-add awesome
+docs: git-add
 	#@echo docs
 	bash -c "if pgrep MacDown; then pkill MacDown; fi"
 	#bash -c "curl https://raw.githubusercontent.com/sindresorhus/awesome/main/readme.md -o ./sources/AWESOME-temp.md"

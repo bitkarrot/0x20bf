@@ -161,9 +161,10 @@
 <body>
 <H3>
 <h2 id="github-twitter"><a
-href="https://keys.openpgp.org/vks/v1/by-fingerprint/E616FA7221A1613E5B99206297966C06BB06757B">🐝</a><a
-href="https://keys.openpgp.org/vks/v1/by-fingerprint/57C5E8BB2F2746C3474B8A511421BF6C4DC9817F">🥕</a><a
-href="http://github.com/0x20bf-org">Github</a> <a
+href="https://keys.openpgp.org/vks/v1/by-fingerprint/E616FA7221A1613E5B99206297966C06BB06757B">🐝</a>
+<a
+href="https://keys.openpgp.org/vks/v1/by-fingerprint/57C5E8BB2F2746C3474B8A511421BF6C4DC9817F">🥕</a>
+<a href="http://github.com/0x20bf-org">Github</a> <a
 href="https://twitter.com/0x20bf_org">Twitter</a></h2>
 <p><a href="https://github.com/0x20bf-org">0x20bf.org</a> &lt;<a
 href="mailto:admin@0x20bf.org">admin@0x20bf.org</a>&gt; Randy McMillan
@@ -188,26 +189,35 @@ implementation. Gnupg is used for text message encryption. Git version
 control is used for archiving messages. These dependancies are for
 convienence.</p>
 <h2 id="protocol---field-definitions">Protocol - Field definitions</h2>
-<h2 id="message-field-delimiter"><code>:</code> - message field
-delimiter</h2>
-<h2
-id="gpgr---gnupg-longshort-key-id-of-the-reciever-of-a-message"><code>GPGR</code>
-- gnupg (long/short key ID) of the reciever of a message</h2>
-<h2
-id="gpgs---gnupg-longshort-key-id-of-the-sender-of-a-message"><code>GPGS</code>
-- gnupg (long/short key ID) of the sender of a message</h2>
+<h3 id="message-field-delimiter">message field delimiter</h3>
+<p><code>:</code> - message field delimiter</p>
+<h3 id="gnupg-longshort-key-id-of-the-reciever-of-a-message">gnupg
+(long/short key ID) of the reciever of a message</h3>
+<p><code>GPGR</code> - gnupg (long/short key ID) of the reciever of a
+message</p>
+<h3 id="gnupg-longshort-key-id-of-the-sender-of-a-message">gnupg
+(long/short key ID) of the sender of a message</h3>
+<p><code>GPGS</code> - gnupg (long/short key ID) of the sender of a
+message</p>
 <h5 id="example---ping-short-format">Example - ping short format</h5>
-<h2 id="gpgrgpgs-recipientsender"><code>:GPGR:GPGS:</code>
-:&lt;recipient&gt;:&lt;sender&gt;:</h2>
-<h2
-id="btc_time---a-bitcoin-block-height-in-the-time-chain."><code>:BTC_TIME:</code>
-- a Bitcoin block height in the “time chain”.</h2>
-<h2
-id="unix_time_seconds---utc-time-in-seconds"><code>:UNIX_TIME_SECONDS:</code>
-- UTC Time in seconds</h2>
-<h2
-id="unix_time_millis---utc-time-in-milliseconds"><code>:UNIX_TIME_MILLIS:</code>
-- UTC Time in milliseconds</h2>
+<p><code>:GPGR:GPGS:</code>
+<code>:&lt;recipient&gt;:&lt;sender&gt;:</code></p>
+<h3 id="algorithm-field">algorithm field</h3>
+<p><code>:ALGO:</code> indicates encryption algorithm used for message
+encryption<br />
+##### Example <code>:RSA:AES256:SHA256:ZIP:</code> ##### gnupg supported
+algorithms:
+<code>Pubkey: RSA, ELG, DSA, ECDH, ECDSA, EDDSA Cipher: IDEA, 3DES, CAST5, BLOWFISH, AES, AES192, AES256, TWOFISH,         CAMELLIA128, CAMELLIA192, CAMELLIA256 Hash: SHA1, RIPEMD160, SHA256, SHA384, SHA512, SHA224 Compression: Uncompressed, ZIP, ZLIB, BZIP2</code>
+When messages are sent in the blind: <code>--include-key-block</code>,
+<a
+href="https://www.gnupg.org/documentation/manuals/gnupg/CMS-Options.html#CMS-Options">–include-certs</a>
+or <a
+href="https://www.gnupg.org/documentation/manuals/gnupg/GPG-Configuration-Options.html">–auto-key-import</a></p>
+<h3 id="time-fields">time fields</h3>
+<p><code>:BTC_TIME:</code> - a Bitcoin block height in the “time
+chain”.</p>
+<p><code>:UNIX_TIME_SECONDS:</code> - UTC Time in seconds</p>
+<p><code>:UNIX_TIME_MILLIS:</code> - UTC Time in milliseconds</p>
 <h5 id="example---ping-time-chain-format">Example - ping time chain
 format</h5>
 <p><code>:GPGR:GPGS:BTC_TIME:</code>
