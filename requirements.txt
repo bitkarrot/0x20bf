@@ -1,0 +1,9 @@
+#zlib
+setuptools
+twitter_scraper
+blockcypher
+setuptools
+twitterAPI
+jq
+#hashlib
+python-gnupg
