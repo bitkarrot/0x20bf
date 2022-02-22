@@ -259,6 +259,7 @@ def message_header():
     if (LOGGER): logger.info(HEADER)
     # HEADER_STRUCTURE = str(":GPGR:DIGEST:BTC_TIME:UNIX_TIME_MILLIS:GPGS:LOC:")
     return HEADER
+
 def tweet_message():
     current_btc_time = BTC_TIME()
     header = message_header()
@@ -285,10 +286,10 @@ logger.info(GPGR)
 GPGS='BB06757B' #SENDER
 logger.info(GPGS)
 MESSAGE='text human readable message'
-if (LOGGER): print(HEX_MESSAGE_DIGEST(GPGR, MESSAGE, GPGS))
+if (LOGGER): logger.info(HEX_MESSAGE_DIGEST(GPGR, MESSAGE, GPGS))
 HEX_MESSAGE_DIGEST(GPGR, MESSAGE, GPGS)
-logger.info(str(message_header()))
-test_hash_lib()
+# logger.info(str(message_header()))
+# test_hash_lib()
 # tweet_block_time()
 message_header()
 tweet_message()
