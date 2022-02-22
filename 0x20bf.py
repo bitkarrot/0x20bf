@@ -8,7 +8,7 @@ global HEX_LOGGER
 global TIME_LOGGER
 global MEMPOOL_LOGGER
 LOGGER = True
-HEX_LOGGER = False
+HEX_LOGGER = True
 TIME_LOGGER = False
 MEMPOOL_LOGGER = False
 logging.basicConfig(level=logging.INFO ,format='%(asctime)s %(message)s', datefmt='%j.%Y %I:%M:%S %p')
@@ -156,6 +156,12 @@ if (TIME_LOGGER): logger.info(block_time())
 if (TIME_LOGGER): logger.info(getMillis())
 if (TIME_LOGGER): logger.info(getSeconds())
 
+def DELIMITER_STRIPPER(string):
+    # avoiding incorrect SHA256 hashes
+    string.strip(":")
+    string.strip(".")
+    return string.strip(":")
+
 def test_hash_lib():
     TEST_256 = hashlib.sha256()
     # empty string reserved for protocol
@@ -164,34 +170,32 @@ def test_hash_lib():
     assert TEST_256.hexdigest() == 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
     return TEST_256.hexdigest()
 
-
-def DELIMITER_STRIPPER(string):
-    # avoiding incorrect SHA256 hashes
-    string.strip(":")
-    string.strip(".")
-    return string.strip(":")
-
 def HEX_MESSAGE_TREE(recipient, sender):
     recipient = DELIMITER_STRIPPER(recipient)
     sender = DELIMITER_STRIPPER(sender)
 
     n_256 = hashlib.sha256()
+    if (HEX_LOGGER): logger.info("n_256:")
+    if (HEX_LOGGER): logger.info(n_256.hexdigest())
     # empty string reserved for protocol
     assert n_256.hexdigest() == test_hash_lib()
 
     # SHA256()+GPGR
     n_256.update(bytes(recipient, 'utf-8'))
-    if (HEX_LOGGER): logger.info(n_256.digest())
+    # if (HEX_LOGGER): logger.info(n_256.digest())
+    if (HEX_LOGGER): logger.info("n_256+recipient:")
     if (HEX_LOGGER): logger.info(n_256.hexdigest())
-    if (HEX_LOGGER): logger.info(n_256.digest_size)
-    if (HEX_LOGGER): logger.info(n_256.block_size)
+    # if (HEX_LOGGER): logger.info(n_256.digest_size)
+    # if (HEX_LOGGER): logger.info(n_256.block_size)
 
     # SHA256()+GPGR+GPGS
     n_256.update(bytes(sender, 'utf-8'))
-    if (HEX_LOGGER): logger.info(n_256.digest())
+    # if (HEX_LOGGER): logger.info(n_256.digest())
+    # if (HEX_LOGGER): logger.info(n_256.hexdigest())
+    if (HEX_LOGGER): logger.info("n_256+recipient+sender:")
     if (HEX_LOGGER): logger.info(n_256.hexdigest())
-    if (HEX_LOGGER): logger.info(n_256.digest_size)
-    if (HEX_LOGGER): logger.info(n_256.block_size)
+    # if (HEX_LOGGER): logger.info(n_256.digest_size)
+    # if (HEX_LOGGER): logger.info(n_256.block_size)
 
     # TODO: populate message tree
     if (HEX_LOGGER): logger.info(n_256.hexdigest())
@@ -215,24 +219,24 @@ def HEX_MESSAGE_DIGEST(recipient, message, sender):
 
     # SHA256()+GPGR
     n_256.update(bytes(recipient, 'utf-8'))
-    if (HEX_LOGGER): logger.info(n_256.digest())
+    # if (HEX_LOGGER): logger.info(n_256.digest())
     if (HEX_LOGGER): logger.info(n_256.hexdigest())
-    if (HEX_LOGGER): logger.info(n_256.digest_size)
-    if (HEX_LOGGER): logger.info(n_256.block_size)
+    # if (HEX_LOGGER): logger.info(n_256.digest_size)
+    # if (HEX_LOGGER): logger.info(n_256.block_size)
 
     # SHA256()+GPGR+MESSAGE
     n_256.update(bytes(message, 'utf-8'))
-    if (HEX_LOGGER): logger.info(n_256.digest())
+    # if (HEX_LOGGER): logger.info(n_256.digest())
     if (HEX_LOGGER): logger.info(n_256.hexdigest())
-    if (HEX_LOGGER): logger.info(n_256.digest_size)
-    if (HEX_LOGGER): logger.info(n_256.block_size)
+    # if (HEX_LOGGER): logger.info(n_256.digest_size)
+    # if (HEX_LOGGER): logger.info(n_256.block_size)
 
     # SHA256()+GPGR+MESSAGE+GPGS
     n_256.update(bytes(sender, 'utf-8'))
-    if (HEX_LOGGER): logger.info(n_256.digest())
+    # if (HEX_LOGGER): logger.info(n_256.digest())
     if (HEX_LOGGER): logger.info(n_256.hexdigest())
-    if (HEX_LOGGER): logger.info(n_256.digest_size)
-    if (HEX_LOGGER): logger.info(n_256.block_size)
+    # if (HEX_LOGGER): logger.info(n_256.digest_size)
+    # if (HEX_LOGGER): logger.info(n_256.block_size)
 
     # TODO: populate message tree
     if (HEX_LOGGER): logger.info(n_256.hexdigest())
@@ -287,6 +291,8 @@ GPGS='BB06757B' #SENDER
 logger.info(GPGS)
 MESSAGE='text human readable message'
 if (HEX_LOGGER): logger.info(HEX_MESSAGE_DIGEST(GPGR, MESSAGE, GPGS))
+# logger.info("HEX_MESSAGE_TREE"+HEX_MESSAGE_TREE(GPGR, GPGS))
+HEX_MESSAGE_TREE(GPGR, GPGS)
 HEX_MESSAGE_DIGEST(GPGR, MESSAGE, GPGS)
 # logger.info(str(message_header()))
 # test_hash_lib()
