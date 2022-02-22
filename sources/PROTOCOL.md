@@ -18,8 +18,7 @@ This document describes the ox20bf protocol message structure and related operat
 
 ## Protocol - Field definitions
 
-
-`:` - message field delimiter
+`:` - message field delimiter:q
 --
 
 `GPGR` - gnupg (long/short key ID) of the reciever of a message
