@@ -159,7 +159,7 @@
   <![endif]-->
 </head>
 <body>
-<H2>
+<H3>
 <h2 id="github-twitter"><a
 href="https://keys.openpgp.org/vks/v1/by-fingerprint/E616FA7221A1613E5B99206297966C06BB06757B">🐝</a><a
 href="https://keys.openpgp.org/vks/v1/by-fingerprint/57C5E8BB2F2746C3474B8A511421BF6C4DC9817F">🥕</a><a
@@ -188,14 +188,14 @@ implementation. Gnupg is used for text message encryption. Git version
 control is used for archiving messages. These dependancies are for
 convienence.</p>
 <h2 id="protocol---field-definitions">Protocol - Field definitions</h2>
-<p><code>:</code> - message field delimiter:q</p>
-<p>–</p>
+<h2 id="message-field-delimiter"><code>:</code> - message field
+delimiter</h2>
 <h2
-id="gpgr---gnupg-shortlong-id-of-the-reciever-of-a-message"><code>GPGR</code>
-- gnupg (short/long) id of the reciever of a message</h2>
+id="gpgr---gnupg-longshort-key-id-of-the-reciever-of-a-message"><code>GPGR</code>
+- gnupg (long/short key ID) of the reciever of a message</h2>
 <h2
-id="gpgs---gnupg-shortlong-id-of-the-sender-of-a-message"><code>GPGS</code>
-- gnupg (short/long) id of the sender of a message</h2>
+id="gpgs---gnupg-longshort-key-id-of-the-sender-of-a-message"><code>GPGS</code>
+- gnupg (long/short key ID) of the sender of a message</h2>
 <h5 id="example---ping-short-format">Example - ping short format</h5>
 <h2 id="gpgrgpgs-recipientsender"><code>:GPGR:GPGS:</code>
 :&lt;recipient&gt;:&lt;sender&gt;:</h2>
