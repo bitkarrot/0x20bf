@@ -31,11 +31,11 @@ except:
 api  = TwitterAPI(CAK,CASK,AT,ATS)
 # if (LOGGER): print(api)
 
-def moveBlockTime():
+def moveblock_time():
     try:
         shutil.move(os.getcwd()+"/BLOCK_TIME", os.getcwd()+"/OLD_BLOCK_TIME")
     except:
-        logger.info("moveBlockTime() failed!")
+        logger.info("moveblock_time() failed!")
         f = open("BLOCK_TIME", "w")
         f.write("" + 0 + "\n")
         f.close()
@@ -51,7 +51,7 @@ def getSeconds():
     seconds = int(round(time.time()))
     return seconds
 
-def blockTime():
+def block_time():
     global block_time
     global block_height
     try:
@@ -67,7 +67,7 @@ def blockTime():
 
 def BTC_TIME():
     global btc_time
-    btc_time = str(blockTime())
+    btc_time = str(block_time())
     return btc_time
 
 def BTC_UNIX_TIME_MILLIS():
@@ -98,7 +98,7 @@ def UNIX_TIME_SECONDS():
     unix_time_seconds = str(getSeconds())
     return unix_time_seconds
 
-def tweet_blocktime():
+def tweet_block_time():
     if BTC_TIME() != OBT:
         request = api.request('statuses/update', {'status': BTC_UNIX_TIME_MILLIS()})
         if (LOGGER): logger.info(request)
@@ -107,7 +107,7 @@ def tweet_blocktime():
         else:
             logger.info('api.request FAILURE')
     else:
-        logger.info('tweetBlockTime() FAILURE')
+        logger.info('tweetblock_time() FAILURE')
 
 def getMempoolAPI(url,DATA):
     if (MEMPOOL_LOGGER): logger.info(url)
@@ -152,7 +152,7 @@ def searchGPGS(GPGS):
 getMempoolAPI('https://mempool.space/api/v1/difficulty-adjustment', DIFFICULTY)
 getMempoolAPI('https://mempool.space/api/blocks/tip/height',        BLOCK_TIP_HEIGHT)
 
-if (TIME_LOGGER): logger.info(blockTime())
+if (TIME_LOGGER): logger.info(block_time())
 if (TIME_LOGGER): logger.info(getMillis())
 if (TIME_LOGGER): logger.info(getSeconds())
 
@@ -273,7 +273,7 @@ def tweet_message():
                 logger.info('api.request FAILURE')
         else: logger.info("TWEET="+str(TWEET))
     else:
-        logger.info('tweetBlockTime() FAILURE')
+        logger.info('tweetblock_time() FAILURE')
 
 # logger.info(BTC_UNIX_TIME_MILLIS())
 
@@ -289,7 +289,7 @@ if (LOGGER): print(HEX_MESSAGE_DIGEST(GPGR, MESSAGE, GPGS))
 HEX_MESSAGE_DIGEST(GPGR, MESSAGE, GPGS)
 logger.info(str(message_header()))
 test_hash_lib()
-# tweet_blocktime()
+# tweet_block_time()
 message_header()
 tweet_message()
 # searchGPGR(GPGR)
