@@ -159,16 +159,16 @@
   <![endif]-->
 </head>
 <body>
-<h2 id="github-twitter">## <a
+<H2>
+<h2 id="github-twitter"><a
 href="https://keys.openpgp.org/vks/v1/by-fingerprint/E616FA7221A1613E5B99206297966C06BB06757B">🐝</a><a
 href="https://keys.openpgp.org/vks/v1/by-fingerprint/57C5E8BB2F2746C3474B8A511421BF6C4DC9817F">🥕</a><a
 href="http://github.com/0x20bf-org">Github</a> <a
 href="https://twitter.com/0x20bf_org">Twitter</a></h2>
 <p><a href="https://github.com/0x20bf-org">0x20bf.org</a> &lt;<a
-href="mailto:admin@0x20bf.org">admin@0x20bf.org</a>&gt;<br />
-Randy McMillan &lt;<a
-href="mailto:randymcmillan@protonmail.com">randymcmillan@protonmail.com</a>&gt;<br />
-Category: Standards Track</p>
+href="mailto:admin@0x20bf.org">admin@0x20bf.org</a>&gt; Randy McMillan
+&lt;<a
+href="mailto:randymcmillan@protonmail.com">randymcmillan@protonmail.com</a>&gt;</p>
 <hr />
 <center>
 <H4>
@@ -177,9 +177,9 @@ Category: Standards Track</p>
 <h2 id="status-of-this-proposal">Status of this Proposal</h2>
 <p>This document proposes an Internet standards track protocol for
 transporting, broadcasting and syndication of messages over common
-internet communications channels. This distribution of this and all
-documents related to this proposal are unlimited and unencumbered by any
-<a href="LICENSE">LICENSE</a>.</p>
+internet communications channels. The distribution of all documents
+related to this proposal are unlimited and unencumbered by any <a
+href="LICENSE">LICENSE</a>, but some are included anyway.</p>
 <h2 id="abstract">Abstract</h2>
 <p>This document describes the ox20bf protocol message structure and
 related operations associated with message field ordering and data
@@ -187,9 +187,9 @@ typing. 0x20bf is meant to be simple, enabling flexability of
 implementation. Gnupg is used for text message encryption. Git version
 control is used for archiving messages. These dependancies are for
 convienence.</p>
-<h1 id="protocol---field-definitions">Protocol - Field definitions</h1>
-<h2 id="message-field-delimiter"><code>:</code> - message field
-delimiter</h2>
+<h2 id="protocol---field-definitions">Protocol - Field definitions</h2>
+<p><code>:</code> - message field delimiter:q</p>
+<p>–</p>
 <h2
 id="gpgr---gnupg-shortlong-id-of-the-reciever-of-a-message"><code>GPGR</code>
 - gnupg (short/long) id of the reciever of a message</h2>
@@ -223,10 +223,9 @@ format</h5>
 seconds&gt;</p>
 <h5 id="example---ping-full-format-milliseconds">Example - ping full
 format (milliseconds)</h5>
-<p><code>:GPGR:GPGS:BTC_TIME:UNIX_TIME_MILLIS:</code>
+<code>:GPGR:GPGS:BTC_TIME:UNIX_TIME_MILLIS:</code>
 :&lt;recipient&gt;:&lt;sender&gt;:&lt;block height&gt;:&lt;utc time
-milliseconds&gt;</p>
-<AUTOMATION>
+milliseconds&gt; <AUTOMATION>
 <p>
 <h2 id="awesome-legit-statoshi"><a
 href="https://github.com/RandyMcMillan/randymcmillan/blob/master/sources/awesome.md"><img

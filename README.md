@@ -1,9 +1,8 @@
-## [🐝](https://keys.openpgp.org/vks/v1/by-fingerprint/E616FA7221A1613E5B99206297966C06BB06757B)[🥕](https://keys.openpgp.org/vks/v1/by-fingerprint/57C5E8BB2F2746C3474B8A511421BF6C4DC9817F)[Github ](http://github.com/0x20bf-org) [Twitter](https://twitter.com/0x20bf_org)
+<H2>[🐝](https://keys.openpgp.org/vks/v1/by-fingerprint/E616FA7221A1613E5B99206297966C06BB06757B)[🥕](https://keys.openpgp.org/vks/v1/by-fingerprint/57C5E8BB2F2746C3474B8A511421BF6C4DC9817F)[Github ](http://github.com/0x20bf-org) [Twitter](https://twitter.com/0x20bf_org)
 ---
 
-[0x20bf.org](https://github.com/0x20bf-org) \<[admin@0x20bf.org](mailto:admin@0x20bf.org)\>		
-Randy McMillan \<[randymcmillan@protonmail.com](mailto:randymcmillan@protonmail.com)\>		
-Category: Standards Track
+[0x20bf.org](https://github.com/0x20bf-org) \<[admin@0x20bf.org](mailto:admin@0x20bf.org)\>
+Randy McMillan \<[randymcmillan@protonmail.com](mailto:randymcmillan@protonmail.com)\>
 
 ---
 
@@ -11,15 +10,16 @@ Category: Standards Track
 
 ## Status of this Proposal
 
-This document proposes an Internet standards track protocol for transporting, broadcasting and syndication of messages over common internet communications channels. This distribution of this and all documents related to this proposal are unlimited and unencumbered by any [LICENSE](LICENSE). 
+This document proposes an Internet standards track protocol for transporting, broadcasting and syndication of messages over common internet communications channels. The distribution of all documents related to this proposal are unlimited and unencumbered by any [LICENSE](LICENSE), but some are included anyway.
 
 ## Abstract
 
 This document describes the ox20bf protocol message structure and related operations associated with message field ordering and data typing. 0x20bf is meant to be simple, enabling flexability of implementation. Gnupg is used for text message encryption. Git version control is used for archiving messages. These dependancies are for convienence.
 
-# Protocol - Field definitions
+## Protocol - Field definitions
 
-`:` - message field delimiter
+`:` - message field delimiter:q
+
 --
 
 `GPGR` - gnupg (short/long) id of the reciever of a message
@@ -52,8 +52,6 @@ This document describes the ox20bf protocol message structure and related operat
 
 ##### Example - ping full format (milliseconds)
 `:GPGR:GPGS:BTC_TIME:UNIX_TIME_MILLIS:` :\<recipient\>:\<sender\>:\<block height\>:\<utc time milliseconds\>
-
-
 <AUTOMATION>
 <p>
 
