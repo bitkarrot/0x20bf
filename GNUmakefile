@@ -127,6 +127,8 @@ seeder:
 .PHONY: init
 .ONESHELL:
 init:
+
+	bash -c "./scripts/initialize"
 	pushd python-gnupg && $(PYTHON3) setup.py install && popd
 	pushd TwitterAPI && $(PYTHON3) setup.py install && popd
 	# @echo $(PYTHON)
