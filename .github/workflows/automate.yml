@@ -80,8 +80,8 @@ jobs:
         run: |
           echo $GITHUB_WORKSPACE
           cd $GITHUB_WORKSPACE
-          apt install gnupg
+          sudo apt install gnupg build-essential libboost-all-dev libssl-dev
           python3 -c "import sys; print(sys.version)"
-          make init
-          make seeder
+          sudo -s make init
+          pushd seeder && make
 
