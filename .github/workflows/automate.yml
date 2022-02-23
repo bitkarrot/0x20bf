@@ -49,8 +49,6 @@ jobs:
           echo $GITHUB_WORKSPACE
           cd $GITHUB_WORKSPACE
           python3 -c "import sys; print(sys.version)"
-          make init
-          make seeder
 
   automate:
     runs-on: ${{ matrix.os }}
@@ -80,6 +78,7 @@ jobs:
         run: |
           echo $GITHUB_WORKSPACE
           cd $GITHUB_WORKSPACE
+          apt install gnupg
           python3 -c "import sys; print(sys.version)"
           make init
           make seeder
