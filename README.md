@@ -1,10 +1,4 @@
-<H3>[🐝](https://keys.openpgp.org/vks/v1/by-fingerprint/E616FA7221A1613E5B99206297966C06BB06757B) [🥕](https://keys.openpgp.org/vks/v1/by-fingerprint/57C5E8BB2F2746C3474B8A511421BF6C4DC9817F) [Github](http://github.com/0x20bf-org) [Twitter](https://twitter.com/0x20bf_org)
----
-
-[0x20bf.org](https://github.com/0x20bf-org) \<[admin@0x20bf.org](mailto:admin@0x20bf.org)\>
-Randy McMillan \<[randymcmillan@protonmail.com](mailto:randymcmillan@protonmail.com)\>
-
----
+[🐝](https://keys.openpgp.org/vks/v1/by-fingerprint/E616FA7221A1613E5B99206297966C06BB06757B) [🥕](https://keys.openpgp.org/vks/v1/by-fingerprint/57C5E8BB2F2746C3474B8A511421BF6C4DC9817F) [Github](http://github.com/0x20bf-org) [Twitter](https://twitter.com/0x20bf_org)<HR>
 
 <center><H4>0xbf20 - A general purpose messaging protocol</center>
 
@@ -14,7 +8,7 @@ This document proposes an Internet standards track protocol for transporting, br
 
 ## Abstract
 
-This document describes the ox20bf protocol message structure and related operations associated with message field ordering and data typing. 0x20bf is meant to be simple, enabling flexability of implementation. Gnupg is used for text message encryption. Git version control is used for archiving messages. These dependancies are for convienence.
+This document describes the ox20bf protocol message structure and related operations associated with message field ordering and data typing. 0x20bf is meant to be simple, enabling flexability of implementation. Gnupg is used for text message encryption. Git version control is used for archiving messages.
 
 ## Protocol - Field definitions
 
@@ -31,7 +25,7 @@ This document describes the ox20bf protocol message structure and related operat
 `:GPGR:GPGS:` `:<recipient>:<sender>:`
 
 ### algorithm field
-`:ALGO:` indicates encryption algorithm used for message encryption  
+`:ALGO:` indicates encryption algorithm used for message encryption
 
 ##### Example
 `:RSA:AES256:SHA256:ZIP:`
@@ -53,35 +47,16 @@ We assume messages are sent in the blind: `--include-key-block` will be the defa
 `:UNIX_TIME_MILLIS:` - UTC Time in milliseconds
 
 ##### Example - ping time chain format
-`:GPGR:GPGS:BTC_TIME:` :\<recipient\>:\<sender\>:\<block height\>
+`:GPGR:GPGS:BTC_TIME:`
 
 ##### Example - ping UTC time format
-`:GPGR:GPGS:UNIX_TIME_SECONDS:` :\<recipient\>:\<sender\>:\<utc time\>
+`:GPGR:GPGS:UNIX_TIME_SECONDS:`
 
 ##### Example - ping full format (seconds)
-`:GPGR:GPGS:BTC_TIME:UNIX_TIME_SECONDS:` :\<recipient\>:\<sender\>:\<block height\>:\<utc time seconds\>
+`:GPGR:GPGS:BTC_TIME:UNIX_TIME_SECONDS:`
 
 ##### Example - ping full format (milliseconds)
-`:GPGR:GPGS:BTC_TIME:UNIX_TIME_MILLIS:` :\<recipient\>:\<sender\>:\<block height\>:\<utc time milliseconds\>
-<AUTOMATION>
-<p>
-
-## [![Awesome](https://awesome.re/badge.svg)](https://github.com/RandyMcMillan/randymcmillan/blob/master/sources/awesome.md) [![legit](https://github.com/RandyMcMillan/legit/actions/workflows/automate.yml/badge.svg)](https://github.com/RandyMcMillan/legit/actions/workflows/automate.yml) [![statoshi](https://github.com/bitcoincore-dev/statoshi/actions/workflows/statoshi.yml/badge.svg)](https://github.com/bitcoincore-dev/statoshi/actions/workflows/statoshi.yml)         
-
-<CENTER></CENTER>
-
-</p>
-</AUTOMATION>
-
-<details>
-<summary>0x20bf - A general purpose message protocol</summary>
-
-```shell
-git clone https://github.com/0x20bf-org/0x20bf.git ~/legit && \
-cd ~/0x20bf && make
-```
-</p>
-</details>
+`:GPGR:GPGS:BTC_TIME:UNIX_TIME_MILLIS:`
 
 <details>
 <summary>👀</summary>

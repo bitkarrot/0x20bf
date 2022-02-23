@@ -159,18 +159,13 @@
   <![endif]-->
 </head>
 <body>
-<H3>
-<h2 id="github-twitter"><a
+<a
 href="https://keys.openpgp.org/vks/v1/by-fingerprint/E616FA7221A1613E5B99206297966C06BB06757B">🐝</a>
 <a
 href="https://keys.openpgp.org/vks/v1/by-fingerprint/57C5E8BB2F2746C3474B8A511421BF6C4DC9817F">🥕</a>
 <a href="http://github.com/0x20bf-org">Github</a> <a
-href="https://twitter.com/0x20bf_org">Twitter</a></h2>
-<p><a href="https://github.com/0x20bf-org">0x20bf.org</a> &lt;<a
-href="mailto:admin@0x20bf.org">admin@0x20bf.org</a>&gt; Randy McMillan
-&lt;<a
-href="mailto:randymcmillan@protonmail.com">randymcmillan@protonmail.com</a>&gt;</p>
-<hr />
+href="https://twitter.com/0x20bf_org">Twitter</a>
+<HR>
 <center>
 <H4>
 0xbf20 - A general purpose messaging protocol
@@ -186,8 +181,7 @@ href="LICENSE">LICENSE</a>, but some are included anyway.</p>
 related operations associated with message field ordering and data
 typing. 0x20bf is meant to be simple, enabling flexability of
 implementation. Gnupg is used for text message encryption. Git version
-control is used for archiving messages. These dependancies are for
-convienence.</p>
+control is used for archiving messages.</p>
 <h2 id="protocol---field-definitions">Protocol - Field definitions</h2>
 <h3 id="message-field-delimiter">message field delimiter</h3>
 <p><code>:</code> - message field delimiter</p>
@@ -223,44 +217,16 @@ chain”.</p>
 <p><code>:UNIX_TIME_MILLIS:</code> - UTC Time in milliseconds</p>
 <h5 id="example---ping-time-chain-format">Example - ping time chain
 format</h5>
-<p><code>:GPGR:GPGS:BTC_TIME:</code>
-:&lt;recipient&gt;:&lt;sender&gt;:&lt;block height&gt;</p>
+<p><code>:GPGR:GPGS:BTC_TIME:</code></p>
 <h5 id="example---ping-utc-time-format">Example - ping UTC time
 format</h5>
-<p><code>:GPGR:GPGS:UNIX_TIME_SECONDS:</code>
-:&lt;recipient&gt;:&lt;sender&gt;:&lt;utc time&gt;</p>
+<p><code>:GPGR:GPGS:UNIX_TIME_SECONDS:</code></p>
 <h5 id="example---ping-full-format-seconds">Example - ping full format
 (seconds)</h5>
-<p><code>:GPGR:GPGS:BTC_TIME:UNIX_TIME_SECONDS:</code>
-:&lt;recipient&gt;:&lt;sender&gt;:&lt;block height&gt;:&lt;utc time
-seconds&gt;</p>
+<p><code>:GPGR:GPGS:BTC_TIME:UNIX_TIME_SECONDS:</code></p>
 <h5 id="example---ping-full-format-milliseconds">Example - ping full
 format (milliseconds)</h5>
-<code>:GPGR:GPGS:BTC_TIME:UNIX_TIME_MILLIS:</code>
-:&lt;recipient&gt;:&lt;sender&gt;:&lt;block height&gt;:&lt;utc time
-milliseconds&gt; <AUTOMATION>
-<p>
-<h2 id="awesome-legit-statoshi"><a
-href="https://github.com/RandyMcMillan/randymcmillan/blob/master/sources/awesome.md"><img
-src="https://awesome.re/badge.svg" alt="Awesome" /></a> <a
-href="https://github.com/RandyMcMillan/legit/actions/workflows/automate.yml"><img
-src="https://github.com/RandyMcMillan/legit/actions/workflows/automate.yml/badge.svg"
-alt="legit" /></a> <a
-href="https://github.com/bitcoincore-dev/statoshi/actions/workflows/statoshi.yml"><img
-src="https://github.com/bitcoincore-dev/statoshi/actions/workflows/statoshi.yml/badge.svg"
-alt="statoshi" /></a></h2>
-<CENTER>
-</CENTER>
-</p>
-<p></AUTOMATION></p>
-<details>
-<summary>
-0x20bf - A general purpose message protocol
-</summary>
-<pre class="shell"><code>git clone https://github.com/0x20bf-org/0x20bf.git ~/legit &amp;&amp; \
-cd ~/0x20bf &amp;&amp; make</code></pre>
-</p>
-</details>
+<p><code>:GPGR:GPGS:BTC_TIME:UNIX_TIME_MILLIS:</code></p>
 <details>
 <summary>
 👀

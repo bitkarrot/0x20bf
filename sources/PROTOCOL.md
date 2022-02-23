@@ -1,10 +1,4 @@
-
----
-
-[0x20bf.org](https://github.com/0x20bf-org) \<[admin@0x20bf.org](mailto:admin@0x20bf.org)\>
-Randy McMillan \<[randymcmillan@protonmail.com](mailto:randymcmillan@protonmail.com)\>
-
----
+<HR>
 
 <center><H4>0xbf20 - A general purpose messaging protocol</center>
 
@@ -14,7 +8,7 @@ This document proposes an Internet standards track protocol for transporting, br
 
 ## Abstract
 
-This document describes the ox20bf protocol message structure and related operations associated with message field ordering and data typing. 0x20bf is meant to be simple, enabling flexability of implementation. Gnupg is used for text message encryption. Git version control is used for archiving messages. These dependancies are for convienence.
+This document describes the ox20bf protocol message structure and related operations associated with message field ordering and data typing. 0x20bf is meant to be simple, enabling flexability of implementation. Gnupg is used for text message encryption. Git version control is used for archiving messages.
 
 ## Protocol - Field definitions
 
@@ -31,7 +25,7 @@ This document describes the ox20bf protocol message structure and related operat
 `:GPGR:GPGS:` `:<recipient>:<sender>:`
 
 ### algorithm field
-`:ALGO:` indicates encryption algorithm used for message encryption  
+`:ALGO:` indicates encryption algorithm used for message encryption
 
 ##### Example
 `:RSA:AES256:SHA256:ZIP:`
@@ -53,13 +47,13 @@ We assume messages are sent in the blind: `--include-key-block` will be the defa
 `:UNIX_TIME_MILLIS:` - UTC Time in milliseconds
 
 ##### Example - ping time chain format
-`:GPGR:GPGS:BTC_TIME:` :\<recipient\>:\<sender\>:\<block height\>
+`:GPGR:GPGS:BTC_TIME:`
 
 ##### Example - ping UTC time format
-`:GPGR:GPGS:UNIX_TIME_SECONDS:` :\<recipient\>:\<sender\>:\<utc time\>
+`:GPGR:GPGS:UNIX_TIME_SECONDS:`
 
 ##### Example - ping full format (seconds)
-`:GPGR:GPGS:BTC_TIME:UNIX_TIME_SECONDS:` :\<recipient\>:\<sender\>:\<block height\>:\<utc time seconds\>
+`:GPGR:GPGS:BTC_TIME:UNIX_TIME_SECONDS:`
 
 ##### Example - ping full format (milliseconds)
-`:GPGR:GPGS:BTC_TIME:UNIX_TIME_MILLIS:` :\<recipient\>:\<sender\>:\<block height\>:\<utc time milliseconds\>
+`:GPGR:GPGS:BTC_TIME:UNIX_TIME_MILLIS:`
