@@ -41,7 +41,7 @@ Cipher: IDEA, 3DES, CAST5, BLOWFISH, AES, AES192, AES256, TWOFISH,
 Hash: SHA1, RIPEMD160, SHA256, SHA384, SHA512, SHA224
 Compression: Uncompressed, ZIP, ZLIB, BZIP2
 ```
-When messages are sent in the blind: `--include-key-block`, [--include-certs](https://www.gnupg.org/documentation/manuals/gnupg/CMS-Options.html#CMS-Options) or [--auto-key-import](https://www.gnupg.org/documentation/manuals/gnupg/GPG-Configuration-Options.html)
+We assume messages are sent in the blind: `--include-key-block` will be the default, to enable offline decryption. [OpenPGP-Options.html](https://www.gnupg.org/documentation/manuals/gnupg/OpenPGP-Options.html)
 
 ### time fields
 `:BTC_TIME:` - a Bitcoin block height in the "time chain".
