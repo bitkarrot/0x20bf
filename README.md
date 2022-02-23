@@ -32,12 +32,14 @@ This document describes the ox20bf protocol message structure and related operat
 
 ### algorithm field
 `:ALGO:` indicates encryption algorithm used for message encryption  
+
 ##### Example
 `:RSA:AES256:SHA256:ZIP:`
+
 ##### gnupg supported algorithms:
-```Pubkey: RSA, ELG, DSA, ECDH, ECDSA, EDDSA
-Cipher: IDEA, 3DES, CAST5, BLOWFISH, AES, AES192, AES256, TWOFISH,
-        CAMELLIA128, CAMELLIA192, CAMELLIA256
+```shell
+Pubkey: RSA, ELG, DSA, ECDH, ECDSA, EDDSA
+Cipher: IDEA, 3DES, CAST5, BLOWFISH, AES, AES192, AES256, TWOFISH, CAMELLIA128, CAMELLIA192, CAMELLIA256
 Hash: SHA1, RIPEMD160, SHA256, SHA384, SHA512, SHA224
 Compression: Uncompressed, ZIP, ZLIB, BZIP2
 ```
