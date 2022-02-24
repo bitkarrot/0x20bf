@@ -126,10 +126,8 @@ seeder:
 
 .PHONY: init
 .ONESHELL:
-init:
+init: initialize gogs
 
-	bash -c "./scripts/initialize"
-	make -C gogs
 	pushd python-gnupg && $(PYTHON3) setup.py install && popd
 	pushd TwitterAPI && $(PYTHON3) setup.py install && popd
 	# @echo $(PYTHON)
@@ -188,6 +186,18 @@ report:
 	@echo '        - GIT_REPO_ORIGIN=${GIT_REPO_ORIGIN}'
 	@echo '        - GIT_REPO_NAME=${GIT_REPO_NAME}'
 	@echo '        - GIT_REPO_PATH=${GIT_REPO_PATH}'
+
+.PHONY: initialize
+.ONESHELL:
+initialize:
+
+	bash -c "./scripts/initialize"
+
+.PHONY: gogs
+.ONESHELL:
+gogs:
+	make -C gogs
+
 
 .PHONY: super
 super:
