@@ -198,10 +198,16 @@ message</p>
 <code>:&lt;recipient&gt;:&lt;sender&gt;:</code></p>
 <h3 id="algorithm-field">algorithm field</h3>
 <p><code>:ALGO:</code> indicates encryption algorithm used for message
-encryption ##### Example <code>:RSA:AES256:SHA256:ZIP:</code> #####
-gnupg supported algorithms:
-<code>Pubkey: RSA, ELG, DSA, ECDH, ECDSA, EDDSA Cipher: IDEA, 3DES, CAST5, BLOWFISH, AES, AES192, AES256, TWOFISH,         CAMELLIA128, CAMELLIA192, CAMELLIA256 Hash: SHA1, RIPEMD160, SHA256, SHA384, SHA512, SHA224 Compression: Uncompressed, ZIP, ZLIB, BZIP2</code>
-We assume messages are sent in the blind:
+encryption</p>
+<h5 id="example">Example</h5>
+<p><code>:RSA:AES256:SHA256:ZIP:</code></p>
+<h5 id="gnupg-supported-algorithms">gnupg supported algorithms:</h5>
+<pre><code>Pubkey: RSA, ELG, DSA, ECDH, ECDSA, EDDSA   
+Cipher: IDEA, 3DES, CAST5, BLOWFISH, AES, AES192, AES256, TWOFISH,
+        CAMELLIA128, CAMELLIA192, CAMELLIA256   
+Hash: SHA1, RIPEMD160, SHA256, SHA384, SHA512, SHA224   
+Compression: Uncompressed, ZIP, ZLIB, BZIP2 </code></pre>
+<p>We assume messages are sent in the blind:
 <code>--include-key-block</code> will be the default, to enable offline
 decryption. <a
 href="https://www.gnupg.org/documentation/manuals/gnupg/OpenPGP-Options.html">OpenPGP-Options.html</a></p>
