@@ -198,9 +198,12 @@ message</p>
 <code>:&lt;recipient&gt;:&lt;sender&gt;:</code></p>
 <h3 id="algorithm-field">algorithm field</h3>
 <p><code>:ALGO:</code> indicates encryption algorithm used for message
-encryption</p>
+construction</p>
 <h5 id="example">Example</h5>
-<p><code>:RSA:AES256:SHA256:ZIP:</code></p>
+<p><code>:ALGO:ALGO:ALGO:ALGO:</code>
+<code>:PUBKEY:CIPHER:HASH:COMPRESSION:</code><br />
+<code>:RSA:AES256:SHA256:ZIP:</code>
+<code>:PUBKEY:CIPHER:HASH:COMPRESSION:</code></p>
 <h5 id="gnupg-supported-algorithms">gnupg supported algorithms:</h5>
 <pre><code>Pubkey: RSA, ELG, DSA, ECDH, ECDSA, EDDSA   
 Cipher: IDEA, 3DES, CAST5, BLOWFISH, AES, AES192, AES256, TWOFISH,

@@ -25,10 +25,11 @@ This document describes the ox20bf protocol message structure and related operat
 `:GPGR:GPGS:` `:<recipient>:<sender>:`
 
 ### algorithm field
-`:ALGO:` indicates encryption algorithm used for message encryption
+`:ALGO:` indicates encryption algorithm used for message construction
 
 ##### Example
-`:RSA:AES256:SHA256:ZIP:`
+`:ALGO:ALGO:ALGO:ALGO:`   `:PUBKEY:CIPHER:HASH:COMPRESSION:`	
+`:RSA:AES256:SHA256:ZIP:` `:PUBKEY:CIPHER:HASH:COMPRESSION:`
 
 ##### gnupg supported algorithms:
 ```
