@@ -45,9 +45,13 @@ We assume messages are sent in the blind: `--include-key-block` will be the defa
 ### time fields
 `:BTC_TIME:` - a Bitcoin block height in the "time chain".
 
+`:BTC:` - a Bitcoin block height in the "time chain".
+
 `:UNIX_TIME_SECONDS:` - UTC Time in seconds
 
 `:UNIX_TIME_MILLIS:` - UTC Time in milliseconds
+
+`:TIME:` - UTC Time in milliseconds
 
 ##### Example - ping time chain format
 `:GPGR:GPGS:BTC_TIME:`
@@ -61,6 +65,8 @@ We assume messages are sent in the blind: `--include-key-block` will be the defa
 ##### Example - ping full format (milliseconds)
 `:GPGR:GPGS:BTC_TIME:UNIX_TIME_MILLIS:`
 
+##### Example - ping abridged format (milliseconds) - abridged `:TIME:` is in millisoeconds
+`:GPGR:GPGS:BTC:TIME:`
 <details>
 <summary>👀</summary>
 <p>
