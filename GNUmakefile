@@ -211,7 +211,7 @@ git-add: remove
 	git add --ignore-errors sources/*.md
 	git add --ignore-errors TIME
 	git add --ignore-errors GLOBAL
-	git add --ignore-errors *.py
+	git add --ignore-errors python/*.py
 	git add --ignore-errors index.html
 	git add --ignore-errors .gitignore
 	git add --ignore-errors .github

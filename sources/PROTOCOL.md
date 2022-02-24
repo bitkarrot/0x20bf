@@ -26,18 +26,16 @@ This document describes the ox20bf protocol message structure and related operat
 
 ### algorithm field
 `:ALGO:` indicates encryption algorithm used for message encryption
-
 ##### Example
 `:RSA:AES256:SHA256:ZIP:`
-
 ##### gnupg supported algorithms:
-```shell
-Pubkey: RSA, ELG, DSA, ECDH, ECDSA, EDDSA
-Cipher: IDEA, 3DES, CAST5, BLOWFISH, AES, AES192, AES256, TWOFISH, CAMELLIA128, CAMELLIA192, CAMELLIA256
+```Pubkey: RSA, ELG, DSA, ECDH, ECDSA, EDDSA
+Cipher: IDEA, 3DES, CAST5, BLOWFISH, AES, AES192, AES256, TWOFISH,
+        CAMELLIA128, CAMELLIA192, CAMELLIA256
 Hash: SHA1, RIPEMD160, SHA256, SHA384, SHA512, SHA224
 Compression: Uncompressed, ZIP, ZLIB, BZIP2
 ```
-We assume messages are sent in the blind: `--include-key-block` will be the default, to enable offline decryption. [OpenPGP-Options.html](https://www.gnupg.org/documentation/manuals/gnupg/OpenPGP-Options.html)
+When messages are sent in the blind, by default: [--include-certs](https://www.gnupg.org/documentation/manuals/gnupg/CMS-Options.html#CMS-Options) or [--auto-key-import](https://www.gnupg.org/documentation/manuals/gnupg/GPG-Configuration-Options.html) will be used.
 
 ### time fields
 `:BTC_TIME:` - a Bitcoin block height in the "time chain".
