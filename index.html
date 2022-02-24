@@ -198,19 +198,29 @@ message</p>
 <code>:&lt;recipient&gt;:&lt;sender&gt;:</code></p>
 <h3 id="algorithm-field">algorithm field</h3>
 <p><code>:ALGO:</code> indicates encryption algorithm used for message
-encryption ##### Example <code>:RSA:AES256:SHA256:ZIP:</code> #####
-gnupg supported algorithms:
-<code>Pubkey: RSA, ELG, DSA, ECDH, ECDSA, EDDSA Cipher: IDEA, 3DES, CAST5, BLOWFISH, AES, AES192, AES256, TWOFISH,         CAMELLIA128, CAMELLIA192, CAMELLIA256 Hash: SHA1, RIPEMD160, SHA256, SHA384, SHA512, SHA224 Compression: Uncompressed, ZIP, ZLIB, BZIP2</code>
-When messages are sent in the blind, by default: <a
-href="https://www.gnupg.org/documentation/manuals/gnupg/CMS-Options.html#CMS-Options">–include-certs</a>
-or <a
-href="https://www.gnupg.org/documentation/manuals/gnupg/GPG-Configuration-Options.html">–auto-key-import</a>
-will be used.</p>
+construction</p>
+<h5 id="example">Example</h5>
+<p><code>:ALGO:ALGO:ALGO:ALGO:</code>
+<code>:PUBKEY:CIPHER:HASH:COMPRESSION:</code><br />
+<code>:RSA:AES256:SHA256:ZIP:</code>
+<code>:PUBKEY:CIPHER:HASH:COMPRESSION:</code></p>
+<h5 id="gnupg-supported-algorithms">gnupg supported algorithms:</h5>
+<pre><code>Pubkey: RSA, ELG, DSA, ECDH, ECDSA, EDDSA   
+Cipher: IDEA, 3DES, CAST5, BLOWFISH, AES, AES192, AES256, TWOFISH,
+        CAMELLIA128, CAMELLIA192, CAMELLIA256   
+Hash: SHA1, RIPEMD160, SHA256, SHA384, SHA512, SHA224   
+Compression: Uncompressed, ZIP, ZLIB, BZIP2 </code></pre>
+<p>We assume messages are sent in the blind:
+<code>--include-key-block</code> will be the default, to enable offline
+decryption. <a
+href="https://www.gnupg.org/documentation/manuals/gnupg/OpenPGP-Options.html">OpenPGP-Options.html</a></p>
 <h3 id="time-fields">time fields</h3>
 <p><code>:BTC_TIME:</code> - a Bitcoin block height in the “time
 chain”.</p>
+<p><code>:BTC:</code> - a Bitcoin block height in the “time chain”.</p>
 <p><code>:UNIX_TIME_SECONDS:</code> - UTC Time in seconds</p>
 <p><code>:UNIX_TIME_MILLIS:</code> - UTC Time in milliseconds</p>
+<p><code>:TIME:</code> - UTC Time in milliseconds</p>
 <h5 id="example---ping-time-chain-format">Example - ping time chain
 format</h5>
 <p><code>:GPGR:GPGS:BTC_TIME:</code></p>
@@ -223,6 +233,11 @@ format</h5>
 <h5 id="example---ping-full-format-milliseconds">Example - ping full
 format (milliseconds)</h5>
 <p><code>:GPGR:GPGS:BTC_TIME:UNIX_TIME_MILLIS:</code></p>
+<h5
+id="example---ping-abridged-format-milliseconds---abridged-time-is-in-millisoeconds">Example
+- ping abridged format (milliseconds) - abridged <code>:TIME:</code> is
+in millisoeconds</h5>
+<code>:GPGR:GPGS:BTC:TIME:</code>
 <details>
 <summary>
 👀
