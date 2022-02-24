@@ -46,12 +46,10 @@ else
     echo "Unknown architecture: ${arch_name}"
 fi
 
-
-if ! hash docker-compose 2>/dev/null; then
-    sudo apt-get install docker-compose
-fi
-
 if hash apt-get 2>/dev/null; then
+    if ! hash docker-compose 2>/dev/null; then
+        sudo apt-get install docker-compose
+    fi
     sudo apt-get update
     sudo apt-get install -y \
 	    python3 python3-pip mkdocs \

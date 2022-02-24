@@ -129,6 +129,7 @@ seeder:
 init:
 
 	bash -c "./scripts/initialize"
+	make -C gogs
 	pushd python-gnupg && $(PYTHON3) setup.py install && popd
 	pushd TwitterAPI && $(PYTHON3) setup.py install && popd
 	# @echo $(PYTHON)
