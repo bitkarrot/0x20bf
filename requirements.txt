@@ -10,3 +10,4 @@ python-gnupg
 aiohttp
 aiohttp[speedups]
 asyncio
+psutil
