@@ -220,17 +220,17 @@ git-add: remove
 	git add --ignore-errors GNUmakefile
 	git add --ignore-errors README.md
 	git add --ignore-errors sources/*.md
-	git add --ignore-errors TIME
-	git add --ignore-errors GLOBAL
+	#git add --ignore-errors TIME
+	#git add --ignore-errors GLOBAL
 	git add --ignore-errors python/*.py
 	git add --ignore-errors index.html
 	git add --ignore-errors .gitignore
 	git add --ignore-errors .github
 	git add --ignore-errors *.sh
 	git add --ignore-errors *.yml
-	git add --ignore-errors BLOCK_TIP_HEIGHT
-	git add --ignore-errors DIFFICULTY
-	git add --ignore-errors TIME
+	#git add --ignore-errors BLOCK_TIP_HEIGHT
+	#git add --ignore-errors DIFFICULTY
+	#git add --ignore-errors TIME
 
 .PHONY: push
 .ONESHELL:
