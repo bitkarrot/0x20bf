@@ -9,12 +9,12 @@ IS_WINDOWS = psutil.WINDOWS
 # Setup logging
 global LOGGER
 LOGGER = True
+global MEMPOOL_LOGGER
+MEMPOOL_LOGGER = True
 global TWEET
 TWEET = False
 global CONFIG
 CONFIG                  = str('twitter_access_tokens')
-global SESSION_ID_LOCK
-SESSION_ID_LOCK         = os.path.expanduser(os.getcwd()+'/SESSION_ID_LOCK')
 global BLOCK_TIP_HEIGHT
 BLOCK_TIP_HEIGHT        = os.path.expanduser(os.getcwd()+'/BLOCK_TIP_HEIGHT')
 global DIFFICULTY
