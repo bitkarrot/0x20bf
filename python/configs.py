@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 
-from imports    import *
+import os
+
 from logger     import *
+import psutil
+import codecs
 
 USER       = psutil.Process().username()
 IS_MACOS   = psutil.MACOS
@@ -105,9 +108,6 @@ UTF8Writer = codecs.getwriter('utf-8')
 # sys.stdout = UTF8Writer(sys.stdout)
 
 POWMOD_GMP_SIZE = pow(2, 256)
-
-START_TIME = TimestampMillisec64()
-CAFFEINATE = 18600
 
 if __name__ == "__main__":
 

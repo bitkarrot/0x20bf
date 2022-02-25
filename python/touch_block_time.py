@@ -2,9 +2,12 @@
 
 import os
 import sys
-#sys.path.insert(0, os.path.abspath('/usr/local/lib/python3.9/site-packages'))
 import time
 import blockcypher
+from mempool_height import *
+import aiohttp
+import asyncio
+
 millis = int(round(time.time() * 1000))
 seconds = int(round(time.time()))
 
@@ -14,8 +17,15 @@ try:
     f = open("BLOCK_TIME", "w")
     f.write("" + block_height + "\n")
     f.close()
-    #print(block_time)
-    print(block_height)
+    # print(block_time)
+    # print(block_height)
 except:
-    block_time = 0
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(mempool_height())
+    # logger.info(loop.run_until_complete(mempool_height()))
+    block_height = loop.run_until_complete(mempool_height())
+    f = open("BLOCK_TIME", "w")
+    f.write("" + block_height + "\n")
+    f.close()
     pass
+# TODO: add more redundant block height checks
