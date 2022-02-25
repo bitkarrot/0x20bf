@@ -118,12 +118,6 @@ I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
 .PHONY: -
 -: help
 
-.PHONY:
-.QUIET:
-.ONESHELL:
-seeder:
-	make -C depends/seeder
-
 .PHONY: init
 .ONESHELL:
 init: initialize
@@ -190,10 +184,17 @@ endif
 initialize:
 	bash -c "./scripts/initialize"
 
+.PHONY:
+.QUIET:
+.ONESHELL:
+seeder:
+	make -C depends/seeder
+
 .PHONY: gogs
 .ONESHELL:
 gogs:
-	make -C gogs
+	make -C depends/gogs
+
 .PHONY: gnupg
 .ONESHELL:
 gnupg:
@@ -203,6 +204,8 @@ gnupg:
 twitter-api:
 	pushd $(PYTHONPATH)/TwitterAPI && $(PYTHON3) $(PYTHONPATH)/TwitterAPI/setup.py install && popd
 
+.PHONY: depends
+depends: seeder gogs
 
 .PHONY: git-add
 .ONESHELL:
