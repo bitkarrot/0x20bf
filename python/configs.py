@@ -13,6 +13,8 @@ global LOGGER
 LOGGER = True
 global OS_LOGGER
 OS_LOGGER = False
+global DATA_LOGGER
+DATA_LOGGER = False
 global HEX_LOGGER
 HEX_LOGGER = True
 global TIME_LOGGER
@@ -81,20 +83,20 @@ def insertPath(PATH):
     sys.path.append(PATH)
 
 
-def getData(filename):
+def get_data(filename):
     f = open(filename, "r")
     DATA = str(f.read())
     f.close()
-    if (LOGGER): print(DATA) #unsecure
+    if (DATA_LOGGER): print(DATA) #unsecure
     return DATA
 
 
-CAK  = getData(CONSUMER_API_KEY)
-CASK = getData(CONSUMER_API_SECRET_KEY)
-AT   = getData(ACCESS_TOKEN)
-ATS  = getData(ACCESS_TOKEN_SECRET)
-BLOCK_TIME  = getData(BLOCK_TIME)
-OBT  = getData(OLD_BLOCK_TIME)
+CAK  = get_data(CONSUMER_API_KEY)
+CASK = get_data(CONSUMER_API_SECRET_KEY)
+AT   = get_data(ACCESS_TOKEN)
+ATS  = get_data(ACCESS_TOKEN_SECRET)
+BLOCK_TIME  = get_data(BLOCK_TIME)
+OBT  = get_data(OLD_BLOCK_TIME)
 
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s', datefmt='%j.%Y %I:%M:%S %p')
