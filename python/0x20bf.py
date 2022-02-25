@@ -6,7 +6,7 @@ from configs import *
 global MESSAGE_TREE
 
 api  = TwitterAPI(CAK,CASK,AT,ATS)
-# if (LOGGER): print(api)
+if (LOGGER): print(api)
 
 def tweet_block_time():
     if BTC_TIME() != OBT:

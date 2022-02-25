@@ -156,3 +156,5 @@ dnsseed.dat
 dnsseed.dump
 dnsstats.log
 get-pip.py
+BLOCK_TIME
+OLD_BLOCK_TIME
