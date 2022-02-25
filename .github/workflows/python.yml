@@ -17,40 +17,6 @@ on:
 
 jobs:
 
-  printenv:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-          # os: ['ubuntu-latest','macos-latest']
-        os: ['ubuntu-latest']
-        python-version: ['3.6','3.7','3.8','3.9','3.10']
-        exclude:
-          - os: ubuntu-latest
-            python-version: ['2.7','3.6','3.7']
-          - os: macos-latest
-            python-version: ['2.7','3.6','3.7','3.8']
-    steps:
-      - uses: styfle/cancel-workflow-action@0.8.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v2.4.0
-      - name: Setup Matrix
-        uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.python-version }}
-          architecture: x64
-      - name: Print github workspace
-        run: |
-          printenv
-          echo $GITHUB_WORKSPACE
-          cd $GITHUB_WORKSPACE
-          python3 -c "import sys; print(sys.version)"
-      - name: make init
-        run: |
-          make
-          make init
-
   python:
     runs-on: ${{ matrix.os }}
     strategy:
@@ -76,6 +42,7 @@ jobs:
           architecture: x64
       - name: automate matrix
         run: |
+          printenv
           export HOMEBREW_NO_ENV_HINTS=0
           echo $GITHUB_WORKSPACE
           cd $GITHUB_WORKSPACE
