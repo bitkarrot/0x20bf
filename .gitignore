@@ -17,6 +17,7 @@ twitter_access_tokens/*
 twitter_access_tokens.zip
 
 python-gnupg/python_gnupg.egg-info/
+python/gnupg/python_gnupg.egg-info/
 
 bitcoin.pdf
 
