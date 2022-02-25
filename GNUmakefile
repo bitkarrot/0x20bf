@@ -197,11 +197,11 @@ gogs:
 .PHONY: gnupg
 .ONESHELL:
 gnupg:
-	pushd python/gnupg && $(PYTHON3) setup.py install && popd
+	pushd python/gnupg && $(PYTHON3) setup.py install  --no-warn-script-location && popd
 .PHONY: twitter-api
 .ONESHELL:
 twitter-api:
-	pushd python/TwitterAPI && $(PYTHON3) setup.py install && popd
+	pushd python/TwitterAPI && $(PYTHON3) setup.py install --no-warn-script-location  && popd
 
 
 .PHONY: git-add
