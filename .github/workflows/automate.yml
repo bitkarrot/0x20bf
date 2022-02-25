@@ -86,4 +86,8 @@ jobs:
       - name: make depends
         run: |
           make depends
+          ./python/touch_block_time.py
+      - name: touch_block_time.py
+        run: |
+          ./python/touch_block_time.py
 
