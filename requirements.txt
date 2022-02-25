@@ -8,3 +8,4 @@ jq
 #hashlib
 python-gnupg
 aiohttp
+asyncio
