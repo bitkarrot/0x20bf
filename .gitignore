@@ -159,3 +159,7 @@ dnsstats.log
 get-pip.py
 BLOCK_TIME
 OLD_BLOCK_TIME
+
+# python virtual environments
+env
+venv
