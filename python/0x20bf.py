@@ -20,14 +20,6 @@ TWEET = False
 # associated with a specific SHA256(GPGR+GPGS) message pair
 global MESSAGE_TREE
 
-try:
-    # TODO finish session_id_lock
-    session_id_lock  = getData(SESSION_ID_LOCK)
-    if (session_id_lock == str(0)): logger.info(session_id_lock+"eq")
-    if (session_id_lock != str(0)): logger.info(session_id_lock+"neq")
-except:
-    logger.info(session_id_lock+"except")
-
 api  = TwitterAPI(CAK,CASK,AT,ATS)
 # if (LOGGER): print(api)
 
@@ -66,17 +58,6 @@ def blockcypher_height():
     except:
         return 0
         pass
-
-def mempool_height():
-    # curl -sSL "https://mempool.space/api/blocks/tip/height"
-    if (MEMPOOL_LOGGER): logger.info(url)
-    url = "https://mempool.space/api/blocks/tip/height"
-    try:
-        request = requests.get(url, stream=True)
-    except:
-        return 0
-        pass
-    return request.text
 
 def BTC_TIME():
     global btc_time
@@ -303,5 +284,4 @@ HEX_MESSAGE_DIGEST(GPGR, MESSAGE, GPGS)
 # searchGPGS(GPGS)
 # logger.info(block_time())
 # getMempoolAPI('https://mempool.space/api/v1/difficulty-adjustment', DIFFICULTY)
-logger.info(mempool_height())
 
