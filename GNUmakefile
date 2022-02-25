@@ -122,7 +122,7 @@ I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
 .QUIET:
 .ONESHELL:
 seeder:
-	make -C seeder
+	make -C depends/seeder
 
 .PHONY: init
 .ONESHELL:
