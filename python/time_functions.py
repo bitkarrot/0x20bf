@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
-from imports import *
 from configs import *
-
 import aiohttp
 import asyncio
 import os
