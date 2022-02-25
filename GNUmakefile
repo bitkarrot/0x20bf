@@ -129,7 +129,7 @@ seeder:
 init: initialize gogs
 
 	pushd python/gnupg && $(PYTHON3) setup.py install && popd
-	pushd TwitterAPI && $(PYTHON3) setup.py install && popd
+	pushd python/TwitterAPI && $(PYTHON3) setup.py install && popd
 	# @echo $(PYTHON)
 	# @echo $(PYTHON2)
 	# @echo $(PYTHON3)
