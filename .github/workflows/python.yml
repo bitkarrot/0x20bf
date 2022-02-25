@@ -1,4 +1,4 @@
-name: automate.yml
+name: python.yml
 
 # Controls when the action will run.
 on:
@@ -51,7 +51,7 @@ jobs:
           make
           make init
 
-  automate:
+  python:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -83,11 +83,13 @@ jobs:
       - name: make init
         run: |
           make init
-      - name: make depends
-        run: |
-          make depends
-          ./python/touch_block_time.py
       - name: touch_block_time.py
         run: |
           ./python/touch_block_time.py
+      - name: mempool_height.py
+        run: |
+          ./python/mempool_height.py
+      - name: time_functions.py
+        run: |
+          ./python/time_functions.py
 
