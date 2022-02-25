@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
-
 import os
-
 from logger     import *
 import psutil
 import codecs
@@ -40,20 +38,7 @@ global BLOCK_TIME
 BLOCK_TIME              = os.path.expanduser(os.getcwd()+'/BLOCK_TIME')
 global OLD_BLOCK_TIME
 OLD_BLOCK_TIME          = os.path.expanduser(os.getcwd()+'/OLD_BLOCK_TIME')
-
-# twitter api
-global TWEET
-TWEET = False
-global TWITTER_CONFIG
-TWITTER_CONFIG          = str('twitter_access_tokens')
-global ACCESS_TOKEN_SECRET
-ACCESS_TOKEN_SECRET     = os.path.expanduser(os.getcwd()+'/'+TWITTER_CONFIG+'/access_token_secret.txt')
-global ACCESS_TOKEN
-ACCESS_TOKEN            = os.path.expanduser(os.getcwd()+'/'+TWITTER_CONFIG+'/access_token.txt')
-global CONSUMER_API_KEY
-CONSUMER_API_KEY        = os.path.expanduser(os.getcwd()+'/'+TWITTER_CONFIG+'/consumer_api_key.txt')
-global CONSUMER_API_SECRET_KEY
-CONSUMER_API_SECRET_KEY = os.path.expanduser(os.getcwd()+'/'+TWITTER_CONFIG+'/consumer_api_secret_key.txt')
+global OBT
 
 # global variables
 global HEADER
@@ -66,11 +51,6 @@ global GPGS
 global MESSAGE
 global GOLDEN_RATIO
 GOLDEN_RATIO = 1.6180339887498948482045868343656381177203091798057628621354486227
-global CAK
-global CASK
-global AT
-global ATS
-global OBT
 
 if (IS_MACOS):
     if (OS_LOGGER): print(str("IS_MACOS"))
@@ -80,34 +60,6 @@ if (IS_LINUX):
 
 if (IS_WINDOWS):
     if (OS_LOGGER): print(str("IS_WINDOWS"))
-
-
-def insertPath(PATH):
-    sys.path.append(PATH)
-
-
-def get_data(filename):
-    f = open(filename, "r")
-    DATA = str(f.read())
-    f.close()
-    if (DATA_LOGGER): print(DATA) #unsecure
-    return DATA
-
-
-CAK  = get_data(CONSUMER_API_KEY)
-CASK = get_data(CONSUMER_API_SECRET_KEY)
-AT   = get_data(ACCESS_TOKEN)
-ATS  = get_data(ACCESS_TOKEN_SECRET)
-BLOCK_TIME  = get_data(BLOCK_TIME)
-OBT  = get_data(OLD_BLOCK_TIME)
-
-
-logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s', datefmt='%j.%Y %I:%M:%S %p')
-logger = logging.getLogger()
-UTF8Writer = codecs.getwriter('utf-8')
-# sys.stdout = UTF8Writer(sys.stdout)
-
-POWMOD_GMP_SIZE = pow(2, 256)
 
 if __name__ == "__main__":
 
