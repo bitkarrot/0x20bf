@@ -83,5 +83,5 @@ jobs:
           sudo apt install gnupg build-essential libboost-all-dev libssl-dev
           python3 -c "import sys; print(sys.version)"
           sudo -s make init
-          pushd seeder && make
+          sudo -s make depends
 
