@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from imports    import *
+from logger     import *
 
 USER       = psutil.Process().username()
 IS_MACOS   = psutil.MACOS
@@ -10,6 +11,10 @@ IS_WINDOWS = psutil.WINDOWS
 # Setup logging
 global LOGGER
 LOGGER = True
+global OS_LOGGER
+OS_LOGGER = False
+global DATA_LOGGER
+DATA_LOGGER = False
 global HEX_LOGGER
 HEX_LOGGER = True
 global TIME_LOGGER
@@ -23,17 +28,21 @@ logger = logging.getLogger()
 UTF8Writer = codecs.getwriter('utf-8')
 # sys.stdout = UTF8Writer(sys.stdout)
 
-
-global TWEET
-TWEET = False
-global TWITTER_CONFIG
-TWITTER_CONFIG          = str('twitter_access_tokens')
+# time_function data
 global BLOCK_TIP_HEIGHT
 BLOCK_TIP_HEIGHT        = os.path.expanduser(os.getcwd()+'/BLOCK_TIP_HEIGHT')
 global DIFFICULTY
 DIFFICULTY              = os.path.expanduser(os.getcwd()+'/DIFFICULTY')
+global BLOCK_TIME
+BLOCK_TIME              = os.path.expanduser(os.getcwd()+'/BLOCK_TIME')
 global OLD_BLOCK_TIME
 OLD_BLOCK_TIME          = os.path.expanduser(os.getcwd()+'/OLD_BLOCK_TIME')
+
+# twitter api
+global TWEET
+TWEET = False
+global TWITTER_CONFIG
+TWITTER_CONFIG          = str('twitter_access_tokens')
 global ACCESS_TOKEN_SECRET
 ACCESS_TOKEN_SECRET     = os.path.expanduser(os.getcwd()+'/'+TWITTER_CONFIG+'/access_token_secret.txt')
 global ACCESS_TOKEN
@@ -42,6 +51,8 @@ global CONSUMER_API_KEY
 CONSUMER_API_KEY        = os.path.expanduser(os.getcwd()+'/'+TWITTER_CONFIG+'/consumer_api_key.txt')
 global CONSUMER_API_SECRET_KEY
 CONSUMER_API_SECRET_KEY = os.path.expanduser(os.getcwd()+'/'+TWITTER_CONFIG+'/consumer_api_secret_key.txt')
+
+# global variables
 global HEADER
 global DIGEST
 global BODY
@@ -59,32 +70,33 @@ global ATS
 global OBT
 
 if (IS_MACOS):
-    print(str("IS_MACOS"))
+    if (OS_LOGGER): print(str("IS_MACOS"))
 
 if (IS_LINUX):
-    print(str("IS_LINUX"))
+    if (OS_LOGGER): print(str("IS_LINUX"))
 
 if (IS_WINDOWS):
-    print(str("IS_WINDOWS"))
+    if (OS_LOGGER): print(str("IS_WINDOWS"))
 
 
 def insertPath(PATH):
     sys.path.append(PATH)
 
 
-def getData(filename):
-    f = open(filename, "r+")
+def get_data(filename):
+    f = open(filename, "r")
     DATA = str(f.read())
     f.close()
-    # if (LOGGER): print(DATA) #unsecure
+    if (DATA_LOGGER): print(DATA) #unsecure
     return DATA
 
 
-CAK  = getData(CONSUMER_API_KEY)
-CASK = getData(CONSUMER_API_SECRET_KEY)
-AT   = getData(ACCESS_TOKEN)
-ATS  = getData(ACCESS_TOKEN_SECRET)
-OBT  = getData(OLD_BLOCK_TIME)
+CAK  = get_data(CONSUMER_API_KEY)
+CASK = get_data(CONSUMER_API_SECRET_KEY)
+AT   = get_data(ACCESS_TOKEN)
+ATS  = get_data(ACCESS_TOKEN_SECRET)
+BLOCK_TIME  = get_data(BLOCK_TIME)
+OBT  = get_data(OLD_BLOCK_TIME)
 
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s', datefmt='%j.%Y %I:%M:%S %p')
@@ -100,25 +112,5 @@ CAFFEINATE = 18600
 if __name__ == "__main__":
 
     from imports import *
-    import argparse
-    parser = argparse.ArgumentParser('config')
-    parser.add_argument("-arg1", action="store_true", help="-arg1 example")
-    parser.add_argument("-arg2", action="store_true", help="-arg2 example")
-    parser.add_argument("-v", "--verbose", help="increase output verbosity", action="store_true")
-    parser.add_argument("-q", "--quiet", action="store_true")
-
-    args = parser.parse_args()
-    if args.verbose:
-        logger.info("args.verbose = %s",args.verbose)
-        sys_info(args)
-        pass
-    if args.quiet:
-        logger.info("args.quiet = %s",args.quiet)
-        pass
-    if args.arg1:
-        logger.info("args.arg1 = %s",args.arg1)
-        pass
-    if args.arg2:
-        logger.info("args.arg2 = %s",args.arg2)
-        pass
+    from logger  import *
 

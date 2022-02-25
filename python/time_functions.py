@@ -1,21 +1,30 @@
 #!/usr/bin/env python3
+from imports import *
+from configs import *
+
+import aiohttp
+import asyncio
 import os
+import sys
 import time
 import math
 import shutil
 import blockcypher
-import asyncio
-from imports import logger
+from logger import *
 
 from mempool_height import mempool_height
-def moveblock_time():
+
+async def touch_time(time):
+    f = open(os.getcwd()+"/BLOCK_TIME", "w")
+    f.write("" + str(time) + "\n")
+    f.close()
+
+def move_block_time():
     try:
         shutil.move(os.getcwd()+"/BLOCK_TIME", os.getcwd()+"/OLD_BLOCK_TIME")
     except:
         logger.info("moveblock_time() failed!")
-        f = open("BLOCK_TIME", "w")
-        f.write("" + 0 + "\n")
-        f.close()
+        touch_time()
         pass
 
 def getMillis():
@@ -74,4 +83,19 @@ def UNIX_TIME_SECONDS():
     global unix_time_seconds
     unix_time_seconds = str(getSeconds())
     return unix_time_seconds
+
+async def fetch(session, url):
+    async with session.get(url) as response:
+        return await response.text()
+
+async def mempool_height():
+    async with aiohttp.ClientSession() as session:
+        url = "https://mempool.space/api/blocks/tip/height"
+        height = await fetch(session, url)
+        if (MEMPOOL_LOGGER): logger.info(height)
+        return height
+
+loop = asyncio.get_event_loop()
+loop.run_until_complete(touch_time(BTC_TIME()))
+loop.run_until_complete(mempool_height())
 

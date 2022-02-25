@@ -30,7 +30,7 @@ else
 PROJECT_NAME							:= $(project)
 endif
 export PROJECT_NAME
-PYTHONPATH=$(PWD)/twitter
+PYTHONPATH=$(PWD)/python
 export PYTHONPATH
 ifeq ($(port),)
 PORT									:= 0
@@ -126,23 +126,11 @@ seeder:
 
 .PHONY: init
 .ONESHELL:
-init: initialize gogs
-
-	pushd python-gnupg && $(PYTHON3) setup.py install && popd
-	pushd TwitterAPI && $(PYTHON3) setup.py install && popd
-	# @echo $(PYTHON)
-	# @echo $(PYTHON2)
-	# @echo $(PYTHON3)
-	# @echo $(PIP)
-	# @echo $(PIP2)
-	# @echo $(PIP3)
+init: initialize
 	@echo PATH=$(PATH):/usr/local/opt/python@3.9/Frameworks/Python.framework/Versions/3.9/bin
 	@echo PATH=$(PATH):$(HOME)/Library/Python/3.9/bin
-	$(PYTHON3) -m pip install --user --upgrade pip
+	$(PYTHON3) -m $(PIP) install --user --upgrade pip
 	$(PYTHON3) -m $(PIP) install --user -r requirements.txt
-	@echo pip3 install --user twint
-	@echo pip3 install --user TwitterAPI
-	[ -d "$(PWD)/TwitterAPI" ] && pushd $(PWD)/TwitterAPI && $(PYTHON3) setup.py install || git clone https://github.com/geduldig/TwitterAPI.git && pushd $(PWD)/TwitterAPI && $(PYTHON3) setup.py install
 
 .PHONY: help
 help: report
@@ -187,18 +175,6 @@ report:
 	@echo '        - GIT_REPO_NAME=${GIT_REPO_NAME}'
 	@echo '        - GIT_REPO_PATH=${GIT_REPO_PATH}'
 
-.PHONY: initialize
-.ONESHELL:
-initialize:
-
-	bash -c "./scripts/initialize"
-
-.PHONY: gogs
-.ONESHELL:
-gogs:
-	make -C gogs
-
-
 .PHONY: super
 super:
 ifneq ($(shell id -u),0)
@@ -208,6 +184,25 @@ ifneq ($(shell id -u),0)
 #.ONESHELL:
 	sudo -s
 endif
+
+.PHONY: initialize
+.ONESHELL:
+initialize:
+	bash -c "./scripts/initialize"
+
+.PHONY: gogs
+.ONESHELL:
+gogs:
+	make -C gogs
+.PHONY: gnupg
+.ONESHELL:
+gnupg:
+	pushd $(PYTHONPATH)/gnupg && $(PYTHON3) $(PYTHONPATH)/gnupg/setup.py install && popd
+.PHONY: twitter-api
+.ONESHELL:
+twitter-api:
+	pushd $(PYTHONPATH)/TwitterAPI && $(PYTHON3) $(PYTHONPATH)/TwitterAPI/setup.py install && popd
+
 
 .PHONY: git-add
 .ONESHELL:

@@ -17,6 +17,7 @@ twitter_access_tokens/*
 twitter_access_tokens.zip
 
 python-gnupg/python_gnupg.egg-info/
+python/gnupg/python_gnupg.egg-info/
 
 bitcoin.pdf
 
@@ -156,3 +157,5 @@ dnsseed.dat
 dnsseed.dump
 dnsstats.log
 get-pip.py
+BLOCK_TIME
+OLD_BLOCK_TIME
