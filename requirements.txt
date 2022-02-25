@@ -7,3 +7,4 @@ twitterAPI
 jq
 #hashlib
 python-gnupg
+aiohttp
