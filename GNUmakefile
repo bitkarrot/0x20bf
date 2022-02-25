@@ -30,7 +30,7 @@ else
 PROJECT_NAME							:= $(project)
 endif
 export PROJECT_NAME
-PYTHONPATH=$(PWD)/twitter
+PYTHONPATH=$(PWD)/python
 export PYTHONPATH
 ifeq ($(port),)
 PORT									:= 0
@@ -197,11 +197,11 @@ gogs:
 .PHONY: gnupg
 .ONESHELL:
 gnupg:
-	pushd python/gnupg && $(PYTHON3) setup.py install  --no-warn-script-location && popd
+	pushd $(PYTHONPATH)/gnupg && $(PYTHON3) $(PYTHONPATH)/gnupg/setup.py install && popd
 .PHONY: twitter-api
 .ONESHELL:
 twitter-api:
-	pushd python/TwitterAPI && $(PYTHON3) setup.py install --no-warn-script-location  && popd
+	pushd $(PYTHONPATH)/TwitterAPI && $(PYTHON3) $(PYTHONPATH)/TwitterAPI/setup.py install && popd
 
 
 .PHONY: git-add
