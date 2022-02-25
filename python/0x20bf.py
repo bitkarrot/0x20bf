@@ -3,14 +3,6 @@ from imports import *
 from configs import *
 
 # Setup logging
-global LOGGER
-global HEX_LOGGER
-global TIME_LOGGER
-global MEMPOOL_LOGGER
-LOGGER = True
-HEX_LOGGER = True
-TIME_LOGGER = False
-MEMPOOL_LOGGER = False
 logging.basicConfig(level=logging.INFO ,format='%(asctime)s %(message)s', datefmt='%j.%Y %I:%M:%S %p')
 logger = logging.getLogger()
 global TWEET
@@ -132,10 +124,6 @@ def searchGPGS(GPGS):
     except:
         logger.info("GPGS SEARCH FAILED!")
         pass
-
-if (TIME_LOGGER): logger.info(block_time())
-if (TIME_LOGGER): logger.info(getMillis())
-if (TIME_LOGGER): logger.info(getSeconds())
 
 def DELIMITER_STRIPPER(string):
     # avoiding incorrect SHA256 hashes

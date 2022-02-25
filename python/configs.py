@@ -6,15 +6,28 @@ USER       = psutil.Process().username()
 IS_MACOS   = psutil.MACOS
 IS_LINUX   = psutil.LINUX
 IS_WINDOWS = psutil.WINDOWS
+
 # Setup logging
 global LOGGER
 LOGGER = True
+global HEX_LOGGER
+HEX_LOGGER = True
+global TIME_LOGGER
+TIME_LOGGER = True
 global MEMPOOL_LOGGER
 MEMPOOL_LOGGER = True
+
+logger = logging.getLogger()
+logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s', datefmt='%j.%Y %I:%M:%S %p')
+logger = logging.getLogger()
+UTF8Writer = codecs.getwriter('utf-8')
+# sys.stdout = UTF8Writer(sys.stdout)
+
+
 global TWEET
 TWEET = False
-global CONFIG
-CONFIG                  = str('twitter_access_tokens')
+global TWITTER_CONFIG
+TWITTER_CONFIG          = str('twitter_access_tokens')
 global BLOCK_TIP_HEIGHT
 BLOCK_TIP_HEIGHT        = os.path.expanduser(os.getcwd()+'/BLOCK_TIP_HEIGHT')
 global DIFFICULTY
@@ -22,13 +35,13 @@ DIFFICULTY              = os.path.expanduser(os.getcwd()+'/DIFFICULTY')
 global OLD_BLOCK_TIME
 OLD_BLOCK_TIME          = os.path.expanduser(os.getcwd()+'/OLD_BLOCK_TIME')
 global ACCESS_TOKEN_SECRET
-ACCESS_TOKEN_SECRET     = os.path.expanduser(os.getcwd()+'/'+CONFIG+'/access_token_secret.txt')
+ACCESS_TOKEN_SECRET     = os.path.expanduser(os.getcwd()+'/'+TWITTER_CONFIG+'/access_token_secret.txt')
 global ACCESS_TOKEN
-ACCESS_TOKEN            = os.path.expanduser(os.getcwd()+'/'+CONFIG+'/access_token.txt')
+ACCESS_TOKEN            = os.path.expanduser(os.getcwd()+'/'+TWITTER_CONFIG+'/access_token.txt')
 global CONSUMER_API_KEY
-CONSUMER_API_KEY        = os.path.expanduser(os.getcwd()+'/'+CONFIG+'/consumer_api_key.txt')
+CONSUMER_API_KEY        = os.path.expanduser(os.getcwd()+'/'+TWITTER_CONFIG+'/consumer_api_key.txt')
 global CONSUMER_API_SECRET_KEY
-CONSUMER_API_SECRET_KEY = os.path.expanduser(os.getcwd()+'/'+CONFIG+'/consumer_api_secret_key.txt')
+CONSUMER_API_SECRET_KEY = os.path.expanduser(os.getcwd()+'/'+TWITTER_CONFIG+'/consumer_api_secret_key.txt')
 global HEADER
 global DIGEST
 global BODY
