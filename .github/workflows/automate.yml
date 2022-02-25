@@ -21,14 +21,10 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: ['ubuntu-latest','macos-latest']
+        os: ['ubuntu-latest']
         python-version: ['3.6','3.7','3.8','3.9','3.10']
         exclude:
           - os: ubuntu-latest
-            python-version: ['2.7']
-          - os: macos-latest
-            python-version: ['2.7']
-          - os: macos-10.15
             python-version: ['2.7']
     steps:
       - uses: styfle/cancel-workflow-action@0.8.0
@@ -72,12 +68,12 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           architecture: x64
-      - name: automate.sh matrix
+      - name: automate matrix
         run: |
+          export HOMEBREW_NO_ENV_HINTS=0
           echo $GITHUB_WORKSPACE
           cd $GITHUB_WORKSPACE
-          sudo apt install gnupg build-essential libboost-all-dev libssl-dev
           python3 -c "import sys; print(sys.version)"
-          sudo -s make init
-          sudo -s make depends
+          make init
+          make depends
 

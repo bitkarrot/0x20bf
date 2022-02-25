@@ -29,6 +29,28 @@ echo OSTYPE:
 echo "$OSTYPE" | awk '{print tolower($0)}'
 }
 
+function initialize-use-apt(){
+
+if hash apt-get 2>/dev/null; then
+    sudo apt-get update
+    sudo apt-get install -y \
+        python3 python3-pip mkdocs jq \
+        gnupg build-essential libboost-all-dev libssl-dev
+    if ! hash docker 2>/dev/null; then
+        sudo apt-get install docker.io
+    fi
+    if ! hash docker-compose 2>/dev/null; then
+        sudo apt-get install docker-compose
+    fi
+    if ! hash pip3 2>/dev/null; then
+        sudo apt-get install python3-pip
+    else
+        pip3 install omegaconf glom
+    fi
+fi
+
+}
+
 function initialize-checkbrew(){
 
 arch_name="$(uname -m)"
@@ -47,25 +69,8 @@ else
     echo "Unknown architecture: ${arch_name}"
 fi
 
-if hash apt-get 2>/dev/null; then
-    sudo apt-get update
-    sudo apt-get install -y \
-        python3 python3-pip mkdocs jq
-    if ! hash docker 2>/dev/null; then
-        sudo apt-get install docker.io
-    fi
-    if ! hash docker-compose 2>/dev/null; then
-        sudo apt-get install docker-compose
-    fi
-    if ! hash pip3 2>/dev/null; then
-        sudo apt-get install python3-pip
-    else
-        pip3 install omegaconf glom
-    fi
-exit
-fi
-
 if hash brew 2>/dev/null; then
+    export HOMEBREW_NO_ENV_HINTS=0
 
     brew install --quiet   python@3.9
     curl -O https://bootstrap.pypa.io/get-pip.py
@@ -75,13 +80,9 @@ if hash brew 2>/dev/null; then
     export python39
     $python39 -m pip -q install --upgrade pip
     $python39 -m pip -q install omegaconf
+    brew install gawk
+    brew install boost boost-build
 
-    brew install awk
-    #brew install python@3.8
-    brew install --quiet --cask docker
-    brew install --quiet        jq docker-compose mkdocs
-    brew link    --overwrite    mkdocs
-    brew link    --overwrite    docker-compose
 else
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
     checkbrew
@@ -115,12 +116,13 @@ if [[ "$OSTYPE" == "linux"* ]]; then
             sudo apt install gawk
             sudo apt update
             sudo apt install software-properties-common
+            sudo apt gnupg build-essential libboost-all-dev libssl-dev
             sudo apt install python3
             sudo apt-get install python3-pip
             sudo apt install docker.io docker-compose
 
             initialize-report
-            initialize-checkbrew
+            initialize-use-apt
             echo 'Using apt...'
         fi
     fi
@@ -129,7 +131,7 @@ if [[ "$OSTYPE" == "linux"* ]]; then
             apk add awk
             report
             initialize-report
-            initialize-checkbrew
+            initialize-use-apt
             echo 'Using apk...'
 
         fi
@@ -140,7 +142,7 @@ if [[ "$OSTYPE" == "linux"* ]]; then
             apt install awk
             report
             initialize-report
-            initialize-checkbrew
+            initialize-use-apt
             echo 'Using apt...'
 
         fi
