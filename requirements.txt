@@ -12,3 +12,5 @@ aiohttp[speedups]
 asyncio
 psutil
 gmpy2
+PyYAML==5.4.1
+pre-commit==2.13.0
