@@ -60,9 +60,3 @@ if (IS_LINUX):
 
 if (IS_WINDOWS):
     if (OS_LOGGER): print(str("IS_WINDOWS"))
-
-if __name__ == "__main__":
-
-    from imports import *
-    from logger  import *
-

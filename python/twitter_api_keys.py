@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import os
 from logger     import *
+from configs     import *
 import psutil
 import codecs
 
@@ -22,14 +23,6 @@ global CONSUMER_API_SECRET_KEY
 global CASK
 CONSUMER_API_SECRET_KEY = os.path.expanduser(os.getcwd()+'/'+TWITTER_CONFIG+'/consumer_api_secret_key.txt')
 
-if (IS_MACOS):
-    if (OS_LOGGER): print(str("IS_MACOS"))
-
-if (IS_LINUX):
-    if (OS_LOGGER): print(str("IS_LINUX"))
-
-if (IS_WINDOWS):
-    if (OS_LOGGER): print(str("IS_WINDOWS"))
 
 def get_data(filename):
     f = open(filename, "r")
@@ -43,9 +36,3 @@ CAK  = get_data(CONSUMER_API_KEY)
 CASK = get_data(CONSUMER_API_SECRET_KEY)
 AT   = get_data(ACCESS_TOKEN)
 ATS  = get_data(ACCESS_TOKEN_SECRET)
-
-if __name__ == "__main__":
-
-    from imports import *
-    from logger  import *
-

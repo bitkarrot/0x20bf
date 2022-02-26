@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from twitter_api_keys import *
 from imports import *
 from configs import *
 # MESSAGE_TREE is used to create a git topic branch

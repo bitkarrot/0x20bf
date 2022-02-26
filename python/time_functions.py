@@ -49,7 +49,7 @@ def blockcypher_height():
         pass
 
 def BTC_TIME():
-    mempool_loop = asyncio.get_event_loop()
+    mempool_loop = asyncio.new_event_loop()
     BTC_TIME = mempool_loop.run_until_complete(mempool_height())
     assert int(BTC_TIME) >= int(blockcypher_height())
     return int(BTC_TIME)
@@ -93,7 +93,7 @@ async def mempool_height():
         if (MEMPOOL_LOGGER): logger.info(height)
         return height
 
-loop = asyncio.get_event_loop()
+loop = asyncio.new_event_loop()
 loop.run_until_complete(touch_time(BTC_TIME()))
 loop.run_until_complete(mempool_height())
 

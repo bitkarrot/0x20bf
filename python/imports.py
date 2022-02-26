@@ -12,7 +12,6 @@ from socket import *
 import codecs
 import psutil
 import gmpy2
-from unix_time import *
 import logger
 import logging
 import time_functions
