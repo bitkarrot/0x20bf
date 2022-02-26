@@ -50,13 +50,35 @@ jobs:
       - name: make init
         run: |
           make init
-      - name: touch_block_time.py
+          # setting up some "non-tests" in alphabetical order
+      - name: 0x20bf.py
         run: |
-          ./python/touch_block_time.py
+          ./python/0x20bf.py
+      - name: configs.py
+        run: |
+          ./python/configs.py
+      - name: hex_message_digest.py
+        run: |
+          ./python/hex_message_digest.py
+      - name: imports.py
+        run: |
+          ./python/imports.py
+      - name: logger.py
+        run: |
+          ./python/logger.py
       - name: mempool_height.py
         run: |
           ./python/mempool_height.py
+      - name: message_header.py
+        run: |
+          ./python/message_header.py
       - name: time_functions.py
         run: |
           ./python/time_functions.py
+      - name: touch_block_time.py
+        run: |
+          ./python/touch_block_time.py
+      - name: tweet_block_time.py
+        run: |
+          ./python/tweet_block_time.py
 
