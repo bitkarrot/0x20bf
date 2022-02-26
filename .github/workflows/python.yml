@@ -51,9 +51,9 @@ jobs:
         run: |
           make requirements
           # setting up some "non-tests" in alphabetical order
-      - name: 0x20bf.py
-        run: |
-          ./python/0x20bf.py
+          #- name: 0x20bf.py
+          #  run: |
+          #    ./python/0x20bf.py
       - name: configs.py
         run: |
           ./python/configs.py
@@ -78,7 +78,7 @@ jobs:
       - name: touch_block_time.py
         run: |
           ./python/touch_block_time.py
-      - name: tweet_block_time.py
-        run: |
-          ./python/tweet_block_time.py
+          #- name: tweet_block_time.py
+          #  run: |
+          #    ./python/tweet_block_time.py
 

@@ -38,7 +38,6 @@ global BLOCK_TIME
 BLOCK_TIME              = os.path.expanduser(os.getcwd()+'/BLOCK_TIME')
 global OLD_BLOCK_TIME
 OLD_BLOCK_TIME          = os.path.expanduser(os.getcwd()+'/OLD_BLOCK_TIME')
-global OBT
 
 # global variables
 global HEADER

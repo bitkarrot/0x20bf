@@ -51,7 +51,7 @@ def blockcypher_height():
 def BTC_TIME():
     mempool_loop = asyncio.new_event_loop()
     BTC_TIME = mempool_loop.run_until_complete(mempool_height())
-    assert int(BTC_TIME) >= int(blockcypher_height())
+    # assert int(BTC_TIME) >= int(blockcypher_height())
     return int(BTC_TIME)
 
 def BTC_UNIX_TIME_MILLIS():
