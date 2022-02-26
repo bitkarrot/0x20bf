@@ -184,6 +184,15 @@ endif
 initialize:
 	bash -c "./scripts/initialize"
 
+.PHONY: requirements reqs
+.ONESHELL:
+reqs: requirements
+requirements:
+	@echo PATH=$(PATH):/usr/local/opt/python@3.9/Frameworks/Python.framework/Versions/3.9/bin
+	@echo PATH=$(PATH):$(HOME)/Library/Python/3.9/bin
+	$(PYTHON3) -m $(PIP) install --user --upgrade pip
+	$(PYTHON3) -m $(PIP) install --user -r requirements.txt
+
 .PHONY:
 .QUIET:
 .ONESHELL:
