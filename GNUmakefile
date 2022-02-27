@@ -30,7 +30,7 @@ else
 PROJECT_NAME							:= $(project)
 endif
 export PROJECT_NAME
-PYTHONPATH=$(PWD)/python
+PYTHONPATH=$(PWD)/0x20bf
 export PYTHONPATH
 ifeq ($(port),)
 PORT									:= 0
@@ -43,23 +43,7 @@ export PORT
 GIT_USER_NAME							:= $(shell git config user.name)
 export GIT_USER_NAME
 GH_USER_NAME							:= $(shell git config user.name)
-#MIRRORS
-GH_USER_REPO							:= $(GH_USER_NAME).github.io
-GH_USER_SPECIAL_REPO					:= $(GH_USER_NAME)
-KB_USER_REPO							:= $(GH_USER_NAME).keybase.pub
-#GITHUB RUNNER CONFIGS
-ifneq ($(ghuser),)
-GH_USER_NAME := $(ghuser)
-GH_USER_SPECIAL_REPO := $(ghuser)/$(ghuser)
-endif
-ifneq ($(kbuser),)
-KB_USER_NAME := $(kbuser)
-KB_USER_REPO := $(kbuser).keybase.pub
-endif
 export GIT_USER_NAME
-export GH_USER_REPO
-export GH_USER_SPECIAL_REPO
-export KB_USER_REPO
 
 GIT_USER_EMAIL							:= $(shell git config user.email)
 export GIT_USER_EMAIL
@@ -73,8 +57,6 @@ GIT_BRANCH								:= $(shell git rev-parse --abbrev-ref HEAD)
 export GIT_BRANCH
 GIT_HASH								:= $(shell git rev-parse --short HEAD)
 export GIT_HASH
-GIT_PREVIOUS_HASH						:= $(shell git rev-parse --short master@{1})
-export GIT_PREVIOUS_HASH
 GIT_REPO_ORIGIN							:= $(shell git remote get-url origin)
 export GIT_REPO_ORIGIN
 GIT_REPO_NAME							:= $(PROJECT_NAME)
@@ -116,10 +98,13 @@ PRIVATE_ALLSPHINXOPTS = -d $(PRIVATE_BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(S
 I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
 
 .PHONY: -
+##	:help
+
 -: help
 
 .PHONY: init
 .ONESHELL:
+##	:init           initialize
 init: initialize
 #	@echo PATH=$(PATH):/usr/local/opt/python@3.9/Frameworks/Python.framework/Versions/3.9/bin
 #	@echo PATH=$(PATH):$(HOME)/Library/Python/3.9/bin
@@ -127,26 +112,11 @@ init: initialize
 	$(PYTHON3) -m $(PIP) install --user -r requirements.txt
 
 .PHONY: help
-help: report
-	@echo ""
-	@echo "  make docs"
-	@echo "  make report"
-	@echo "  make dotfiles"
-	@echo "  make awesome"
-	@echo "  make legit"
-	@echo "  make git-add"
-	@echo "  make remove"
-	@echo "  make global-branch"
-	@echo "  make time-branch"
-	@echo "  make touch-global"
-	@echo "  make touch-time"
-	@echo "  make branch"
-	@echo "  make trigger"
-	@echo "  make push"
-	@echo "  make bitcoin-test-battery"
-	@echo ""
+help:
+	@sed -n 's/^##//p' ${MAKEFILE_LIST} | column -t -s ':' |  sed -e 's/^/ /'
 
 .PHONY: report
+##	:report         environment args
 report:
 	@echo ''
 	@echo '	[ARGUMENTS]	'
@@ -156,9 +126,6 @@ report:
 	@echo '        - PROJECT_NAME=${PROJECT_NAME}'
 	@echo '        - PYTHONPATH=${PYTHONPATH}'
 	@echo '        - GIT_USER_NAME=${GIT_USER_NAME}'
-	@echo '        - GH_USER_REPO=${GH_USER_REPO}'
-	@echo '        - GH_USER_SPECIAL_REPO=${GH_USER_SPECIAL_REPO}'
-	@echo '        - KB_USER_REPO=${KB_USER_REPO}'
 	@echo '        - GIT_USER_EMAIL=${GIT_USER_EMAIL}'
 	@echo '        - GIT_SERVER=${GIT_SERVER}'
 	@echo '        - GIT_PROFILE=${GIT_PROFILE}'
@@ -169,24 +136,16 @@ report:
 	@echo '        - GIT_REPO_NAME=${GIT_REPO_NAME}'
 	@echo '        - GIT_REPO_PATH=${GIT_REPO_PATH}'
 
-.PHONY: super
-super:
-ifneq ($(shell id -u),0)
-	@echo switch to superuser
-	@echo cd $(TARGET_DIR)
-	#sudo ln -s $(PWD) $(TARGET_DIR)
-#.ONESHELL:
-	sudo -s
-endif
-
 .PHONY: initialize
 .ONESHELL:
+##	:initialize     run scripts/initialize
 initialize:
 	bash -c "./scripts/initialize"
 
 .PHONY: requirements reqs
 .ONESHELL:
 reqs: requirements
+##	:requirements   pip install --user -r requirements.txt
 requirements:
 	@echo PATH=$(PATH):/usr/local/opt/python@3.9/Frameworks/Python.framework/Versions/3.9/bin
 	@echo PATH=$(PATH):$(HOME)/Library/Python/3.9/bin
@@ -196,24 +155,29 @@ requirements:
 .PHONY:
 .QUIET:
 .ONESHELL:
+##	:seeder         make -C depends/seeder
 seeder:
 	make -C depends/seeder
 
 .PHONY: gogs
 .ONESHELL:
+##	:gogs           make -C depends/seeder
 gogs:
 	make -C depends/gogs
 
 .PHONY: gnupg
 .ONESHELL:
+##	:gnupg          setup python-gnupg
 gnupg:
 	pushd $(PYTHONPATH)/gnupg && $(PYTHON3) $(PYTHONPATH)/gnupg/setup.py install && popd
 .PHONY: twitter-api
 .ONESHELL:
+##	:twitter-api    setup TwitterAPI
 twitter-api:
 	pushd $(PYTHONPATH)/TwitterAPI && $(PYTHON3) $(PYTHONPATH)/TwitterAPI/setup.py install && popd
 
 .PHONY: depends
+##	:depends        build depends
 depends: seeder gogs
 
 .PHONY: git-add
@@ -239,76 +203,11 @@ git-add: remove
 	#git add --ignore-errors DIFFICULTY
 	#git add --ignore-errors TIME
 
-.PHONY: push
-.ONESHELL:
-push: remove touch-time touch-block-time git-add
-	@echo push
-	git push --set-upstream origin main
-	bash -c "git commit --allow-empty -m '$(TIME)'"
-	bash -c "git push -f git@github.com:0x20bf-org/0x20bf.git	+main:main"
-	bash -c "git push -f git@github.com:0x20bf-org/0x20bf.git	+main:main"
-
-
-.PHONY: branch
-.ONESHELL:
-branch: remove git-add docs touch-time touch-block-time
-	@echo branch
-
-	git add --ignore-errors GNUmakefile TIME GLOBAL .github *.sh *.yml
-	git add --ignore-errors .github
-	git commit -m 'make branch by $(GIT_USER_NAME) on $(TIME)'
-	git branch $(TIME)
-	git push -f origin $(TIME)
-
-.PHONY: time-branch
-.ONESHELL:
-time-branch: remove git-add docs touch-time touch-block-time
-	@echo time-branch
-	bash -c "git commit -m 'make time-branch by $(GIT_USER_NAME) on time-$(TIME)'"
-		git branch time-$(TIME)
-		git push -f origin time-$(TIME)
-
-.PHONY: trigger
-trigger: remove git-add touch-block-time touch-time touch-global
-
-.PHONY: touch-time
-.ONESHELL:
-touch-time: remove git-add touch-block-time
-	@echo touch-time
-	# echo $(TIME) $(shell git rev-parse HEAD) > TIME
-	echo $(TIME) > TIME
-
-.PHONY: touch-global
-.ONESHELL:
-touch-global: remove git-add touch-block-time
-	@echo touch-global
-	echo $(TIME) $(shell git rev-parse HEAD) > GLOBAL
-
-.PHONY: touch-block-time
-.ONESHELL:
-touch-block-time: remove git-add
-	@echo touch-block-time
-	@echo $(PYTHON3)
-	# $(PYTHON3) -m $(PIP) install -r requirements.txt
-	#$(PYTHON3) ./touch-block-time.py
-	BLOCK_TIME=$(shell  ./touch-block-time.py)
-	export BLOCK_TIME
-	echo $(BLOCK_TIME)
-	git add .gitignore *.md GNUmakefile  *.yml *.sh BLOCK_TIME *.html TIME SESSION_ID
-	git commit --allow-empty -m $(TIME)
-		git branch $(BLOCK_TIME)
-		git push -f origin $(BLOCK_TIME)
-
-.PHONY: automate
-automate: touch-time git-add
-	@echo automate
-	./.github/workflows/automate.sh
-
 .PHONY: docs
-docs: git-add
-	#@echo docs
-	bash -c "if pgrep MacDown; then pkill MacDown; fi"
-	#bash -c "curl https://raw.githubusercontent.com/sindresorhus/awesome/main/readme.md -o ./sources/AWESOME-temp.md"
+##	:docs           build docs from sources/*.md
+docs:
+	@echo "##### [make](https://www.gnu.org/software/make/)" > sources/MAKE.md
+	bash -c "make help >> $(PWD)/sources/MAKE.md"
 	bash -c 'cat $(PWD)/sources/HEADER.md                >  $(PWD)/README.md'
 	bash -c 'cat $(PWD)/sources/PROTOCOL.md              >> $(PWD)/README.md'
 	bash -c 'cat $(PWD)/sources/COMMANDS.md              >> $(PWD)/README.md'
@@ -325,41 +224,9 @@ docs: git-add
 	git add --ignore-errors *.md
 	#git ls-files -co --exclude-standard | grep '\.md/$\' | xargs git
 
-.PHONY: awesome
-awesome:
-	@echo awesome
-
-	bash -c "brew install curl gnu-sed pandoc"
-
-    bash -c "curl https://www.bitcoin.com/bitcoin.pdf -o bitcoin.pdf && rm -f bitcoin.pdf"
-
-	bash -c "curl https://raw.githubusercontent.com/sindresorhus/awesome/main/readme.md -o ./sources/AWESOME-temp.md"
-	bash -c "sed '1,136d' ~/randymcmillan/sources/AWESOME-temp.md > ./sources/AWESOME.md"
-	bash -c "pandoc -s ~/randymcmillan/sources/AWESOME.md -o ./sources/awesome.html"
-
 .PHONY: remove
 remove:
-	rm -rf dotfiles
 	rm -rf legit
-
-#.PHONY: bitcoin-test-battery
-#bitcoin-test-battery:
-#	./bitcoin-test-battery.sh v22.0rc3
-
-.PHONY: dotfiles
-.ONESHELL:
-dotfiles:
-	@echo dotfiles
-
-	if [ -f ~/dotfiles/README.md ]; then pushd ~/dotfiles && make vim && popd ; else git clone -b master --depth 1 https://github.com/randymcmillan/dotfiles ~/dotfiles; fi
-	cd ~/dotfiles && make init && make vim
-
-.PHONY: bitcoin-test-battery
-.ONESHELL:
-bitcoin-test-battery:
-
-	if [ -f $(TIME)/README.md ]; then pushd $(TIME) && ./autogen.sh && ./configure && make && popd ; else git clone -b master --depth 3 https://github.com/bitcoin/bitcoin $(TIME) && \
-		pushd $(TIME) && ./autogen.sh && ./configure --disable-wallet --disable-bench --disable-tests && make deploy; fi
 
 .PHONY: legit
 .ONESHELL:
@@ -372,8 +239,8 @@ legit:
 
 .PHONY: clean
 .ONESHELL:
-clean: touch-time touch-global
-	bash -c "rm -rf $(BUILDDIR)"
+clean:
+	#bash -c "rm -rf $(BUILDDIR)"
 
 .PHONY: serve
 .ONESHELL:

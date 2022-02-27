@@ -259,11 +259,17 @@ source venv/bin/activate
 pip install -r requirements.txt
 pip install -e .</code></pre>
 <h5 id="make"><a href="https://www.gnu.org/software/make/">make</a></h5>
-<pre><code>make
-make init
-make initialize
-make requirements
-</code></pre>
+<pre><code>  help
+  init           initialize
+  report         environment args
+  initialize     run scripts/initialize
+  requirements   pip install --user -r requirements.txt
+  seeder         make -C depends/seeder
+  gogs           make -C depends/seeder
+  gnupg          setup python-gnupg
+  twitter-api    setup TwitterAPI
+  depends        build depends
+  docs           build docs from sources/*.md</code></pre>
 <h2 id="contributing"><a
 href="./sources/CONTRIBUTING.md">Contributing</a></h2>
 <p>Check linting and formatting <code>pre-commit run -a</code></p>
