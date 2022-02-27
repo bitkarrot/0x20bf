@@ -200,16 +200,15 @@ message</p>
 <p><code>:ALGO:</code> indicates encryption algorithm used for message
 construction</p>
 <h5 id="example">Example</h5>
-<p><code>:ALGO:ALGO:ALGO:ALGO:</code>
-<code>:PUBKEY:CIPHER:HASH:COMPRESSION:</code><br />
-<code>:RSA:AES256:SHA256:ZIP:</code>
-<code>:PUBKEY:CIPHER:HASH:COMPRESSION:</code></p>
+<p><code>:ALGO:ALGO:ALGO:ALGO:</code></p>
+<p><code>:PUBKEY:CIPHER:HASH:COMPRESSION:</code></p>
+<p><code>:RSA:AES256:SHA256:ZIP:</code></p>
 <h5 id="gnupg-supported-algorithms">gnupg supported algorithms:</h5>
-<pre><code>Pubkey: RSA, ELG, DSA, ECDH, ECDSA, EDDSA   
+<pre><code>Pubkey: RSA, ELG, DSA, ECDH, ECDSA, EDDSA
 Cipher: IDEA, 3DES, CAST5, BLOWFISH, AES, AES192, AES256, TWOFISH,
-        CAMELLIA128, CAMELLIA192, CAMELLIA256   
-Hash: SHA1, RIPEMD160, SHA256, SHA384, SHA512, SHA224   
-Compression: Uncompressed, ZIP, ZLIB, BZIP2 </code></pre>
+        CAMELLIA128, CAMELLIA192, CAMELLIA256
+Hash: SHA1, RIPEMD160, SHA256, SHA384, SHA512, SHA224
+Compression: Uncompressed, ZIP, ZLIB, BZIP2</code></pre>
 <p>We assume messages are sent in the blind:
 <code>--include-key-block</code> will be the default, to enable offline
 decryption. <a
@@ -237,7 +236,17 @@ format (milliseconds)</h5>
 id="example---ping-abridged-format-milliseconds---abridged-time-is-in-millisoeconds">Example
 - ping abridged format (milliseconds) - abridged <code>:TIME:</code> is
 in millisoeconds</h5>
-<p><code>:GPGR:GPGS:BTC:TIME:</code>## Getting Started</p>
+<p><code>:GPGR:GPGS:BTC:TIME:</code></p>
+<hr />
+<p>TODO: more message structure</p>
+<p>TODO: file structure</p>
+<p>TODO: LOC - location specifications for offline resources</p>
+<hr />
+<p><br><a
+href="https://github.com/0x20bf-org/0x20bf/actions/workflows/python.yml"><img
+src="https://github.com/0x20bf-org/0x20bf/actions/workflows/python.yml/badge.svg"
+alt="python.yml" /></a></p>
+<h2 id="getting-started">Getting Started</h2>
 <h5 id="git"><a href="https://git-scm.com/downloads">git</a></h5>
 <pre><code>git clone https://github.com/0x20bf-org/0x20bf.git
 cd 0x20bf</code></pre>
