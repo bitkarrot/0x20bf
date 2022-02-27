@@ -17,17 +17,21 @@ tr -d '\n' | cut -c 17-368600 | xxd -r -p > bitcoin.pdf
 <summary>👀</summary>
 <p>
 
-#### Referal Links:
+#### Referral Links:
 
 [![DigitalOcean Referral Badge](https://web-platforms.sfo2.digitaloceanspaces.com/WWW/Badge%202.svg)](https://www.digitalocean.com/?refcode=ae5c7d05da91&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge)
 
 </p>
 </details>
 
+<details>
+<summary>Getting Started</summary>
+
 ## Getting Started
 
-version at least python3.7
 <p>
+version at least python3.7
+
 ```
 git clone https://github.com/0x20bf-org/0x20bf.git
 cd 0x20bf
@@ -36,7 +40,6 @@ source venv/bin/activate
 pip install -r requirements.txt
 pip install -e .
 ```
-</p>
 
 ## Other
 
@@ -45,3 +48,6 @@ Check linting and formatting
 
 Build for distribution
 `python3 setup.py build`
+
+</p>
+</details>
