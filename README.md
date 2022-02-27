@@ -108,7 +108,8 @@ pip install -e .
 
 ##### [make](https://www.gnu.org/software/make/)
  	  help
- 	  init           initialize
+ 	  init           initialize requirements
+ 	  install        pip install -e .
  	  report         environment args
  	  initialize     run scripts/initialize
  	  requirements   pip install --user -r requirements.txt
