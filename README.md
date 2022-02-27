@@ -28,8 +28,11 @@ This document describes the ox20bf protocol message structure and related operat
 `:ALGO:` indicates encryption algorithm used for message construction
 
 ##### Example
-`:ALGO:ALGO:ALGO:ALGO:`   `:PUBKEY:CIPHER:HASH:COMPRESSION:`
-`:RSA:AES256:SHA256:ZIP:` `:PUBKEY:CIPHER:HASH:COMPRESSION:`
+`:ALGO:ALGO:ALGO:ALGO:`
+
+`:PUBKEY:CIPHER:HASH:COMPRESSION:`
+
+`:RSA:AES256:SHA256:ZIP:`
 
 ##### gnupg supported algorithms:
 ```
