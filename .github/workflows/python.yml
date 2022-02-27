@@ -49,11 +49,13 @@ jobs:
           python3 -c "import sys; print(sys.version)"
       - name: make init
         run: |
+          make
           make requirements
+          make install
           # setting up some "non-tests" in alphabetical order
-          #- name: 0x20bf.py
-          #  run: |
-          #    ./0x20bf/0x20bf.py
+      - name: 0x20bf.py
+        run: |
+          ./0x20bf/0x20bf.py
       - name: configs.py
         run: |
           ./0x20bf/configs.py
