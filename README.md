@@ -28,16 +28,16 @@ This document describes the ox20bf protocol message structure and related operat
 `:ALGO:` indicates encryption algorithm used for message construction
 
 ##### Example
-`:ALGO:ALGO:ALGO:ALGO:`   `:PUBKEY:CIPHER:HASH:COMPRESSION:`	
+`:ALGO:ALGO:ALGO:ALGO:`   `:PUBKEY:CIPHER:HASH:COMPRESSION:`
 `:RSA:AES256:SHA256:ZIP:` `:PUBKEY:CIPHER:HASH:COMPRESSION:`
 
 ##### gnupg supported algorithms:
 ```
-Pubkey: RSA, ELG, DSA, ECDH, ECDSA, EDDSA	
+Pubkey: RSA, ELG, DSA, ECDH, ECDSA, EDDSA
 Cipher: IDEA, 3DES, CAST5, BLOWFISH, AES, AES192, AES256, TWOFISH,
-        CAMELLIA128, CAMELLIA192, CAMELLIA256	
-Hash: SHA1, RIPEMD160, SHA256, SHA384, SHA512, SHA224	
-Compression: Uncompressed, ZIP, ZLIB, BZIP2	
+        CAMELLIA128, CAMELLIA192, CAMELLIA256
+Hash: SHA1, RIPEMD160, SHA256, SHA384, SHA512, SHA224
+Compression: Uncompressed, ZIP, ZLIB, BZIP2
 ```
 
 We assume messages are sent in the blind: `--include-key-block` will be the default, to enable offline decryption. [OpenPGP-Options.html](https://www.gnupg.org/documentation/manuals/gnupg/OpenPGP-Options.html)
@@ -66,7 +66,24 @@ We assume messages are sent in the blind: `--include-key-block` will be the defa
 `:GPGR:GPGS:BTC_TIME:UNIX_TIME_MILLIS:`
 
 ##### Example - ping abridged format (milliseconds) - abridged `:TIME:` is in millisoeconds
-`:GPGR:GPGS:BTC:TIME:`## Getting Started
+`:GPGR:GPGS:BTC:TIME:`
+
+---
+
+TODO: more message structure
+
+TODO: file structure
+
+TODO: LOC - location specifications for offline resources
+
+---
+
+
+
+<br>[![python.yml](https://github.com/0x20bf-org/0x20bf/actions/workflows/python.yml/badge.svg)](https://github.com/0x20bf-org/0x20bf/actions/workflows/python.yml)
+
+
+## Getting Started
 
 ##### [git](https://git-scm.com/downloads)
 
