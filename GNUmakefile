@@ -121,9 +121,9 @@ I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
 .PHONY: init
 .ONESHELL:
 init: initialize
-	@echo PATH=$(PATH):/usr/local/opt/python@3.9/Frameworks/Python.framework/Versions/3.9/bin
-	@echo PATH=$(PATH):$(HOME)/Library/Python/3.9/bin
-	$(PYTHON3) -m $(PIP) install --user --upgrade pip
+#	@echo PATH=$(PATH):/usr/local/opt/python@3.9/Frameworks/Python.framework/Versions/3.9/bin
+#	@echo PATH=$(PATH):$(HOME)/Library/Python/3.9/bin
+#	$(PYTHON3) -m $(PIP) install --user --upgrade pip
 	$(PYTHON3) -m $(PIP) install --user -r requirements.txt
 
 .PHONY: help
@@ -229,7 +229,7 @@ git-add: remove
 	git add --ignore-errors sources/*.md
 	#git add --ignore-errors TIME
 	#git add --ignore-errors GLOBAL
-	git add --ignore-errors python/*.py
+	git add --ignore-errors 0x20bf/*.py
 	git add --ignore-errors index.html
 	git add --ignore-errors .gitignore
 	git add --ignore-errors .github
@@ -312,6 +312,9 @@ docs: git-add
 	bash -c 'cat $(PWD)/sources/HEADER.md                >  $(PWD)/README.md'
 	# bash -c 'cat $(PWD)/sources/COMMANDS.md              >> $(PWD)/README.md'
 	bash -c 'cat $(PWD)/sources/PROTOCOL.md              >> $(PWD)/README.md'
+	bash -c 'cat $(PWD)/sources/GETTING_STARTED.md       >> $(PWD)/README.md'
+	bash -c 'cat $(PWD)/sources/MAKE.md                  >> $(PWD)/README.md'
+	bash -c 'cat $(PWD)/sources/CONTRIBUTING.md          >> $(PWD)/README.md'
 	bash -c 'cat $(PWD)/sources/FOOTER.md                >> $(PWD)/README.md'
 	#brew install pandoc
 	bash -c "if hash pandoc 2>/dev/null; then echo; fi || brew install pandoc"

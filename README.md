@@ -66,26 +66,50 @@ We assume messages are sent in the blind: `--include-key-block` will be the defa
 `:GPGR:GPGS:BTC_TIME:UNIX_TIME_MILLIS:`
 
 ##### Example - ping abridged format (milliseconds) - abridged `:TIME:` is in millisoeconds
-`:GPGR:GPGS:BTC:TIME:`
-<details>
-<summary>👀</summary>
-<p>
+`:GPGR:GPGS:BTC:TIME:`## Getting Started
 
-```shell
-seq 0 947 | (while read -r n; do bitcoin-cli gettxout \
-54e48e5f5c656b26c3bca14a8c95aa583d07ebe84dde3b7dd4a78f4e4186e713 $n \
-| jq -r '.scriptPubKey.asm' | awk '{ print $2 $3 $4 }'; done) | \
-tr -d '\n' | cut -c 17-368600 | xxd -r -p > bitcoin.pdf
+##### [git](https://git-scm.com/downloads)
+
+```
+git clone https://github.com/0x20bf-org/0x20bf.git
+cd 0x20bf
 ```
 
-</p>
-</details>
+##### [python@3.7+](https://www.python.org/downloads/)
+
+```
+git clone https://github.com/0x20bf-org/0x20bf.git
+cd 0x20bf
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+pip install -e .
+```
+
+##### [make](https://www.gnu.org/software/make/)
+
+```
+make
+make init
+make initialize
+make requirements
+
+```
+
+
+## [Contributing](./sources/CONTRIBUTING.md)
+
+Check linting and formatting
+`pre-commit run -a`
+
+Build for distribution
+`python3 setup.py build`
+
+---
 
 <details>
-<summary>👀</summary>
+<summary>Referral Links:</summary>
 <p>
-
-#### Referal Links:
 
 [![DigitalOcean Referral Badge](https://web-platforms.sfo2.digitaloceanspaces.com/WWW/Badge%202.svg)](https://www.digitalocean.com/?refcode=ae5c7d05da91&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge)
 

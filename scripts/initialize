@@ -9,13 +9,6 @@ export OS_VERSION
 export UNAME_M
 export ARCH
 
-function initialize-add-python-paths(){
-PATH=$PATH:/usr/local/opt/python@3.6/Frameworks/Python.framework/Versions/3.6/bin
-PATH=$PATH:/usr/local/opt/python@3.7/Frameworks/Python.framework/Versions/3.7/bin
-PATH=$PATH:/usr/local/opt/python@3.8/Frameworks/Python.framework/Versions/3.8/bin
-PATH=$PATH:/usr/local/opt/python@3.9/Frameworks/Python.framework/Versions/3.9/bin
-PATH=$PATH:/usr/local/opt/python@3.10/Frameworks/Python.framework/Versions/3.10/bin
-}
 function initialize-report(){
 echo OS:
 echo "$OS" | awk '{print tolower($0)}'
@@ -27,6 +20,20 @@ echo ARCH:
 echo "$ARCH" | awk '{print tolower($0)}'
 echo OSTYPE:
 echo "$OSTYPE" | awk '{print tolower($0)}'
+}
+
+function initialize-add-python-paths(){
+# support python 3.7 - 3.10
+PATH=$PATH:/usr/local/opt/python@3.7/Frameworks/Python.framework/Versions/3.7/bin
+PATH=$PATH:/usr/local/opt/python@3.8/Frameworks/Python.framework/Versions/3.8/bin
+PATH=$PATH:/usr/local/opt/python@3.9/Frameworks/Python.framework/Versions/3.9/bin
+PATH=$PATH:/usr/local/opt/python@3.10/Frameworks/Python.framework/Versions/3.10/bin
+}
+
+function initialize-use-apk(){
+
+echo "more apk support needed"
+
 }
 
 function initialize-use-apt(){
@@ -53,20 +60,18 @@ fi
 
 function initialize-checkbrew(){
 
-arch_name="$(uname -m)"
-
-if [ "${arch_name}" = "x86_64" ]; then
+if [ "${UNAME_M}" = "x86_64" ]; then
     if [ "$(sysctl -in sysctl.proc_translated)" = "1" ]; then
         echo "Running on Rosetta 2"
     else
         echo "Running on native Intel"
     fi
-elif [ "${arch_name}" = "arm64" ]; then
+elif [ "${UNAME_M}" = "arm64" ]; then
     echo "Running on arm64"
-elif [ "${arch_name}" = "aarch64" ]; then
+elif [ "${UNAME_M}" = "aarch64" ]; then
     echo "Running on aarch64"
 else
-    echo "Unknown architecture: ${arch_name}"
+    echo "Unknown architecture: ${UNAME_M}"
 fi
 
 if hash brew 2>/dev/null; then
@@ -131,7 +136,7 @@ if [[ "$OSTYPE" == "linux"* ]]; then
             apk add awk
             report
             initialize-report
-            initialize-use-apt
+            initialize-use-apk
             echo 'Using apk...'
 
         fi
@@ -142,6 +147,8 @@ if [[ "$OSTYPE" == "linux"* ]]; then
             apt install awk
             report
             initialize-report
+            # likely a raspi
+            # more detect raspi needed
             initialize-use-apt
             echo 'Using apt...'
 
