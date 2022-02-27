@@ -23,3 +23,24 @@ tr -d '\n' | cut -c 17-368600 | xxd -r -p > bitcoin.pdf
 
 </p>
 </details>
+
+## Getting Started
+
+version at least python3.8
+
+```
+git clone https://github.com/0x20bf-org/0x20bf.git
+cd 0x20bf
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+pip install -e .
+```
+
+## Other
+
+Check linting and formatting
+`pre-commit run -a`
+
+Build for distribution
+`python3 setup.py build`
