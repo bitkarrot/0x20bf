@@ -104,12 +104,13 @@ I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
 
 .PHONY: init
 .ONESHELL:
-##	:init           initialize
-init: initialize
-#	@echo PATH=$(PATH):/usr/local/opt/python@3.9/Frameworks/Python.framework/Versions/3.9/bin
-#	@echo PATH=$(PATH):$(HOME)/Library/Python/3.9/bin
-#	$(PYTHON3) -m $(PIP) install --user --upgrade pip
-	$(PYTHON3) -m $(PIP) install --user -r requirements.txt
+##	:init           initialize requirements
+init: initialize requirements
+.PHONY: install
+.ONESHELL:
+##	:install        pip install -e .
+install:
+	$(PYTHON3) -m $(PIP) install -e .
 
 .PHONY: help
 help:
@@ -147,8 +148,6 @@ initialize:
 reqs: requirements
 ##	:requirements   pip install --user -r requirements.txt
 requirements:
-	@echo PATH=$(PATH):/usr/local/opt/python@3.9/Frameworks/Python.framework/Versions/3.9/bin
-	@echo PATH=$(PATH):$(HOME)/Library/Python/3.9/bin
 	$(PYTHON3) -m $(PIP) install --user --upgrade pip
 	$(PYTHON3) -m $(PIP) install --user -r requirements.txt
 

@@ -163,3 +163,5 @@ OLD_BLOCK_TIME
 # python virtual environments
 env
 venv
+0x20bf.egg-info/
+0x20bf.egg-info/*
