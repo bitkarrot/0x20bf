@@ -33,8 +33,17 @@ jobs:
       - uses: styfle/cancel-workflow-action@0.8.0
         with:
           access_token: ${{ github.token }}
+
       - name: Checkout
         uses: actions/checkout@v2.4.0
+
+      - name: cache depends
+        id: cache-depends
+        uses: actions/cache@v2
+        with:
+          path: depends
+          key: ${{ runner.os }}-depends
+
       - name: Setup Matrix
         uses: actions/setup-python@v2
         with:
@@ -48,6 +57,7 @@ jobs:
           cd $GITHUB_WORKSPACE
           python3 -c "import sys; print(sys.version)"
       - name: make depends
+        if: steps.cache-depends.outputs.cache-hit != 'true'
         run: |
           make initialize
           make depends
