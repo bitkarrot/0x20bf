@@ -161,7 +161,7 @@ seeder:
 
 .PHONY: gogs
 .ONESHELL:
-##	:gogs           make -C depends/seeder
+##	:gogs           make -C depends/gogs
 gogs:
 	make -C depends/gogs
 
