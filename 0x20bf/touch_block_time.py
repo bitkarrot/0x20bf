@@ -1,11 +1,7 @@
 #!/usr/bin/env python3
-
-import os
-import sys
 import time
 import blockcypher
-from mempool_height import *
-import aiohttp
+from mempool_height import mempool_height
 import asyncio
 
 millis = int(round(time.time() * 1000))
@@ -19,7 +15,7 @@ try:
     f.close()
     # print(block_time)
     # print(block_height)
-except:
+except Exception:
     loop = asyncio.get_event_loop()
     loop.run_until_complete(mempool_height())
     # logger.info(loop.run_until_complete(mempool_height()))
