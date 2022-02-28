@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from configs import *
+from configs import MEMPOOL_LOGGER
 import aiohttp
 import asyncio
 import os
@@ -8,7 +8,7 @@ import time
 import math
 import shutil
 import blockcypher
-from logger import *
+from logger import logger
 
 from mempool_height import mempool_height
 

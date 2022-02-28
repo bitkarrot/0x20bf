@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from configs import *
+from configs import MEMPOOL_LOGGER, logger
 
 import aiohttp
 import asyncio

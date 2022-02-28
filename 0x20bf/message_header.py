@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-from hex_message_digest import *
-from time_functions import *
-from imports import *
-from configs import *
+from hex_message_digest import HEX_MESSAGE_DIGEST
+from time_functions import BTC_TIME, UNIX_TIME_MILLIS
+from imports import HEX_LOGGER
+from configs import LOGGER, logger
 
 def message_header(GPGR, MESSAGE, GPGS, LOC):
     # the HEADER is prepended with GPGR

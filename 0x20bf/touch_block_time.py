@@ -4,7 +4,7 @@ import os
 import sys
 import time
 import blockcypher
-from mempool_height import *
+from mempool_height import mempool_height
 import aiohttp
 import asyncio
 

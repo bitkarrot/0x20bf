@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import os
-from logger     import *
-from configs     import *
+from logger import logger
+from configs import DATA_LOGGER
 import psutil
 import codecs
 
