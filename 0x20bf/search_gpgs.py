@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 from configs import TWEET
-from twitter_api_keys import CAK, CASK, AT, ATS
-from TwitterAPI import TwitterAPI
 from logger import logger
 from time_functions import BTC_UNIX_TIME_MILLIS
+from twitter_api_keys import AT, ATS, CAK, CASK
+from TwitterAPI import TwitterAPI
+
 # from hex_message_digest import HEX_MESSAGE_DIGEST
 
 

@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 import asyncio
 import os
-import time
 import shutil
+import time
+
 import blockcypher
 from logger import logger
-
 from mempool_height import mempool_height
 
 

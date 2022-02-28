@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-from logger import logger
-from configs import LOGGER, HEX_LOGGER, TWEET, OLD_BLOCK_TIME
 import hashlib
-from time_functions import BTC_TIME, UNIX_TIME_MILLIS
-from TwitterAPI import TwitterAPI
-from twitter_api_keys import CAK, CASK, AT, ATS
+
+from configs import HEX_LOGGER, LOGGER, OLD_BLOCK_TIME, TWEET
+from logger import logger
 from search_gpgr import search_gpgr
 from search_gpgs import search_gpgs
+from time_functions import BTC_TIME, UNIX_TIME_MILLIS
+from twitter_api_keys import AT, ATS, CAK, CASK
+from TwitterAPI import TwitterAPI
 
 if (TWEET):
     api = TwitterAPI(CAK, CASK, AT, ATS)

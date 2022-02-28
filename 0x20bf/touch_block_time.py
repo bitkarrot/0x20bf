@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
+import asyncio
 import time
+
 import blockcypher
 from mempool_height import mempool_height
-import asyncio
 
 millis = int(round(time.time() * 1000))
 seconds = int(round(time.time()))

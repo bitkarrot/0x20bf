@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
-from configs import logger
-from configs import MEMPOOL_LOGGER
+import asyncio
 
 import aiohttp
-import asyncio
+from configs import MEMPOOL_LOGGER, logger
 
 
 async def fetch(session, url):

@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
+import hashlib
+
 from configs import HEX_LOGGER
 from logger import logger
-import hashlib
 
 
 def DELIMITER_STRIPPER(string):

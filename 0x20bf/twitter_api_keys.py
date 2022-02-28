@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-from configs import DATA_LOGGER
 import os
+
+from configs import DATA_LOGGER
 from logger import logger
 
 # twitter api

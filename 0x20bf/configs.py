@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 import os
-from logger import logger
+
 import psutil
+from logger import logger
 
 USER = psutil.Process().username()
 IS_MACOS = psutil.MACOS
