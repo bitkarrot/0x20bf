@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import os
 from logger import logger
 from configs import LOGGER, HEX_LOGGER, TWEET, OLD_BLOCK_TIME
 import hashlib
@@ -23,8 +22,8 @@ def DELIMITER_STRIPPER(string):
 def test_hash_lib():
     TEST_256 = hashlib.sha256()
     # empty string reserved for protocol
-    assert TEST_256.digest_size == pow(2,5)
-    assert TEST_256.block_size == pow(2,6)
+    assert TEST_256.digest_size == pow(2, 5)
+    assert TEST_256.block_size == pow(2, 6)
     assert TEST_256.hexdigest() == 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
     return TEST_256.hexdigest()
 
