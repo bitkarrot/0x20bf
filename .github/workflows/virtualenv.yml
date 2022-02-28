@@ -28,7 +28,7 @@ jobs:
     - run: make init
     - run: flake8
       #- run: pydocstyle
-    - run: isort --skip 0x20bf/p2p --skip 0x20bf/gnupg/ --skip 0x20bf/venv/ .
+    - run: isort . --skip 0x20bf/p2p --skip 0x20bf/gnupg/
     - run: black --check --diff .
 
   tests:
