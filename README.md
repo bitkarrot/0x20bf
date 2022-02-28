@@ -95,7 +95,7 @@ git clone https://github.com/0x20bf-org/0x20bf.git
 cd 0x20bf
 ```
 
-##### [python@3.7+](https://www.python.org/downloads/)
+##### [python@3.8+](https://www.python.org/downloads/)
 
 ```
 git clone https://github.com/0x20bf-org/0x20bf.git
