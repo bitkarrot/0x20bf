@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 import os
 from logger import logger
-from configs import LOGGER, HEX_LOGGER, TWEET
+from configs import LOGGER, HEX_LOGGER, TWEET, OLD_BLOCK_TIME
 import hashlib
-from time_functions import BTC_TIME
+from time_functions import BTC_TIME, UNIX_TIME_MILLIS
 from TwitterAPI import TwitterAPI
-if (os.getlogin() != "runner"):
-    from twitter_api_keys import CAK, CASK, AT, ATS
+from twitter_api_keys import CAK, CASK, AT, ATS
 from search_gpgr import search_gpgr
 from search_gpgs import search_gpgs
 
@@ -114,36 +113,35 @@ def HEX_MESSAGE_DIGEST(recipient, message, sender):
 
     return n_256.hexdigest()
 
-# def message_header():
-#     # BODY = str(":GPGR:" + GPGR+':DIGEST:'+DIGEST+':BTC:UNIX:'+BTC_UNIX_TIME_MILLIS()+":GPGS:"+GPGS+":")
-#     HEADER = str(":GPGR:DIGEST:BTC_TIME:UNIX_TIME_MILLIS:GPGS:LOC:")
-#     if (LOGGER): logger.info(HEADER)
-#     return HEADER
-
 
 def message_header():
     # the HEADER is prepended with GPGR
     # the HEADER is appended with GPGS
     DIGEST = HEX_MESSAGE_DIGEST(GPGR, MESSAGE ,GPGS)
-    LOC="https://github.com/0x20bf-org/0x20bf/blob/main/" + GPGR+DIGEST+BTC_TIME()+UNIX_TIME_MILLIS()+GPGS+".txt.gpg"
+    LOC = "https://github.com/0x20bf-org/0x20bf/blob/main/" + GPGR + DIGEST + BTC_TIME() + UNIX_TIME_MILLIS() + GPGS + ".txt.gpg"
     # LOC is appended on to DIGEST
     HEADER = str(
-        ":" + GPGR+
-        ':' + DIGEST+
-        ':' + BTC_TIME()+":"+UNIX_TIME_MILLIS()+":"+GPGS+":"+LOC+":")
+        ":"
+        + GPGR + ':'
+        + DIGEST + ':'
+        + BTC_TIME() + ":"
+        + UNIX_TIME_MILLIS() + ":"
+        + GPGS + ":"
+        + LOC
+        + ":")
 
-    if (LOGGER): logger.info(HEADER)
+    if (LOGGER):
+        logger.info(HEADER)
     # HEADER_STRUCTURE = str(":GPGR:DIGEST:BTC_TIME:UNIX_TIME_MILLIS:GPGS:LOC:")
     return HEADER
 
 
 def send_message():
-    current_btc_time = BTC_TIME()
     header = message_header()
     # body = message_body()
     if (LOGGER):
         logger.info(header)
-    if (BTC_TIME() != OBT):
+    if (BTC_TIME() != OLD_BLOCK_TIME):
         if (TWEET):
             request = api.request('statuses/update', {'status': header})
             if (request.status_code == 200):
