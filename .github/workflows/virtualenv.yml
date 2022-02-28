@@ -27,7 +27,7 @@ jobs:
       id: cache-virtualenv
     - run: make init
     - run: flake8
-    - run: pydocstyle
+      #- run: pydocstyle
     - run: isort . --diff --check-only
     - run: black --check --diff .
 
