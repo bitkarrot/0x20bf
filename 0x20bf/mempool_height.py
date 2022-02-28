@@ -14,9 +14,10 @@ async def mempool_height():
     async with aiohttp.ClientSession() as session:
         url = "https://mempool.space/api/blocks/tip/height"
         height = await fetch(session, url)
-        if (MEMPOOL_LOGGER):
+        if MEMPOOL_LOGGER:
             logger.info(height)
         return height
+
 
 loop = asyncio.get_event_loop()
 loop.run_until_complete(mempool_height())

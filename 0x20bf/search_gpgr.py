@@ -8,7 +8,7 @@ from TwitterAPI import TwitterAPI
 # from hex_message_digest import HEX_MESSAGE_DIGEST
 
 
-if (TWEET):
+if TWEET:
     api = TwitterAPI(CAK, CASK, AT, ATS)
 
 
@@ -16,9 +16,9 @@ def search_gpgr(GPGR):
     # TODO: refactor asyncio
     try:
         global r
-        request = api.request('search/tweets', {'q': GPGR})
+        request = api.request("search/tweets", {"q": GPGR})
         try:
-            with open(GPGR + ":" + BTC_UNIX_TIME_MILLIS(), 'w+') as f:
+            with open(GPGR + ":" + BTC_UNIX_TIME_MILLIS(), "w+") as f:
                 f.write(request.text)
                 f.close
         except Exception:

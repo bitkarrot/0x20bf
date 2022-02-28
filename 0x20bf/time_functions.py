@@ -93,6 +93,7 @@ async def fetch(session, url):
     async with session.get(url) as response:
         return await response.text()
 
+
 loop = asyncio.new_event_loop()
 loop.run_until_complete(touch_time(BTC_TIME()))
 loop.run_until_complete(mempool_height())

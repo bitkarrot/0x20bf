@@ -9,7 +9,7 @@ def message_header(GPGR, MESSAGE, GPGS, LOC):
     # the HEADER is prepended with GPGR
     # the HEADER is appended with GPGS
     DIGEST = HEX_MESSAGE_DIGEST(GPGR, MESSAGE, GPGS)
-    if (LOGGER):
+    if LOGGER:
         logger.info(DIGEST)
     # TODO branch will be dynamic based on message tree - tbd
     # LOC isnt nesseccsarally a web asset
@@ -19,14 +19,21 @@ def message_header(GPGR, MESSAGE, GPGS, LOC):
     # LOC is appended on to DIGEST
     HEADER = str(
         ":"
-        + GPGR + ':'
-        + DIGEST + ':'
-        + str(BTC_TIME()) + ":"
-        + UNIX_TIME_MILLIS() + ":"
-        + GPGS + ":" + LOC
-        + ":")
+        + GPGR
+        + ":"
+        + DIGEST
+        + ":"
+        + str(BTC_TIME())
+        + ":"
+        + UNIX_TIME_MILLIS()
+        + ":"
+        + GPGS
+        + ":"
+        + LOC
+        + ":"
+    )
 
-    if (LOGGER):
+    if LOGGER:
         logger.info(HEADER)
     # ":GPGR:DIGEST:BTC_TIME:UNIX_TIME_MILLIS:GPGS:LOC:"
     return HEADER
@@ -34,14 +41,14 @@ def message_header(GPGR, MESSAGE, GPGS, LOC):
 
 def test_message_header():
     logger.info("test_message_header()")
-    GPGR = '4DC9817F'  # bitkarrot
+    GPGR = "4DC9817F"  # bitkarrot
     logger.info(GPGR)
-    GPGS = 'BB06757B'  # randymcmillan
+    GPGS = "BB06757B"  # randymcmillan
     logger.info(GPGS)
-    MESSAGE = 'text human readable message'
-    if (HEX_LOGGER):
+    MESSAGE = "text human readable message"
+    if HEX_LOGGER:
         logger.info(HEX_MESSAGE_DIGEST(GPGR, MESSAGE, GPGS))
-    logger.info(str(message_header(GPGR, MESSAGE, GPGS,"test/location")))
+    logger.info(str(message_header(GPGR, MESSAGE, GPGS, "test/location")))
     return message_header(GPGR, MESSAGE, GPGS, "test/location")
 
 

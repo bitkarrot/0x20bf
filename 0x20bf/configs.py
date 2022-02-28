@@ -25,13 +25,13 @@ MEMPOOL_LOGGER = True
 
 # time_function data
 global BLOCK_TIP_HEIGHT
-BLOCK_TIP_HEIGHT = os.path.expanduser(os.getcwd() + '/BLOCK_TIP_HEIGHT')
+BLOCK_TIP_HEIGHT = os.path.expanduser(os.getcwd() + "/BLOCK_TIP_HEIGHT")
 global DIFFICULTY
-DIFFICULTY = os.path.expanduser(os.getcwd() + '/DIFFICULTY')
+DIFFICULTY = os.path.expanduser(os.getcwd() + "/DIFFICULTY")
 global BLOCK_TIME
-BLOCK_TIME = os.path.expanduser(os.getcwd() + '/BLOCK_TIME')
+BLOCK_TIME = os.path.expanduser(os.getcwd() + "/BLOCK_TIME")
 global OLD_BLOCK_TIME
-OLD_BLOCK_TIME = os.path.expanduser(os.getcwd() + '/OLD_BLOCK_TIME')
+OLD_BLOCK_TIME = os.path.expanduser(os.getcwd() + "/OLD_BLOCK_TIME")
 
 # global variables
 global HEADER
@@ -48,14 +48,14 @@ GOLDEN_RATIO = 1.618033988749894848204586834365638117720309179805762862135448622
 global TWEET
 TWEET = False
 
-if (IS_MACOS):
-    if (OS_LOGGER):
+if IS_MACOS:
+    if OS_LOGGER:
         logger.info(str("IS_MACOS"))
 
-if (IS_LINUX):
-    if (OS_LOGGER):
+if IS_LINUX:
+    if OS_LOGGER:
         logger.info(str("IS_LINUX"))
 
-if (IS_WINDOWS):
-    if (OS_LOGGER):
+if IS_WINDOWS:
+    if OS_LOGGER:
         logger.info(str("IS_WINDOWS"))
