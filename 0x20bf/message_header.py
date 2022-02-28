@@ -18,14 +18,17 @@ def message_header(GPGR, MESSAGE, GPGS, LOC):
     LOC = "https://github.com/0x20bf-org/0x20bf/blob/" + BRANCH
     # LOC is appended on to DIGEST
     HEADER = str(
-        ":" + GPGR +
-        ':' + DIGEST +
-        ':' + str(BTC_TIME()) + ":" + UNIX_TIME_MILLIS() +
-        ":" + GPGS + ":" + LOC + ":")
+        ":"
+        + GPGR + ':'
+        + DIGEST + ':'
+        + str(BTC_TIME()) + ":"
+        + UNIX_TIME_MILLIS() + ":"
+        + GPGS + ":" + LOC
+        + ":")
 
     if (LOGGER):
         logger.info(HEADER)
-    # HEADER_STRUCTURE = str(":GPGR:DIGEST:BTC_TIME:UNIX_TIME_MILLIS:GPGS:LOC:")
+    # ":GPGR:DIGEST:BTC_TIME:UNIX_TIME_MILLIS:GPGS:LOC:"
     return HEADER
 
 
