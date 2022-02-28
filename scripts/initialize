@@ -23,8 +23,7 @@ echo "$OSTYPE" | awk '{print tolower($0)}'
 }
 
 function initialize-add-python-paths(){
-# support python 3.7 - 3.10
-PATH=$PATH:/usr/local/opt/python@3.7/Frameworks/Python.framework/Versions/3.7/bin
+# support python 3.8 - 3.10
 PATH=$PATH:/usr/local/opt/python@3.8/Frameworks/Python.framework/Versions/3.8/bin
 PATH=$PATH:/usr/local/opt/python@3.9/Frameworks/Python.framework/Versions/3.9/bin
 PATH=$PATH:/usr/local/opt/python@3.10/Frameworks/Python.framework/Versions/3.10/bin
