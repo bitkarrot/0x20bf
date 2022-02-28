@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
-# from configs import HEX_LOGGER
+from configs import TWEET
 from twitter_api_keys import CAK, CASK, AT, ATS
 from TwitterAPI import TwitterAPI
 from logger import logger
 from time_functions import BTC_UNIX_TIME_MILLIS
 # from hex_message_digest import HEX_MESSAGE_DIGEST
 
-api = TwitterAPI(CAK, CASK, AT, ATS)
+
+if (TWEET):
+    api = TwitterAPI(CAK, CASK, AT, ATS)
 
 
 def search_gpgr(GPGR):
