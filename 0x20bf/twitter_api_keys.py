@@ -4,6 +4,7 @@ import os
 from configs import DATA_LOGGER, TWEET
 from logger import logger
 
+
 # twitter api
 global TWITTER_CONFIG
 TWITTER_CONFIG = str("twitter_access_tokens")
