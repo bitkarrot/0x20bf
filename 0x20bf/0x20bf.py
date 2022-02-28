@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
+import os
 from logger import logger
 from configs import LOGGER, HEX_LOGGER, TWEET
-from twitter_api_keys import CAK, CASK, AT, ATS
 import hashlib
 from time_functions import BTC_TIME
 from TwitterAPI import TwitterAPI
+if (os.getlogin() != "runner"):
+    from twitter_api_keys import CAK, CASK, AT, ATS
 from search_gpgr import search_gpgr
 from search_gpgs import search_gpgs
 
-api = TwitterAPI(CAK, CASK, AT, ATS)
+if (os.getlogin() != "runner"):
+    api = TwitterAPI(CAK, CASK, AT, ATS)
 
 
 def DELIMITER_STRIPPER(string):
@@ -155,9 +158,6 @@ def send_message():
 
 # logger.info(BTC_UNIX_TIME_MILLIS())
 
-# GPGR='4DC9817F' #bitkarrot
-# GPGR='BB06757B' #RECIPIENT
-# GPGR='7C048F04'
 GPGR = '4DC9817F'  # bitkarrot
 logger.info(GPGR)
 GPGS = 'BB06757B'  # randymcmillan
@@ -165,15 +165,11 @@ logger.info(GPGS)
 MESSAGE = 'text human readable message'
 if (HEX_LOGGER):
     logger.info(HEX_MESSAGE_DIGEST(GPGR, MESSAGE, GPGS))
-# logger.info("HEX_MESSAGE_TREE" + HEX_MESSAGE_TREE(GPGR, GPGS))
 HEX_MESSAGE_TREE(GPGR, GPGS)
 HEX_MESSAGE_DIGEST(GPGR, MESSAGE, GPGS)
-# logger.info(str(message_header()))
-# test_hash_lib()
-# tweet_block_time()
-# message_header()
-# tweet_message()
-search_gpgr(GPGR)
-search_gpgs(GPGS)
-# logger.info(block_time())
-# getMempoolAPI('https://mempool.space/api/v1/difficulty-adjustment', DIFFICULTY)
+
+if (os.getlogin() != "runner" and TWEET):
+    send_message()
+if (os.getlogin() != "runner"):
+    search_gpgr(GPGR)
+    search_gpgs(GPGS)
