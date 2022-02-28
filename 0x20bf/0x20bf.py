@@ -166,8 +166,8 @@ if (HEX_LOGGER):
 HEX_MESSAGE_TREE(GPGR, GPGS)
 HEX_MESSAGE_DIGEST(GPGR, MESSAGE, GPGS)
 
-if (os.getlogin() != "runner" and TWEET):
+if (TWEET):
     send_message()
-if (os.getlogin() != "runner"):
+if (TWEET):
     search_gpgr(GPGR)
     search_gpgs(GPGS)
