@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from logger import logger
 from configs import LOGGER, DATA_LOGGER
-import TwitterAPI
+from TwitterAPI import TwitterAPI
 from time_functions import BTC_TIME, BTC_UNIX_TIME_MILLIS
 from twitter_api_keys import CAK, CASK, AT, ATS
 api = TwitterAPI(CAK, CASK, AT, ATS)
