@@ -26,23 +26,6 @@ def search_gpgr(GPGR):
         pass
 
 
-GPGR = '4DC9817F'  # bitkarrot
-search_gpgr(GPGR)
+# GPGR = '4DC9817F'  # bitkarrot
+# search_gpgr(GPGR)
 # logger.info(GPGR)
-# GPGS = 'BB06757B'  # randymcmillan
-# logger.info(GPGS)
-# MESSAGE = 'text human readable message'
-# if (HEX_LOGGER):
-#  logger.info(HEX_MESSAGE_DIGEST(GPGR, MESSAGE, GPGS))
-# logger.info("HEX_MESSAGE_TREE" + HEX_MESSAGE_TREE(GPGR, GPGS))
-# HEX_MESSAGE_TREE(GPGR, GPGS)
-# HEX_MESSAGE_DIGEST(GPGR, MESSAGE, GPGS)
-# logger.info(str(message_header()))
-# test_hash_lib()
-# tweet_block_time()
-# message_header()
-# tweet_message()
-# searchGPGR(GPGR)
-# searchGPGS(GPGS)
-# logger.info(block_time())
-# getMempoolAPI('https://mempool.space/api/v1/difficulty-adjustment', DIFFICULTY)
