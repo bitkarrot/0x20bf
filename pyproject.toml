@@ -6,7 +6,7 @@ authors = ["randymcmillan <randy.lee.mcmillan@gmail.com>, bitkarrot <bitkarrot@b
 license = "Apache License 2.0"
 
 [tool.poetry.dependencies]
-python = "^3.7.1"
+python = "^3.8"
 pre-commit = "2.13.0"
 aiohttp = "3.7.4.post0"
 PyYAML = "5.4.1"
