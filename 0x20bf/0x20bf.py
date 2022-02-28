@@ -9,7 +9,7 @@ from twitter_api_keys import CAK, CASK, AT, ATS
 from search_gpgr import search_gpgr
 from search_gpgs import search_gpgs
 
-if (os.getlogin() != "runner"):
+if (TWEET):
     api = TwitterAPI(CAK, CASK, AT, ATS)
 
 

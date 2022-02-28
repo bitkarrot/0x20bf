@@ -35,7 +35,13 @@ def get_data(filename):
     return DATA
 
 
-CAK = get_data(CONSUMER_API_KEY)
-CASK = get_data(CONSUMER_API_SECRET_KEY)
-AT = get_data(ACCESS_TOKEN)
-ATS = get_data(ACCESS_TOKEN_SECRET)
+if (TWEET):
+    CAK = get_data(CONSUMER_API_KEY)
+    CASK = get_data(CONSUMER_API_SECRET_KEY)
+    AT = get_data(ACCESS_TOKEN)
+    ATS = get_data(ACCESS_TOKEN_SECRET)
+else:
+    CAK = TWEET
+    CASK = TWEET
+    AT = TWEET
+    ATS = TWEET
