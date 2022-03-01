@@ -42,6 +42,11 @@ export PORT
 #GIT CONFIG
 GIT_USER_NAME							:= $(shell git config user.name)
 export GIT_USER_NAME
+ifneq ($(USER),runner)
+USER:=--user
+else
+USER:=
+endif
 GH_USER_NAME							:= $(shell git config user.name)
 export GIT_USER_NAME
 
@@ -105,7 +110,7 @@ I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
 .PHONY: init
 .ONESHELL:
 ##	:init           initialize requirements
-init: initialize requirements
+init: report initialize requirements
 .PHONY: install
 .ONESHELL:
 ##	:install        pip install -e .
@@ -148,8 +153,8 @@ initialize:
 reqs: requirements
 ##	:requirements   pip install --user -r requirements.txt
 requirements:
-	$(PYTHON3) -m $(PIP) install --user --upgrade pip
-	$(PYTHON3) -m $(PIP) install --user -r requirements.txt
+	$(PYTHON3) -m $(PIP) install $(USER) --upgrade pip
+	$(PYTHON3) -m $(PIP) install $(USER) -r requirements.txt
 
 .PHONY:
 .QUIET:
