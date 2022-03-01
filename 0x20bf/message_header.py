@@ -1,6 +1,5 @@
 from configs import HEX_LOGGER, LOGGER
 from hex_message_digest import HEX_MESSAGE_DIGEST
-from logger import logger
 from time_functions import BTC_TIME, UNIX_TIME_MILLIS
 
 
