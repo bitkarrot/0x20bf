@@ -1,6 +1,4 @@
-#!/usr/bin/env python3
 import asyncio
-
 import aiohttp
 from configs import MEMPOOL_LOGGER, logger
 
