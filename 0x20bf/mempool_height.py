@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
-<<<<<<< fix-imports
-from configs import MEMPOOL_LOGGER, logger
-=======
 import asyncio
->>>>>>> main
 
 import aiohttp
 from configs import MEMPOOL_LOGGER, logger
