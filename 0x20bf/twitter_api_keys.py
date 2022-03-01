@@ -1,12 +1,10 @@
 #!/usr/bin/env python3
 import os
 
-from configs import DATA_LOGGER
+from configs import DATA_LOGGER, TWEET
 from logger import logger
 
 # twitter api
-global TWEET
-TWEET = False
 global TWITTER_CONFIG
 TWITTER_CONFIG = str("twitter_access_tokens")
 global ACCESS_TOKEN_SECRET
