@@ -1,7 +1,6 @@
-#!/usr/bin/env python3
 import os
-
 import psutil
+
 from logger import logger
 
 USER = psutil.Process().username()

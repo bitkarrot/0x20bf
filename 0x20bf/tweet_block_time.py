@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 from configs import DATA_LOGGER, LOGGER
 from logger import logger
 from time_functions import BTC_TIME, BTC_UNIX_TIME_MILLIS

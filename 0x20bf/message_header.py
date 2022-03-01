@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 from configs import HEX_LOGGER, LOGGER
 from hex_message_digest import HEX_MESSAGE_DIGEST
 from logger import logger

@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 from configs import TWEET
 from logger import logger
 from time_functions import BTC_UNIX_TIME_MILLIS
