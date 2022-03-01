@@ -53,6 +53,15 @@ if hash apt-get 2>/dev/null; then
     else
         pip3 install omegaconf glom
     fi
+    if ! hash flake8 2>/dev/null; then
+        sudo apt-get install flake8
+    fi
+    if ! hash isort 2>/dev/null; then
+        sudo apt-get install isort
+    fi
+    if ! hash black 2>/dev/null; then
+        sudo apt-get install black
+    fi
 fi
 
 }
@@ -85,7 +94,7 @@ if hash brew 2>/dev/null; then
     $python39 -m pip -q install --upgrade pip
     $python39 -m pip -q install omegaconf
     brew install gawk
-    brew install boost boost-build
+    brew install boost boost-build flake8 isort black
 
 else
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
