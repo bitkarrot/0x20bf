@@ -115,6 +115,7 @@ init: report initialize requirements
 .ONESHELL:
 ##	:install        pip install -e .
 install:
+    # TODO: install depends/p2p depends/gnupg
 	$(PYTHON3) -m $(PIP) install -e .
 
 .PHONY: help
@@ -206,6 +207,11 @@ git-add: remove
 	#git add --ignore-errors BLOCK_TIP_HEIGHT
 	#git add --ignore-errors DIFFICULTY
 	#git add --ignore-errors TIME
+
+.PHONY: pre-commit
+##	:pre-commit           pre-commit run -a
+pre-commit:
+	pre-commit run -a
 
 .PHONY: docs
 ##	:docs           build docs from sources/*.md
