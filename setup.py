@@ -28,14 +28,18 @@ setup(
     version="0.0.1",
     author="randymcmillan, bitkarrot",
     author_email="randy.lee.mcmillan@gmail.com, bitkarrot@bitcoin.org.hk",
-    description=(str("0x20bf: An internet standards track protocol for"
-                 + "transporting, broadcasting and syndication of messages"
-                 + "ver common internet communications channels.")),
+    description=(
+        str(
+            "0x20bf: An internet standards track protocol for"
+            + "transporting, broadcasting and syndication of messages"
+            + "ver common internet communications channels."
+        )
+    ),
     license="Apache License 2.0",
     keywords="",
     url="http://packages.python.org/0x20bf",
-    packages=['0x20bf', 'tests'],
-    long_description=read('README.md'),
+    packages=["0x20bf", "tests"],
+    long_description=read("README.md"),
     classifiers=[
         "Development Status :: 1 - Alpha",
         "Topic :: Utilities",

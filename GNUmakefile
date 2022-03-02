@@ -32,6 +32,8 @@ endif
 export PROJECT_NAME
 PYTHONPATH=$(PWD)/0x20bf
 export PYTHONPATH
+DEPENDSPATH=$(PWD)/depends
+export DEPENDSPATH
 ifeq ($(port),)
 PORT									:= 0
 else
@@ -115,6 +117,7 @@ init: report initialize requirements
 .ONESHELL:
 ##	:install        pip install -e .
 install:
+    # TODO: install depends/p2p depends/gnupg
 	$(PYTHON3) -m $(PIP) install -e .
 
 .PHONY: help
@@ -173,12 +176,15 @@ gogs:
 .ONESHELL:
 ##	:gnupg          setup python-gnupg
 gnupg:
-	pushd $(PYTHONPATH)/gnupg && $(PYTHON3) $(PYTHONPATH)/gnupg/setup.py install && popd
+	pushd $(DEPENDSPATH)/gnupg && $(PYTHON3) $(DEPENDSPATH)/gnupg/setup.py install && popd
+.PHONY: gnupg-test
+.ONESHELL:
+##	:gnupg-test     test depends/gnupg library
+gnupg-test:
+	pushd $(DEPENDSPATH)/gnupg && $(PYTHON3) $(DEPENDSPATH)/gnupg/test_gnupg.py
+
 .PHONY: twitter-api
 .ONESHELL:
-##	:twitter-api    setup TwitterAPI
-twitter-api:
-	pushd $(PYTHONPATH)/TwitterAPI && $(PYTHON3) $(PYTHONPATH)/TwitterAPI/setup.py install && popd
 
 .PHONY: depends
 ##	:depends        build depends
@@ -206,6 +212,11 @@ git-add: remove
 	#git add --ignore-errors BLOCK_TIP_HEIGHT
 	#git add --ignore-errors DIFFICULTY
 	#git add --ignore-errors TIME
+
+.PHONY: pre-commit
+##	:pre-commit     pre-commit run -a
+pre-commit:
+	pre-commit run -a
 
 .PHONY: docs
 ##	:docs           build docs from sources/*.md

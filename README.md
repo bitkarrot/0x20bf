@@ -118,6 +118,7 @@ pip install -e .
  	  gnupg          setup python-gnupg
  	  twitter-api    setup TwitterAPI
  	  depends        build depends
+ 	  pre-commit           pre-commit run -a
  	  docs           build docs from sources/*.md
 
 ## [Contributing](./sources/CONTRIBUTING.md)
