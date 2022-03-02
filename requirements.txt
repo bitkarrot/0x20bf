@@ -18,3 +18,4 @@ mathlib
 pydocstyle
 black
 mypy
+gnupg
