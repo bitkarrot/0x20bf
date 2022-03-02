@@ -179,15 +179,12 @@ gnupg:
 	pushd $(DEPENDSPATH)/gnupg && $(PYTHON3) $(DEPENDSPATH)/gnupg/setup.py install && popd
 .PHONY: gnupg-test
 .ONESHELL:
-##	:gnupg-test          test depends/gnupg library
+##	:gnupg-test     test depends/gnupg library
 gnupg-test:
 	pushd $(DEPENDSPATH)/gnupg && $(PYTHON3) $(DEPENDSPATH)/gnupg/test_gnupg.py
 
 .PHONY: twitter-api
 .ONESHELL:
-##	:twitter-api    setup TwitterAPI
-twitter-api:
-	pushd $(PYTHONPATH)/TwitterAPI && $(PYTHON3) $(PYTHONPATH)/TwitterAPI/setup.py install && popd
 
 .PHONY: depends
 ##	:depends        build depends
@@ -217,7 +214,7 @@ git-add: remove
 	#git add --ignore-errors TIME
 
 .PHONY: pre-commit
-##	:pre-commit           pre-commit run -a
+##	:pre-commit     pre-commit run -a
 pre-commit:
 	pre-commit run -a
 
