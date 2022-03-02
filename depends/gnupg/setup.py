@@ -1,6 +1,5 @@
-from setuptools import setup
-
 from gnupg import __version__ as version
+from setuptools import setup
 
 setup(
     name="python-gnupg",
@@ -39,14 +38,22 @@ The archives should be the same as those uploaded to PyPI.
     },
     py_modules=["gnupg"],
     platforms="No particular restrictions",
-    download_url="https://pypi.io/packages/source/p/python-gnupg/python-gnupg-%s.tar.gz" % version,
+    download_url="https://pypi.io/packages/source/p/python-gnupg/python-gnupg-%s.tar.gz"
+    % version,
     classifiers=[
-        'Development Status :: 5 - Production/Stable', "Intended Audience :: Developers",
-        'License :: OSI Approved :: BSD License', "Programming Language :: Python",
-        "Programming Language :: Python :: 2", "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 2.7", "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7", "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9", "Programming Language :: Python :: 3.10",
+        "Development Status :: 5 - Production/Stable",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: BSD License",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
         "Operating System :: OS Independent",
-        "Topic :: Software Development :: Libraries :: Python Modules"
-    ])
+        "Topic :: Software Development :: Libraries :: Python Modules",
+    ],
+)
