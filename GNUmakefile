@@ -32,6 +32,8 @@ endif
 export PROJECT_NAME
 PYTHONPATH=$(PWD)/0x20bf
 export PYTHONPATH
+DEPENDSPATH=$(PWD)/depends
+export DEPENDSPATH
 ifeq ($(port),)
 PORT									:= 0
 else
@@ -174,7 +176,13 @@ gogs:
 .ONESHELL:
 ##	:gnupg          setup python-gnupg
 gnupg:
-	pushd $(PYTHONPATH)/gnupg && $(PYTHON3) $(PYTHONPATH)/gnupg/setup.py install && popd
+	pushd $(DEPENDSPATH)/gnupg && $(PYTHON3) $(DEPENDSPATH)/gnupg/setup.py install && popd
+.PHONY: gnupg-test
+.ONESHELL:
+##	:gnupg-test          test depends/gnupg library
+gnupg-test:
+	pushd $(DEPENDSPATH)/gnupg && $(PYTHON3) $(DEPENDSPATH)/gnupg/test_gnupg.py
+
 .PHONY: twitter-api
 .ONESHELL:
 ##	:twitter-api    setup TwitterAPI

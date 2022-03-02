@@ -172,3 +172,9 @@ NETWORK_WEEBLE_WOBBLE
 NETWORK_WOBBLE
 depends/p2p
 depends/gnupg
+dist/
+p2pnetwork.egg-info/
+private_key.key
+python_gnupg.egg-info/
+random_binary_data
+test_gnupg.log
