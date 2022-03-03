@@ -133,7 +133,7 @@ if [[ "$OSTYPE" == "linux"* ]]; then
             sudo apt gnupg build-essential libboost-all-dev libssl-dev
             sudo apt install python3
             sudo apt-get install python3-pip
-            sudo apt install docker.io docker-compose
+            sudo apt install containerd docker.io docker-compose
 
             initialize-report
             initialize-use-apt
