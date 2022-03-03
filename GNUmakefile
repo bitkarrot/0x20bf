@@ -104,6 +104,14 @@ PRIVATE_ALLSPHINXOPTS = -d $(PRIVATE_BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(S
 # the i18n builder cannot share the environment and doctrees with the others
 I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
 
+ifneq ($(shell id -u),0)
+DASH_U:=-U
+else
+DASH_U:=
+endif
+export DASH_U
+
+
 .PHONY: -
 ##	:help
 
@@ -117,8 +125,13 @@ init: report initialize requirements
 .ONESHELL:
 ##	:install        pip install -e .
 install:
-    # TODO: install depends/p2p depends/gnupg
-	$(PYTHON3) -m $(PIP) install -U -e .
+
+ifneq ($(shell id -u),0)
+# TODO: install depends/p2p depends/gnupg
+	$(PYTHON3) -m $(PIP) install $(DASH_U) -e .
+else
+	$(PYTHON3) -m $(PIP) install $(DASH_U) -e .
+endif
 
 .PHONY: help
 help:
