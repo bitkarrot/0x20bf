@@ -130,7 +130,7 @@ if [[ "$OSTYPE" == "linux"* ]]; then
             sudo apt install gawk
             sudo apt update
             sudo apt install software-properties-common
-            sudo apt gnupg build-essential libboost-all-dev libssl-dev
+            sudo apt-get -y gnupg build-essential libboost-all-dev libssl-dev
             sudo apt install python3
             sudo apt-get install python3-pip
             sudo apt install containerd docker.io docker-compose
