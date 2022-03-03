@@ -159,12 +159,18 @@ requirements:
 	$(PYTHON3) -m $(PIP) install $(USER) --upgrade pip
 	$(PYTHON3) -m $(PIP) install $(USER) -r requirements.txt
 
-.PHONY:
+.PHONY: seeder
 .QUIET:
 .ONESHELL:
 ##	:seeder         make -C depends/seeder
 seeder:
 	make -C depends/seeder
+
+.PHONY: legit
+.ONESHELL:
+##	:legit         pushd depends/legit && cargo build --release
+legit:
+	pushd depends/legit && cargo build --release
 
 .PHONY: gogs
 .ONESHELL:
@@ -182,6 +188,8 @@ gnupg:
 ##	:gnupg-test     test depends/gnupg library
 gnupg-test:
 	pushd $(DEPENDSPATH)/gnupg && $(PYTHON3) $(DEPENDSPATH)/gnupg/test_gnupg.py
+
+
 
 .PHONY: twitter-api
 .ONESHELL:
@@ -238,19 +246,6 @@ docs:
 	git add --ignore-errors sources/*.md
 	git add --ignore-errors *.md
 	#git ls-files -co --exclude-standard | grep '\.md/$\' | xargs git
-
-.PHONY: remove
-remove:
-	rm -rf legit
-
-.PHONY: legit
-.ONESHELL:
-legit:
-
-	if [ -f ./legit/README.md ]; then make -C dotfiles ; else git clone -b master --depth 1 https://github.com/randymcmillan/legit ./legit; fi
-	#TODO make all
-	#make all -C legit
-	cd legit && ./make-legit.sh
 
 .PHONY: clean
 .ONESHELL:
