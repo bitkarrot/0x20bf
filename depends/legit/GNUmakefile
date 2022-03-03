@@ -3,37 +3,13 @@ PWD 									?= pwd_unknown
 TIME 									:= $(shell date +%s)
 export TIME
 
-PYTHON                                  := $(shell which python)
-export PYTHON
-PYTHON2                                 := $(shell which python2)
-export PYTHON2
-PYTHON3                                 := $(shell which python3)
-export PYTHON3
-
-PIP                                     := $(notdir $(shell which pip))
-export PIP
-PIP2                                    := $(notdir $(shell which pip2))
-export PIP2
-PIP3                                    := $(notdir $(shell which pip3))
-export PIP3
-
-ifeq ($(PYTHON3),/usr/local/bin/python3)
-PIP                                    := pip
-PIP3                                   := pip
-export PIP
-export PIP3
-endif
-
 ifeq ($(project),)
 PROJECT_NAME							:= $(notdir $(PWD))
 else
 PROJECT_NAME							:= $(project)
 endif
 export PROJECT_NAME
-PYTHONPATH=$(PWD)/0x20bf
-export PYTHONPATH
-DEPENDSPATH=$(PWD)/depends
-export DEPENDSPATH
+
 ifeq ($(port),)
 PORT									:= 0
 else
@@ -44,13 +20,22 @@ export PORT
 #GIT CONFIG
 GIT_USER_NAME							:= $(shell git config user.name)
 export GIT_USER_NAME
-ifneq ($(USER),runner)
-USER:=--user
-else
-USER:=
-endif
 GH_USER_NAME							:= $(shell git config user.name)
+#MIRRORS
+GH_USER_REPO    						:= $(GH_USER_NAME).github.io
+KB_USER_REPO   	        				:= $(GH_USER_NAME).keybase.pub
+#GITHUB RUNNER CONFIGS
+ifneq ($(ghuser),)
+GH_USER_NAME := $(ghuser)
+GH_USER_REPO := $(ghuser).github.io
+endif
+ifneq ($(kbuser),)
+KB_USER_NAME := $(kbuser)
+KB_USER_REPO := $(kbuser).keybase.pub
+endif
 export GIT_USER_NAME
+export GH_USER_REPO
+export KB_USER_REPO
 
 GIT_USER_EMAIL							:= $(shell git config user.email)
 export GIT_USER_EMAIL
@@ -64,6 +49,8 @@ GIT_BRANCH								:= $(shell git rev-parse --abbrev-ref HEAD)
 export GIT_BRANCH
 GIT_HASH								:= $(shell git rev-parse --short HEAD)
 export GIT_HASH
+GIT_PREVIOUS_HASH						:= $(shell git rev-parse --short master@{1})
+export GIT_PREVIOUS_HASH
 GIT_REPO_ORIGIN							:= $(shell git remote get-url origin)
 export GIT_REPO_ORIGIN
 GIT_REPO_NAME							:= $(PROJECT_NAME)
@@ -104,37 +91,37 @@ PRIVATE_ALLSPHINXOPTS = -d $(PRIVATE_BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(S
 # the i18n builder cannot share the environment and doctrees with the others
 I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
 
-.PHONY: -
-##	:help
-
--: help
-
 .PHONY: init
-.ONESHELL:
-##	:init           initialize requirements
-init: report initialize requirements
-.PHONY: install
-.ONESHELL:
-##	:install        pip install -e .
-install:
-    # TODO: install depends/p2p depends/gnupg
-	$(PYTHON3) -m $(PIP) install -e .
+init: help
+	@echo "make init"
 
 .PHONY: help
 help:
-	@sed -n 's/^##//p' ${MAKEFILE_LIST} | column -t -s ':' |  sed -e 's/^/ /'
+	@echo ""
+	@echo "  make docs"
+	@echo "  make report"
+	@echo "  make awesome"
+	@echo "  make git-add"
+	@echo "  make remove"
+	@echo "  make global-branch"
+	@echo "  make time-branch"
+	@echo "  make touch-global"
+	@echo "  make touch-time"
+	@echo "  make branch"
+	@echo "  make trigger"
+	@echo "  make push"
+	@echo ""
+	@echo ""
 
 .PHONY: report
-##	:report         environment args
-report:
+report: 
 	@echo ''
 	@echo '	[ARGUMENTS]	'
 	@echo '      args:'
 	@echo '        - TIME=${TIME}'
-	@echo '        - BASENAME=${BASENAME}'
 	@echo '        - PROJECT_NAME=${PROJECT_NAME}'
-	@echo '        - PYTHONPATH=${PYTHONPATH}'
 	@echo '        - GIT_USER_NAME=${GIT_USER_NAME}'
+	@echo '        - GH_USER_REPO=${GH_USER_REPO}'
 	@echo '        - GIT_USER_EMAIL=${GIT_USER_EMAIL}'
 	@echo '        - GIT_SERVER=${GIT_SERVER}'
 	@echo '        - GIT_PROFILE=${GIT_PROFILE}'
@@ -144,59 +131,6 @@ report:
 	@echo '        - GIT_REPO_ORIGIN=${GIT_REPO_ORIGIN}'
 	@echo '        - GIT_REPO_NAME=${GIT_REPO_NAME}'
 	@echo '        - GIT_REPO_PATH=${GIT_REPO_PATH}'
-
-.PHONY: initialize
-.ONESHELL:
-##	:initialize     run scripts/initialize
-initialize:
-	bash -c "./scripts/initialize"
-
-.PHONY: requirements reqs
-.ONESHELL:
-reqs: requirements
-##	:requirements   pip install --user -r requirements.txt
-requirements:
-	$(PYTHON3) -m $(PIP) install $(USER) --upgrade pip
-	$(PYTHON3) -m $(PIP) install $(USER) -r requirements.txt
-
-.PHONY: seeder
-.QUIET:
-.ONESHELL:
-##	:seeder         make -C depends/seeder
-seeder:
-	make -C depends/seeder
-
-.PHONY: legit
-.ONESHELL:
-##	:legit          pushd depends/legit && cargo build --release
-legit:
-	pushd depends/legit && cargo build --release
-
-.PHONY: gogs
-.ONESHELL:
-##	:gogs           make -C depends/gogs
-gogs:
-	make -C depends/gogs
-
-.PHONY: gnupg
-.ONESHELL:
-##	:gnupg          setup python-gnupg
-gnupg:
-	pushd $(DEPENDSPATH)/gnupg && $(PYTHON3) $(DEPENDSPATH)/gnupg/setup.py install && popd
-.PHONY: gnupg-test
-.ONESHELL:
-##	:gnupg-test     test depends/gnupg library
-gnupg-test:
-	pushd $(DEPENDSPATH)/gnupg && $(PYTHON3) $(DEPENDSPATH)/gnupg/test_gnupg.py
-
-
-
-.PHONY: twitter-api
-.ONESHELL:
-
-.PHONY: depends
-##	:depends        build depends
-depends: seeder gogs legit
 
 .PHONY: git-add
 .ONESHELL:
@@ -209,53 +143,75 @@ git-add: remove
 	git add --ignore-errors GNUmakefile
 	git add --ignore-errors README.md
 	git add --ignore-errors sources/*.md
-	#git add --ignore-errors TIME
-	#git add --ignore-errors GLOBAL
-	git add --ignore-errors 0x20bf/*.py
+	git add --ignore-errors sources/*.html
+	git add --ignore-errors TIME
+	git add --ignore-errors GLOBAL
+	#git add --ignore-errors CNAME
+	git add --ignore-errors touch-block-time.py
+	git add --ignore-errors *.py
+	#git add --ignore-errors sources/*.py
 	git add --ignore-errors index.html
 	git add --ignore-errors .gitignore
 	git add --ignore-errors .github
 	git add --ignore-errors *.sh
 	git add --ignore-errors *.yml
-	#git add --ignore-errors BLOCK_TIP_HEIGHT
-	#git add --ignore-errors DIFFICULTY
-	#git add --ignore-errors TIME
 
-.PHONY: pre-commit
-##	:pre-commit     pre-commit run -a
-pre-commit:
-	pre-commit run -a
+.PHONY: push
+.ONESHELL:
+push: touch-time
+	@echo push
+	bash -c "git commit --allow-empty -m '$(TIME)'"
+	bash -c "git push -f origin	+master:master"
+
+.PHONY: branch
+.ONESHELL:
+branch: docs touch-time touch-block-time
+	@echo branch
+
+	git add --ignore-errors GNUmakefile TIME GLOBAL .github *.sh *.yml
+	git add --ignore-errors .github
+	git commit -m 'make branch by $(GIT_USER_NAME) on $(TIME)'
+	git branch $(TIME)
+	git push -f origin $(TIME)
+
+.PHONY: touch-time
+.ONESHELL:
+touch-time:
+	@echo touch-time
+	echo $(TIME) $(shell git rev-parse HEAD) > TIME
+	git add TIME
+
+.PHONY: automate
+automate: touch-time git-add
+	@echo automate
+	./.github/workflows/automate.sh
 
 .PHONY: docs
-##	:docs           build docs from sources/*.md
-docs:
-	@echo "##### [make](https://www.gnu.org/software/make/)" > sources/MAKE.md
-	bash -c "make help >> $(PWD)/sources/MAKE.md"
+docs: git-add awesome
+	#@echo docs
+	bash -c "if pgrep MacDown; then pkill MacDown; fi"
+	#bash -c "curl https://raw.githubusercontent.com/sindresorhus/awesome/main/readme.md -o ./sources/AWESOME-temp.md"
 	bash -c 'cat $(PWD)/sources/HEADER.md                >  $(PWD)/README.md'
-	bash -c 'cat $(PWD)/sources/PROTOCOL.md              >> $(PWD)/README.md'
 	bash -c 'cat $(PWD)/sources/COMMANDS.md              >> $(PWD)/README.md'
-	bash -c 'cat $(PWD)/sources/GETTING_STARTED.md       >> $(PWD)/README.md'
-	bash -c 'cat $(PWD)/sources/MAKE.md                  >> $(PWD)/README.md'
-	bash -c 'cat $(PWD)/sources/CONTRIBUTING.md          >> $(PWD)/README.md'
 	bash -c 'cat $(PWD)/sources/FOOTER.md                >> $(PWD)/README.md'
 	#brew install pandoc
 	bash -c "if hash pandoc 2>/dev/null; then echo; fi || brew install pandoc"
-	#bash -c 'pandoc -s README.md -o index.html  --metadata title="$(GH_USER_SPECIAL_REPO)" '
+	#bash -c 'pandoc -s README.md -o index.html  --metadata title="$(GH_USER_REPO)" '
 	bash -c 'pandoc -s README.md -o index.html'
 	#bash -c "if hash open 2>/dev/null; then open README.md; fi || echo failed to open README.md"
 	git add --ignore-errors sources/*.md
 	git add --ignore-errors *.md
-	#git ls-files -co --exclude-standard | grep '\.md/$\' | xargs git
+	#git ls-files -co --exclude-standard | grep '\.md/$\' | xargs git 
+
+.PHONY: legit
+.ONESHELL:
+legit:
+	./make-legit.sh
 
 .PHONY: clean
 .ONESHELL:
-clean:
-	#bash -c "rm -rf $(BUILDDIR)"
-
-.PHONY: serve
-.ONESHELL:
-serve:
-	bash -c "$(PYTHON3) -m http.server $(PORT) -d . &"
+clean: touch-time touch-global
+	bash -c "rm -rf $(BUILDDIR)"
 
 .PHONY: failure
 failure:
@@ -263,3 +219,4 @@ failure:
 .PHONY: success
 success:
 	@-/bin/true && ([ $$? -eq 0 ] && echo "success!") || echo "failure!"
+

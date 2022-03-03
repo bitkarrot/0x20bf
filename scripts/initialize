@@ -94,7 +94,7 @@ if hash brew 2>/dev/null; then
     $python39 -m pip -q install --upgrade pip
     $python39 -m pip -q install omegaconf
     brew install gawk
-    brew install boost boost-build flake8 black
+    brew install boost boost-build flake8 black rust
     brew link --overwrite isort
 
 else
