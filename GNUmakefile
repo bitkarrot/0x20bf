@@ -168,7 +168,7 @@ seeder:
 
 .PHONY: legit
 .ONESHELL:
-##	:legit         pushd depends/legit && cargo build --release
+##	:legit          pushd depends/legit && cargo build --release
 legit:
 	pushd depends/legit && cargo build --release
 
@@ -196,7 +196,7 @@ gnupg-test:
 
 .PHONY: depends
 ##	:depends        build depends
-depends: seeder gogs
+depends: seeder gogs legit
 
 .PHONY: git-add
 .ONESHELL:
