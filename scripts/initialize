@@ -91,8 +91,8 @@ if hash brew 2>/dev/null; then
     [ -f "/usr/local/opt/python@3.9/bin/python3" ] && python39=/usr/local/opt/python@3.9/bin/python3
     [ -f "/opt/homebrew/opt/python@3.9/bin/python3" ] && python39=/opt/homebrew/opt/python@3.9/bin/python3
     export python39
-    $python39 -m pip -q install --upgrade pip
-    $python39 -m pip -q install omegaconf
+    $python39 -m pip -q -U install --upgrade pip
+    $python39 -m pip -q -U install omegaconf
     brew install gawk
     brew install boost boost-build flake8 black rust
     brew link --overwrite isort

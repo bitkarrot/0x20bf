@@ -118,7 +118,7 @@ init: report initialize requirements
 ##	:install        pip install -e .
 install:
     # TODO: install depends/p2p depends/gnupg
-	$(PYTHON3) -m $(PIP) install -e .
+	$(PYTHON3) -m $(PIP) install -U -e .
 
 .PHONY: help
 help:
