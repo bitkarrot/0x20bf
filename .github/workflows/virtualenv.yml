@@ -25,7 +25,7 @@ jobs:
     - uses: actions/setup-python@v2
     - uses: syphar/restore-virtualenv@v1
       id: cache-virtualenv
-    - run: make init venv test-venv
+    - run: make init
     - run: flake8
       #- run: pydocstyle
     - run: isort .
@@ -39,5 +39,4 @@ jobs:
     - uses: actions/setup-python@v2
     - uses: syphar/restore-virtualenv@v1
       id: cache-virtualenv
-
-    - run: ./tests/py.test
+    - run: make init venv test-venv

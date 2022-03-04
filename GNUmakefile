@@ -122,6 +122,8 @@ export DASH_U
 .ONESHELL:
 ##	:init           initialize requirements
 init: report initialize requirements
+	# remove this artifact from gnupg tests
+	sudo rm -rf rokeys/.gitignore
 
 .PHONY: venv
 ##	:venv           create python3 virtual environment
@@ -138,7 +140,7 @@ test-venv: venv
 	. venv/bin/activate;
 	$(PYTHON3) ./tests/depends/gnupg/setup.py install;
 	$(PYTHON3) ./tests/depends/gnupg/test_gnupg.py;
-	pushd tests/depends/p2p && python3 setup.py install && python3 examples/my_own_p2p_application.py
+	pushd tests/depends/p2p && python3 setup.py install && python3 examples/my_own_p2p_application.py && popd
 	$(PYTHON3) ./tests/py.test;
 
 
