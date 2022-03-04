@@ -3,6 +3,8 @@ PWD 									?= pwd_unknown
 TIME 									:= $(shell date +%s)
 export TIME
 
+GPGBINARY                               := $(shell which gpg)
+export GPGBINARY
 PYTHON                                  := $(shell which python)
 export PYTHON
 PYTHON2                                 := $(shell which python2)
@@ -114,13 +116,35 @@ export DASH_U
 
 .PHONY: -
 ##	:help
-
 -: help
 
 .PHONY: init
 .ONESHELL:
 ##	:init           initialize requirements
 init: report initialize requirements
+
+.PHONY: venv
+##	:venv           create python3 virtual environment
+venv: venv/touchfile
+
+venv/touchfile: requirements.txt
+	test -d venv || virtualenv venv
+	. venv/bin/activate; pip install -Ur requirements.txt
+    curl -O tests/test_numbers.py https://raw.githubusercontent.com/spapanik/mathlib/main/tests/mathlib/test_numbers.py
+    curl -O tests/test_numbers.py https://raw.githubusercontent.com/spapanik/mathlib/main/tests/mathlib/test_primes.py
+	touch venv/touchfile
+
+test-venv: venv
+    # TODO: use tox config
+	. venv/bin/activate;
+	#$(PYTHON3) ./tests/depends/gnupg/setup.py install;
+	#$(PYTHON3) ./tests/depends/gnupg/test_gnupg.py;
+	$(PYTHON3) ./tests/py.test;
+
+
+clean-venv:
+	rm -rf venv
+
 .PHONY: install
 .ONESHELL:
 ##	:install        pip install -e .
@@ -146,6 +170,7 @@ report:
 	@echo '        - TIME=${TIME}'
 	@echo '        - BASENAME=${BASENAME}'
 	@echo '        - PROJECT_NAME=${PROJECT_NAME}'
+	@echo '        - GPGBINARY=${GPGBINARY}'
 	@echo '        - PYTHONPATH=${PYTHONPATH}'
 	@echo '        - GIT_USER_NAME=${GIT_USER_NAME}'
 	@echo '        - GIT_USER_EMAIL=${GIT_USER_EMAIL}'
@@ -169,8 +194,8 @@ initialize:
 reqs: requirements
 ##	:requirements   pip install --user -r requirements.txt
 requirements:
-	$(PYTHON3) -m $(PIP) install $(USER) --upgrade pip
-	$(PYTHON3) -m $(PIP) install $(USER) -r requirements.txt
+	$(PYTHON3) -m $(PIP) install $(DASH_U) --upgrade pip
+	$(PYTHON3) -m $(PIP) install $(DASH_U) -r requirements.txt
 
 .PHONY: seeder
 .QUIET:
