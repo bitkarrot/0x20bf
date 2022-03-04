@@ -138,6 +138,7 @@ test-venv: venv
 	. venv/bin/activate;
 	$(PYTHON3) ./tests/depends/gnupg/setup.py install;
 	$(PYTHON3) ./tests/depends/gnupg/test_gnupg.py;
+	pushd tests/depends/p2p && python3 setup.py install && python3 examples/my_own_p2p_application.py
 	$(PYTHON3) ./tests/py.test;
 
 
