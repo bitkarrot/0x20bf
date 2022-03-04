@@ -1,5 +1,4 @@
 import pytest
-
 from mathlib import primes
 
 
