@@ -25,15 +25,11 @@ jobs:
     - uses: actions/setup-python@v2
     - uses: syphar/restore-virtualenv@v1
       id: cache-virtualenv
-    - run: make init
+    - run: make init venv test-venv
     - run: flake8
       #- run: pydocstyle
-      #- run: isort . --skip 0x20bf/p2p --skip 0x20bf/gnupg/
-      #- run: echo "0x20bf/p2p"   >> .gitignore
-      #- run: echo "0x20bf/gnupg" >> .gitignore
-      #- run: black 0x20bf
-    - run: isort 0x20bf
-    - run: black 0x20bf
+    - run: isort .
+    - run: black .
 
   tests:
     needs: create-virtualenv
