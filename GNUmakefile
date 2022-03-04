@@ -1,6 +1,6 @@
 SHELL                                   := /bin/bash
-PWD 									?= pwd_unknown
-TIME 									:= $(shell date +%s)
+PWD                                     ?= pwd_unknown
+TIME                                    := $(shell date +%s)
 export TIME
 
 GPGBINARY                               := $(shell which gpg)
@@ -27,9 +27,9 @@ export PIP3
 endif
 
 ifeq ($(project),)
-PROJECT_NAME							:= $(notdir $(PWD))
+PROJECT_NAME                            := $(notdir $(PWD))
 else
-PROJECT_NAME							:= $(project)
+PROJECT_NAME                            := $(project)
 endif
 export PROJECT_NAME
 PYTHONPATH=$(PWD)/0x20bf
@@ -37,40 +37,40 @@ export PYTHONPATH
 DEPENDSPATH=$(PWD)/depends
 export DEPENDSPATH
 ifeq ($(port),)
-PORT									:= 0
+PORT                                    := 0
 else
-PORT									:= $(port)
+PORT                                    := $(port)
 endif
 export PORT
 
 #GIT CONFIG
-GIT_USER_NAME							:= $(shell git config user.name)
+GIT_USER_NAME                           := $(shell git config user.name)
 export GIT_USER_NAME
 ifneq ($(USER),runner)
 USER:=--user
 else
 USER:=
 endif
-GH_USER_NAME							:= $(shell git config user.name)
+GH_USER_NAME                            := $(shell git config user.name)
 export GIT_USER_NAME
 
-GIT_USER_EMAIL							:= $(shell git config user.email)
+GIT_USER_EMAIL                          := $(shell git config user.email)
 export GIT_USER_EMAIL
-GIT_SERVER								:= https://github.com
+GIT_SERVER                              := https://github.com
 export GIT_SERVER
-GIT_SSH_SERVER							:= git@github.com
+GIT_SSH_SERVER                          := git@github.com
 export GIT_SSH_SERVER
-GIT_PROFILE								:= $(shell git config user.name)
+GIT_PROFILE                             := $(shell git config user.name)
 export GIT_PROFILE
-GIT_BRANCH								:= $(shell git rev-parse --abbrev-ref HEAD)
+GIT_BRANCH                              := $(shell git rev-parse --abbrev-ref HEAD)
 export GIT_BRANCH
-GIT_HASH								:= $(shell git rev-parse --short HEAD)
+GIT_HASH                                := $(shell git rev-parse --short HEAD)
 export GIT_HASH
-GIT_REPO_ORIGIN							:= $(shell git remote get-url origin)
+GIT_REPO_ORIGIN                         := $(shell git remote get-url origin)
 export GIT_REPO_ORIGIN
-GIT_REPO_NAME							:= $(PROJECT_NAME)
+GIT_REPO_NAME                           := $(PROJECT_NAME)
 export GIT_REPO_NAME
-GIT_REPO_PATH							:= $(HOME)/$(GIT_REPO_NAME)
+GIT_REPO_PATH                           := $(HOME)/$(GIT_REPO_NAME)
 export GIT_REPO_PATH
 
 BASENAME := $(shell basename -s .git `git config --get remote.origin.url`)
