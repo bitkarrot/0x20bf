@@ -10,7 +10,7 @@
 import sys
 import time
 
-sys.path.insert(0, "..")  # Import the files where the modules are located
+sys.path.insert(0, "../p2pnetwork")  # Import the files where the modules are located
 
 from MyOwnPeer2PeerNode import MyOwnPeer2PeerNode
 

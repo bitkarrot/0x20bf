@@ -178,3 +178,4 @@ private_key.key
 python_gnupg.egg-info/
 random_binary_data
 test_gnupg.log
+tests/touchfile
