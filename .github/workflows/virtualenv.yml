@@ -31,7 +31,7 @@ jobs:
     - run: isort .
     - run: black .
 
-  tests:
+  make-init-venv-test-venv:
     needs: create-virtualenv
     runs-on: ubuntu-latest
     steps:
@@ -40,3 +40,12 @@ jobs:
     - uses: syphar/restore-virtualenv@v1
       id: cache-virtualenv
     - run: make init venv test-venv
+  make-initialize-depends:
+    needs: create-virtualenv
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-python@v2
+    - uses: syphar/restore-virtualenv@v1
+      id: cache-virtualenv
+    - run: make initialize depends
