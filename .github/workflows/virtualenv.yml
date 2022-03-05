@@ -42,6 +42,7 @@ jobs:
     - uses: syphar/restore-virtualenv@v1
       id: cache-virtualenv
     - run: make init venv test-venv
+
   make-initialize-depends:
     needs: create-virtualenv
     runs-on: ubuntu-latest
