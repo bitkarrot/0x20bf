@@ -143,7 +143,7 @@ test-venv: venv
 	. venv/bin/activate;
 	$(PYTHON3) ./tests/py.test;
 ##	:test-gnupg     python3 ./tests/depends/gnupg/setup.py install
-##	:test-gnupg     python3 ./tests/depends/gnupg/test_gnupg.py
+##	:               python3 ./tests/depends/gnupg/test_gnupg.py
 test-gnupg: venv
     # TODO: use tox config
 	. venv/bin/activate;
@@ -158,14 +158,14 @@ test-p2p: venv
 clean-venv:
 	rm -rf venv
 
-.PHONY: build
-
+.PHONY: build install
 ##	:build          python3 setup.py build
+build:
+	python3 setup.py build
 install:
-.PHONY: install
-
-##	:install        pip install -e .
+##	:install        python3 -m pip install -e .
 install: build
+	$(PYTHON3) -m $(PIP) install -e .
 
 ifneq ($(shell id -u),0)
 # TODO: install depends/p2p depends/gnupg

@@ -264,9 +264,9 @@ pip install -e .</code></pre>
   venv           create python3 virtual environment
   test-venv      python3 ./tests/py.test
   test-gnupg     python3 ./tests/depends/gnupg/setup.py install
-  test-gnupg     python3 ./tests/depends/gnupg/test_gnupg.py
+                 python3 ./tests/depends/gnupg/test_gnupg.py
   build          python3 setup.py build
-  install        pip install -e .
+  install        python3 -m pip install -e .
   report         environment args
   initialize     run scripts/initialize
   requirements   pip install --user -r requirements.txt
@@ -281,8 +281,10 @@ pip install -e .</code></pre>
   docs           build docs from sources/*.md</code></pre>
 <h2 id="contributing"><a
 href="./sources/CONTRIBUTING.md">Contributing</a></h2>
-<p>Check linting and formatting <code>pre-commit run -a</code></p>
-<p>Build for distribution <code>python3 setup.py build</code></p>
+<p>Check linting and formatting</p>
+<pre class="shell"><code>  pre-commit run -a</code></pre>
+<p>Build for distribution</p>
+<pre class="shell"><code>  python3 setup.py build</code></pre>
 <hr />
 <details>
 <summary>
