@@ -121,7 +121,7 @@ export DASH_U
 -: help
 
 .PHONY: init
-.ONESHELL:
+
 ##	:init           initialize requirements
 init: report initialize requirements
 	# remove this artifact from gnupg tests
@@ -159,11 +159,11 @@ clean-venv:
 	rm -rf venv
 
 .PHONY: build
-.ONESHELL:
+
 ##	:build          python3 setup.py build
 install:
 .PHONY: install
-.ONESHELL:
+
 ##	:install        pip install -e .
 install: build
 
@@ -203,13 +203,13 @@ report:
 	@echo '        - GIT_REPO_PATH=${GIT_REPO_PATH}'
 
 .PHONY: initialize
-.ONESHELL:
+
 ##	:initialize     run scripts/initialize
 initialize:
 	bash -c "./scripts/initialize"
 
 .PHONY: requirements reqs
-.ONESHELL:
+
 reqs: requirements
 ##	:requirements   pip install --user -r requirements.txt
 requirements:
@@ -218,35 +218,35 @@ requirements:
 
 .PHONY: seeder
 .QUIET:
-.ONESHELL:
+
 ##	:seeder         make -C depends/seeder
 seeder:
 	make -C depends/seeder
 
 .PHONY: legit
-.ONESHELL:
+
 ##	:legit          pushd depends/legit && cargo build --release
 legit:
 	pushd depends/legit && cargo build --release
 
 .PHONY: gogs
-.ONESHELL:
+
 ##	:gogs           make -C depends/gogs
 gogs:
 	make -C depends/gogs
 
 .PHONY: install-gnupg
-.ONESHELL:
+
 ##	:install-gnupg  install python gnupg on host
 install-gnupg:
 	pushd $(DEPENDSPATH)/gnupg && $(PYTHON3) $(DEPENDSPATH)/gnupg/setup.py install && popd
 .PHONY: gnupg-test
-.ONESHELL:
+
 ##	:gnupg-test     test depends/gnupg library
 gnupg-test:
 	pushd $(DEPENDSPATH)/gnupg && $(PYTHON3) $(DEPENDSPATH)/gnupg/test_gnupg.py
 .PHONY: install-p2p
-.ONESHELL:
+
 ##	:install-p2p    install python p2p-network on host
 install-p2p:
 	pushd $(DEPENDSPATH)/p2p && $(PYTHON3) $(DEPENDSPATH)/p2p/setup.py install && popd
@@ -254,14 +254,14 @@ install-p2p:
 
 
 .PHONY: twitter-api
-.ONESHELL:
+
 
 .PHONY: depends
 ##	:depends        build depends
 depends: seeder gogs legit
 
 .PHONY: git-add
-.ONESHELL:
+
 git-add: remove
 	@echo git-add
 
@@ -310,12 +310,12 @@ docs:
 	#git ls-files -co --exclude-standard | grep '\.md/$\' | xargs git
 
 .PHONY: clean
-.ONESHELL:
+
 clean:
 	#bash -c "rm -rf $(BUILDDIR)"
 
 .PHONY: serve
-.ONESHELL:
+
 serve:
 	bash -c "$(PYTHON3) -m http.server $(PORT) -d . &"
 
