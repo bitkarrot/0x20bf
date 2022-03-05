@@ -75,10 +75,10 @@ jobs:
           ./0x20bf/configs.py
       - name: hex_message_digest.py
         run: |
-          ./0x20bf/hex_message_digest.py
+          python3 0x20bf/hex_message_digest.py
       - name: imports.py
         run: |
-          ./0x20bf/imports.py
+          python3 0x20bf/imports.py
       - name: logger.py
         run: |
           ./0x20bf/logger.py
