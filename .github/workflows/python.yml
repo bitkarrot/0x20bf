@@ -66,6 +66,7 @@ jobs:
           make
           make requirements
           make install
+          rm -rf rokeys/.gitignore
           # setting up some "non-tests" in alphabetical order
       - name: 0x20bf.py
         run: |
