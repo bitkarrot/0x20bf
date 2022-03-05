@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 from configs import HEX_LOGGER, LOGGER, logger
-from hex_message_digest import HEX_MESSAGE_DIGEST
-from time_functions import BTC_TIME, UNIX_TIME_MILLIS
+from hex_message_digest import hex_message_digest
+from time_functions import btc_time, unix_time_millis
 
 
 def message_header(GPGR, MESSAGE, GPGS, LOC):
     # the HEADER is prepended with GPGR
     # the HEADER is appended with GPGS
-    DIGEST = HEX_MESSAGE_DIGEST(GPGR, MESSAGE, GPGS)
+    DIGEST = hex_message_digest(GPGR, MESSAGE, GPGS)
     if LOGGER:
         logger.info(DIGEST)
     # TODO branch will be dynamic based on message tree - tbd
@@ -22,9 +22,9 @@ def message_header(GPGR, MESSAGE, GPGS, LOC):
         + ":"
         + DIGEST
         + ":"
-        + str(BTC_TIME())
+        + str(btc_time())
         + ":"
-        + UNIX_TIME_MILLIS()
+        + unix_time_millis()
         + ":"
         + GPGS
         + ":"
@@ -34,7 +34,7 @@ def message_header(GPGR, MESSAGE, GPGS, LOC):
 
     if LOGGER:
         logger.info(HEADER)
-    # ":GPGR:DIGEST:BTC_TIME:UNIX_TIME_MILLIS:GPGS:LOC:"
+    # ":GPGR:DIGEST:btc_time:unix_time_millis:GPGS:LOC:"
     return HEADER
 
 
@@ -46,7 +46,7 @@ def test_message_header():
     logger.info(GPGS)
     MESSAGE = "text human readable message"
     if HEX_LOGGER:
-        logger.info(HEX_MESSAGE_DIGEST(GPGR, MESSAGE, GPGS))
+        logger.info(hex_message_digest(GPGR, MESSAGE, GPGS))
     logger.info(str(message_header(GPGR, MESSAGE, GPGS, "test/location")))
     return message_header(GPGR, MESSAGE, GPGS, "test/location")
 
