@@ -56,6 +56,7 @@ config.read('configs.ini')
 config.sections()
 config.get('DEFAULTSECT', "", fallback=False)
 config.get('LOGGERDEFAULTS', "", fallback=False)
+config.get('USERDEFAULTS', "", fallback=False)
 
 if is_macos:
     if config.getboolean('LOGGERDEFAULTS', 'os_logger'):
@@ -70,8 +71,8 @@ if is_windows:
         logger.info(str("is_windows"))
 
 for key in config['DEFAULTSECT']:
-    print(key)
+    logger.info(key)
 for key in config['LOGGERDEFAULTS']:
-    print(key)
+    logger.info(key)
 for key in config['USERDEFAULTS']:
-    print(key)
+    logger.info(key)

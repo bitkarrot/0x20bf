@@ -1,16 +1,37 @@
 #!/usr/bin/env python3
 import hashlib
 
-from configs import HEX_LOGGER, LOGGER, OLD_BLOCK_TIME, TWEET
+from configs import OLD_BLOCK_TIME
+import configparser
 from logger import logger
-from search_gpgr import search_gpgr
-from search_gpgs import search_gpgs
+from search_gpg_key import search_gpg_key
 from time_functions import btc_time, unix_time_millis
-from twitter_api_keys import AT, ATS, CAK, CASK
 from TwitterAPI import TwitterAPI
 
-if TWEET:
-    api = TwitterAPI(CAK, CASK, AT, ATS)
+# REF: https://docs.python.org/3/library/configparser.html
+config = configparser.ConfigParser()
+config.read('configs.ini')
+config.sections()
+config.get('DEFAULTSECT', "", fallback=False)
+config.get('LOGGERDEFAULTS', "", fallback=False)
+config.get('USERDEFAULTS', "", fallback=False)
+
+
+if config.getboolean('USERDEFAULTS', 'tweet'):
+    twitter_api = configparser.ConfigParser()
+    twitter_api.read('twitter.ini')
+    twitter_api.sections()
+    twitter_api.get('TWITTERAPI', "", fallback=0)
+    AT = twitter_api.get('[TWITTERAPI]', 'access_token')
+    ATS = twitter_api.get('[TWITTERAPI]', 'access_token_secret')
+    CAK = twitter_api.get('[TWITTERAPI]', 'consumer_api_key')
+    CASK = twitter_api.get('[TWITTERAPI]', 'consumer_api_secret_key')
+    api = TwitterAPI(
+        CAK,
+        CASK,
+        AT,
+        ATS
+    )
 
 
 def DELIMITER_STRIPPER(string):
@@ -37,36 +58,35 @@ def HEX_MESSAGE_TREE(recipient, sender):
     sender = DELIMITER_STRIPPER(sender)
 
     n_256 = hashlib.sha256()
-    if HEX_LOGGER:
+    if config.getboolean('LOGGERDEFAULTS', 'hex_logger'):
         logger.info("n_256:")
-    if HEX_LOGGER:
+    if config.getboolean('LOGGERDEFAULTS', 'hex_logger'):
         logger.info(n_256.hexdigest())
     # empty string reserved for protocol
     assert n_256.hexdigest() == test_hash_lib()
 
     # SHA256() + GPGR
     n_256.update(bytes(recipient, "utf-8"))
-    # if (HEX_LOGGER): logger.info(n_256.digest())
-    if HEX_LOGGER:
+    # if (hex_logger): logger.info(n_256.digest())
+    if config.getboolean('LOGGERDEFAULTS', 'hex_logger'):
         logger.info("n_256 + recipient:")
-    if HEX_LOGGER:
+    if config.getboolean('LOGGERDEFAULTS', 'hex_logger'):
         logger.info(n_256.hexdigest())
-    # if (HEX_LOGGER): logger.info(n_256.digest_size)
-    # if (HEX_LOGGER): logger.info(n_256.block_size)
+    # if (hex_logger): logger.info(n_256.digest_size)
+    # if (hex_logger): logger.info(n_256.block_size)
 
     # SHA256() + GPGR+GPGS
     n_256.update(bytes(sender, "utf-8"))
-    # if (HEX_LOGGER): logger.info(n_256.digest())
-    # if (HEX_LOGGER): logger.info(n_256.hexdigest())
-    if HEX_LOGGER:
+    # if (hex_logger): logger.info(n_256.digest())
+    # if (hex_logger): logger.info(n_256.hexdigest())
+    if config.getboolean('LOGGERDEFAULTS', 'hex_logger'):
         logger.info("n_256 + recipient+sender:")
-    if HEX_LOGGER:
         logger.info(n_256.hexdigest())
-    # if (HEX_LOGGER): logger.info(n_256.digest_size)
-    # if (HEX_LOGGER): logger.info(n_256.block_size)
+    # if (hex_logger): logger.info(n_256.digest_size)
+    # if (hex_logger): logger.info(n_256.block_size)
 
     # TODO: populate message tree
-    if HEX_LOGGER:
+    if config.getboolean('LOGGERDEFAULTS', 'hex_logger'):
         logger.info(n_256.hexdigest())
 
     return n_256.hexdigest()
@@ -81,37 +101,37 @@ def HEX_MESSAGE_DIGEST(recipient, message, sender):
     # empty string reserved for protocol
     assert n_256.hexdigest() == test_hash_lib()
 
-    # if (HEX_LOGGER): logger.info("%s",n_256.digest())
-    # if (HEX_LOGGER): logger.info(n_256.hexdigest())
-    # if (HEX_LOGGER): logger.info(n_256.digest_size)
-    # if (HEX_LOGGER): logger.info(n_256.block_size)
+    # if (hex_logger): logger.info("%s",n_256.digest())
+    # if (hex_logger): logger.info(n_256.hexdigest())
+    # if (hex_logger): logger.info(n_256.digest_size)
+    # if (hex_logger): logger.info(n_256.block_size)
 
     # SHA256() + GPGR
     n_256.update(bytes(recipient, "utf-8"))
-    # if (HEX_LOGGER): logger.info(n_256.digest())
-    if HEX_LOGGER:
+    # if (hex_logger): logger.info(n_256.digest())
+    if config.getboolean('LOGGERDEFAULTS', 'hex_logger'):
         logger.info(n_256.hexdigest())
-    # if (HEX_LOGGER): logger.info(n_256.digest_size)
-    # if (HEX_LOGGER): logger.info(n_256.block_size)
+    # if (hex_logger): logger.info(n_256.digest_size)
+    # if (hex_logger): logger.info(n_256.block_size)
 
     # SHA256() + GPGR+MESSAGE
     n_256.update(bytes(message, "utf-8"))
-    # if (HEX_LOGGER): logger.info(n_256.digest())
-    if HEX_LOGGER:
+    # if (hex_logger): logger.info(n_256.digest())
+    if config.getboolean('LOGGERDEFAULTS', 'hex_logger'):
         logger.info(n_256.hexdigest())
-    # if (HEX_LOGGER): logger.info(n_256.digest_size)
-    # if (HEX_LOGGER): logger.info(n_256.block_size)
+    # if (hex_logger): logger.info(n_256.digest_size)
+    # if (hex_logger): logger.info(n_256.block_size)
 
     # SHA256() + GPGR+MESSAGE+GPGS
     n_256.update(bytes(sender, "utf-8"))
-    # if (HEX_LOGGER): logger.info(n_256.digest())
-    if HEX_LOGGER:
+    # if (hex_logger): logger.info(n_256.digest())
+    if config.getboolean('LOGGERDEFAULTS', 'hex_logger'):
         logger.info(n_256.hexdigest())
-    # if (HEX_LOGGER): logger.info(n_256.digest_size)
-    # if (HEX_LOGGER): logger.info(n_256.block_size)
+    # if (hex_logger): logger.info(n_256.digest_size)
+    # if (hex_logger): logger.info(n_256.block_size)
 
     # TODO: populate message tree
-    if HEX_LOGGER:
+    if config.getboolean('LOGGERDEFAULTS', 'hex_logger'):
         logger.info(n_256.hexdigest())
 
     return n_256.hexdigest()
@@ -147,7 +167,7 @@ def message_header():
         + ":"
     )
 
-    if LOGGER:
+    if config.getboolean('LOGGERDEFAULTS', 'logger'):
         logger.info(HEADER)
     # HEADER_STRUCTURE = str(":GPGR:DIGEST:btc_time:unix_time_millis:GPGS:LOC:")
     return HEADER
@@ -156,17 +176,17 @@ def message_header():
 def send_message():
     header = message_header()
     # body = message_body()
-    if LOGGER:
+    if config.getboolean('LOGGERDEFAULTS', 'logger'):
         logger.info(header)
     if btc_time() != OLD_BLOCK_TIME:
-        if TWEET:
+        if tweet:
             request = api.request("statuses/update", {"status": header})
             if request.status_code == 200:
                 logger.info("api.request SUCCESS")
             else:
                 logger.info("api.request FAILURE")
         else:
-            logger.info("TWEET=" + str(TWEET))
+            logger.info("tweet=" + str(tweet))
     else:
         logger.info("tweetblock_time() FAILURE")
 
@@ -178,13 +198,13 @@ logger.info(GPGR)
 GPGS = "BB06757B"  # randymcmillan
 logger.info(GPGS)
 MESSAGE = "text human readable message"
-if HEX_LOGGER:
+if config.getboolean('LOGGERDEFAULTS', 'hex_logger'):
     logger.info(HEX_MESSAGE_DIGEST(GPGR, MESSAGE, GPGS))
 HEX_MESSAGE_TREE(GPGR, GPGS)
 HEX_MESSAGE_DIGEST(GPGR, MESSAGE, GPGS)
 
-if TWEET:
+if config.getboolean('USERDEFAULTS', 'tweet'):
     send_message()
-if TWEET:
-    search_gpgr(GPGR)
-    search_gpgs(GPGS)
+if config.getboolean('USERDEFAULTS', 'tweet'):
+    search_gpg_key(GPGR)
+    search_gpg_key(GPGS)

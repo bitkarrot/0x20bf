@@ -3,10 +3,19 @@ import asyncio
 import os
 import shutil
 import time
+import configparser
 
 import aiohttp
 import blockcypher
-from configs import GENESIS_TIME, MEMPOOL_LOGGER, TIME_LOGGER, logger
+from logger import logger
+
+# REF: https://docs.python.org/3/library/configparser.html
+config = configparser.ConfigParser()
+config.read("configs.ini")
+config.sections()
+config.get("DEFAULTSECT", "", fallback=False)
+config.get("LOGGERDEFAULTS", "", fallback=False)
+config.get("USERDEFAULTS", "", fallback=False)
 
 
 async def touch_time(time):
@@ -59,23 +68,19 @@ def btc_time():
 
 
 def btc_unix_time_millis():
-    global btc_unix_time_millis
     global SESSION_ID
-    btc_unix_time_millis = str(btc_time()) + ":" + str(get_millis())
-    SESSION_ID = btc_unix_time_millis
+    SESSION_ID = str(btc_time()) + ":" + str(get_millis())
     f = open("SESSION_ID", "w")
     f.write("" + SESSION_ID + "\n")
     f.close()
     f = open("SESSION_ID.lock", "w")
     f.write("" + SESSION_ID + "\n")
     f.close()
-    return btc_unix_time_millis
+    return SESSION_ID
 
 
 def BTC_UNIX_TIME_SECONDS():
-    global btc_unix_time_seconds
-    btc_unix_time_seconds = str(btc_time()) + ":" + str(get_seconds())
-    return btc_unix_time_seconds
+    return str(btc_time()) + ":" + str(get_seconds())
 
 
 def unix_time_millis():
@@ -100,7 +105,9 @@ def NETWORK_MODULUS():
     # GENESIS_TIME is well known
     # btc_time() block height message was contructed is known to GPGR and GPGS
     # TODO: add functions to reconstruct :WEEBLE:WOBBLE: based on these values
-    NETWORK_MODULUS = (get_millis() - GENESIS_TIME) % btc_time()
+    NETWORK_MODULUS = (
+        get_millis() - int(config.get("DEFAULTSECT", "genesis_time"))
+    ) % btc_time()
     f = open("NETWORK_MODULUS", "w")
     f.write("" + str(NETWORK_MODULUS) + "\n")
     f.close()
@@ -121,7 +128,9 @@ def NETWORK_WEEBLE_WOBBLE():
 def NETWORK_WEEBLE():
     # (current_time - genesis time) yields time from bitcoin genesis block
     # dividing by number of blocks yields an average time per block
-    NETWORK_WEEBLE = int((get_millis() - GENESIS_TIME) / btc_time())
+    NETWORK_WEEBLE = int((
+        get_millis() - int(config.get("DEFAULTSECT", "genesis_time"))
+    ) / btc_time())
     f = open("NETWORK_WEEBLE", "w")
     f.write("" + str(NETWORK_WEEBLE) + "\n")
     f.close()
@@ -131,13 +140,13 @@ def NETWORK_WEEBLE():
 def NETWORK_WOBBLE():
     # wobble is the remainder of the weeble_wobble calculation
     # source of deterministic entropy
-    NETWORK_WOBBLE = int(
-        str(((get_millis() - 1231006505) / btc_time()) - NETWORK_WEEBLE()).strip("0.")
-    )
+    NETWORK_WOBBLE = str(float((
+        get_millis() - int(config.get("DEFAULTSECT", "genesis_time"))
+    ) / btc_time()) % 1).strip("0.")
     f = open("NETWORK_WOBBLE", "w")
     f.write("" + str(NETWORK_WOBBLE) + "\n")
     f.close()
-    return NETWORK_WOBBLE
+    return int(NETWORK_WOBBLE)
 
 
 async def fetch(session, url):
@@ -149,7 +158,7 @@ async def mempool_height():
     async with aiohttp.ClientSession() as session:
         url = "https://mempool.space/api/blocks/tip/height"
         height = await fetch(session, url)
-        if MEMPOOL_LOGGER:
+        if config.get("LOGGERDEFAULTS", "mempool_logger"):
             logger.info(height)
         return height
 
@@ -159,7 +168,7 @@ loop = asyncio.new_event_loop()
 loop.run_until_complete(mempool_height())
 loop.run_until_complete(touch_time(btc_time()))
 
-if TIME_LOGGER:
+if config.get("LOGGERDEFAULTS", "time_logger"):
     logger.info(":NETWORK_MODULUS:" + str(NETWORK_MODULUS()) + ":")
     logger.info(":NETWORK_WEEBLE:" + str(NETWORK_WEEBLE()) + ":")
     logger.info(":NETWORK_WOBBLE:" + str(NETWORK_WOBBLE()) + ":")
