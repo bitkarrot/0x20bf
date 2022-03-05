@@ -261,22 +261,30 @@ pip install -e .</code></pre>
 <h5 id="make"><a href="https://www.gnu.org/software/make/">make</a></h5>
 <pre><code>  help
   init           initialize requirements
-  install        pip install -e .
+  venv           create python3 virtual environment
+  test-venv      python3 ./tests/py.test
+  test-gnupg     python3 ./tests/depends/gnupg/setup.py install
+                 python3 ./tests/depends/gnupg/test_gnupg.py
+  build          python3 setup.py build
+  install        python3 -m pip install -e .
   report         environment args
   initialize     run scripts/initialize
   requirements   pip install --user -r requirements.txt
   seeder         make -C depends/seeder
   legit          pushd depends/legit &amp;&amp; cargo build --release
   gogs           make -C depends/gogs
-  gnupg          setup python-gnupg
+  install-gnupg  install python gnupg on host
   gnupg-test     test depends/gnupg library
+  install-p2p    install python p2p-network on host
   depends        build depends
   pre-commit     pre-commit run -a
   docs           build docs from sources/*.md</code></pre>
 <h2 id="contributing"><a
 href="./sources/CONTRIBUTING.md">Contributing</a></h2>
-<p>Check linting and formatting <code>pre-commit run -a</code></p>
-<p>Build for distribution <code>python3 setup.py build</code></p>
+<p>Check linting and formatting</p>
+<pre class="shell"><code>  pre-commit run -a</code></pre>
+<p>Build for distribution</p>
+<pre class="shell"><code>  python3 setup.py build</code></pre>
 <hr />
 <details>
 <summary>

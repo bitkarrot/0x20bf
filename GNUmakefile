@@ -36,6 +36,8 @@ PYTHONPATH=$(PWD)/0x20bf
 export PYTHONPATH
 DEPENDSPATH=$(PWD)/depends
 export DEPENDSPATH
+BUILDPATH=$(PWD)/build
+export BUILDPATH
 ifeq ($(port),)
 PORT                                    := 0
 else
@@ -119,7 +121,7 @@ export DASH_U
 -: help
 
 .PHONY: init
-.ONESHELL:
+
 ##	:init           initialize requirements
 init: report initialize requirements
 	# remove this artifact from gnupg tests
@@ -135,22 +137,35 @@ venv:
 	)
 	@echo ". venv/bin/activate"
 
+##	:test-venv      python3 ./tests/py.test
 test-venv: venv
+    # TODO: use tox config
+	. venv/bin/activate;
+	$(PYTHON3) ./tests/py.test;
+##	:test-gnupg     python3 ./tests/depends/gnupg/setup.py install
+##	:               python3 ./tests/depends/gnupg/test_gnupg.py
+test-gnupg: venv
     # TODO: use tox config
 	. venv/bin/activate;
 	$(PYTHON3) ./tests/depends/gnupg/setup.py install;
 	$(PYTHON3) ./tests/depends/gnupg/test_gnupg.py;
+test-p2p: venv
+    # TODO: use tox config
+	. venv/bin/activate;
 	pushd tests/depends/p2p && python3 setup.py install && python3 examples/my_own_p2p_application.py && popd
-	$(PYTHON3) ./tests/py.test;
 
 
 clean-venv:
 	rm -rf venv
 
-.PHONY: install
-.ONESHELL:
-##	:install        pip install -e .
+.PHONY: build install
+##	:build          python3 setup.py build
+build:
+	python3 setup.py build
 install:
+##	:install        python3 -m pip install -e .
+install: build
+	$(PYTHON3) -m $(PIP) install -e .
 
 ifneq ($(shell id -u),0)
 # TODO: install depends/p2p depends/gnupg
@@ -174,6 +189,8 @@ report:
 	@echo '        - PROJECT_NAME=${PROJECT_NAME}'
 	@echo '        - GPGBINARY=${GPGBINARY}'
 	@echo '        - PYTHONPATH=${PYTHONPATH}'
+	@echo '        - DEPENDSPATH=${DEPENDSPATH}'
+	@echo '        - BUILDPATH=${BUILDPATH}'
 	@echo '        - GIT_USER_NAME=${GIT_USER_NAME}'
 	@echo '        - GIT_USER_EMAIL=${GIT_USER_EMAIL}'
 	@echo '        - GIT_SERVER=${GIT_SERVER}'
@@ -186,13 +203,13 @@ report:
 	@echo '        - GIT_REPO_PATH=${GIT_REPO_PATH}'
 
 .PHONY: initialize
-.ONESHELL:
+
 ##	:initialize     run scripts/initialize
 initialize:
 	bash -c "./scripts/initialize"
 
 .PHONY: requirements reqs
-.ONESHELL:
+
 reqs: requirements
 ##	:requirements   pip install --user -r requirements.txt
 requirements:
@@ -201,45 +218,50 @@ requirements:
 
 .PHONY: seeder
 .QUIET:
-.ONESHELL:
+
 ##	:seeder         make -C depends/seeder
 seeder:
 	make -C depends/seeder
 
 .PHONY: legit
-.ONESHELL:
+
 ##	:legit          pushd depends/legit && cargo build --release
 legit:
 	pushd depends/legit && cargo build --release
 
 .PHONY: gogs
-.ONESHELL:
+
 ##	:gogs           make -C depends/gogs
 gogs:
 	make -C depends/gogs
 
-.PHONY: gnupg
-.ONESHELL:
-##	:gnupg          setup python-gnupg
-gnupg:
+.PHONY: install-gnupg
+
+##	:install-gnupg  install python gnupg on host
+install-gnupg:
 	pushd $(DEPENDSPATH)/gnupg && $(PYTHON3) $(DEPENDSPATH)/gnupg/setup.py install && popd
 .PHONY: gnupg-test
-.ONESHELL:
+
 ##	:gnupg-test     test depends/gnupg library
 gnupg-test:
 	pushd $(DEPENDSPATH)/gnupg && $(PYTHON3) $(DEPENDSPATH)/gnupg/test_gnupg.py
+.PHONY: install-p2p
+
+##	:install-p2p    install python p2p-network on host
+install-p2p:
+	pushd $(DEPENDSPATH)/p2p && $(PYTHON3) $(DEPENDSPATH)/p2p/setup.py install && popd
 
 
 
 .PHONY: twitter-api
-.ONESHELL:
+
 
 .PHONY: depends
 ##	:depends        build depends
 depends: seeder gogs legit
 
 .PHONY: git-add
-.ONESHELL:
+
 git-add: remove
 	@echo git-add
 
@@ -288,12 +310,12 @@ docs:
 	#git ls-files -co --exclude-standard | grep '\.md/$\' | xargs git
 
 .PHONY: clean
-.ONESHELL:
+
 clean:
 	#bash -c "rm -rf $(BUILDDIR)"
 
 .PHONY: serve
-.ONESHELL:
+
 serve:
 	bash -c "$(PYTHON3) -m http.server $(PORT) -d . &"
 
