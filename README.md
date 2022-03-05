@@ -109,6 +109,11 @@ pip install -e .
 ##### [make](https://www.gnu.org/software/make/)
  	  help
  	  init           initialize requirements
+ 	  venv           create python3 virtual environment
+ 	  test-venv      python3 ./tests/py.test
+ 	  test-gnupg     python3 ./tests/depends/gnupg/setup.py install
+ 	  test-gnupg     python3 ./tests/depends/gnupg/test_gnupg.py
+ 	  build          python3 setup.py build
  	  install        pip install -e .
  	  report         environment args
  	  initialize     run scripts/initialize
@@ -116,8 +121,9 @@ pip install -e .
  	  seeder         make -C depends/seeder
  	  legit          pushd depends/legit && cargo build --release
  	  gogs           make -C depends/gogs
- 	  gnupg          setup python-gnupg
+ 	  install-gnupg  install python gnupg on host
  	  gnupg-test     test depends/gnupg library
+ 	  install-p2p    install python p2p-network on host
  	  depends        build depends
  	  pre-commit     pre-commit run -a
  	  docs           build docs from sources/*.md
