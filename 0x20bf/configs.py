@@ -1,29 +1,23 @@
 #!/usr/bin/env python3
 import os
+import configparser
 
 import psutil
 from logger import logger
 
 USER = psutil.Process().username()
-IS_MACOS = psutil.MACOS
-IS_LINUX = psutil.LINUX
-IS_WINDOWS = psutil.WINDOWS
+is_macos = psutil.MACOS
+is_linux = psutil.LINUX
+is_windows = psutil.WINDOWS
 
 # Setup logging
-global LOGGER
-LOGGER = True
-global OS_LOGGER
-OS_LOGGER = False
-global DATA_LOGGER
-DATA_LOGGER = False
-global HEX_LOGGER
-HEX_LOGGER = True
-global GENESIS_TIME
-GENESIS_TIME = 1231006505
-global TIME_LOGGER
-TIME_LOGGER = True
-global MEMPOOL_LOGGER
-MEMPOOL_LOGGER = False
+global logger
+global os_logger
+global data_logger
+global hex_logger
+global genesis_time
+global time_logger
+global mempool_logger
 
 # time_function data
 global BLOCK_TIP_HEIGHT
@@ -45,19 +39,30 @@ global GPGR
 global GPGS
 global MESSAGE
 global GOLDEN_RATIO
-GOLDEN_RATIO = 1.6180339887498948482045868343656381177203091798057628621354486227
 
 global TWEET
-TWEET = False
 
-if IS_MACOS:
-    if OS_LOGGER:
+config = configparser.ConfigParser()
+config.read('configs.ini')
+config.sections()
+config.get('DEFAULTSECT', "", fallback=False)
+config.get('LOGGERDEFAULTS', "", fallback=False)
+
+if is_macos:
+    if config.getboolean('LOGGERDEFAULTS', 'os_logger'):
         logger.info(str("IS_MACOS"))
 
-if IS_LINUX:
-    if OS_LOGGER:
+if is_linux:
+    if config.getboolean('LOGGERDEFAULTS', 'os_logger'):
         logger.info(str("IS_LINUX"))
 
-if IS_WINDOWS:
-    if OS_LOGGER:
+if is_windows:
+    if config.getboolean('LOGGERDEFAULTS', 'os_logger'):
         logger.info(str("IS_WINDOWS"))
+
+for key in config['DEFAULTSECT']:
+    print(key)
+for key in config['LOGGERDEFAULTS']:
+    print(key)
+for key in config['USERDEFAULTS']:
+    print(key)
