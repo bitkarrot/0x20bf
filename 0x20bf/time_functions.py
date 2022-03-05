@@ -6,8 +6,7 @@ import time
 
 import aiohttp
 import blockcypher
-from configs import GENESIS_TIME, MEMPOOL_LOGGER, TIME_LOGGER
-from logger import logger
+from configs import GENESIS_TIME, MEMPOOL_LOGGER, TIME_LOGGER, logger
 
 
 async def touch_time(time):
@@ -51,18 +50,18 @@ def blockcypher_height():
         pass
 
 
-def BTC_TIME():
-    # TODO: ADD AS MANY SOURCES FOR BTC_TIME() AS POSSIBLE!!!
+def btc_time():
+    # TODO: ADD AS MANY SOURCES FOR btc_time() AS POSSIBLE!!!
     mempool_loop = asyncio.new_event_loop()
     BTC_TIME = mempool_loop.run_until_complete(mempool_height())
     # assert int(BTC_TIME) >= int(blockcypher_height())
     return int(BTC_TIME)
 
 
-def BTC_UNIX_TIME_MILLIS():
+def btc_unix_time_millis():
     global btc_unix_time_millis
     global SESSION_ID
-    btc_unix_time_millis = str(BTC_TIME()) + ":" + str(get_millis())
+    btc_unix_time_millis = str(btc_time()) + ":" + str(get_millis())
     SESSION_ID = btc_unix_time_millis
     f = open("SESSION_ID", "w")
     f.write("" + SESSION_ID + "\n")
@@ -75,11 +74,11 @@ def BTC_UNIX_TIME_MILLIS():
 
 def BTC_UNIX_TIME_SECONDS():
     global btc_unix_time_seconds
-    btc_unix_time_seconds = str(BTC_TIME()) + ":" + str(get_seconds())
+    btc_unix_time_seconds = str(btc_time()) + ":" + str(get_seconds())
     return btc_unix_time_seconds
 
 
-def UNIX_TIME_MILLIS():
+def unix_time_millis():
     global unix_time_millis
     unix_time_millis = str(get_millis())
     return unix_time_millis
@@ -99,9 +98,9 @@ def NETWORK_MODULUS():
     # source of deterministic entropy
     # get_millis() is known to the GPGS and GPGR
     # GENESIS_TIME is well known
-    # BTC_TIME() block height message was contructed is known to GPGR and GPGS
+    # btc_time() block height message was contructed is known to GPGR and GPGS
     # TODO: add functions to reconstruct :WEEBLE:WOBBLE: based on these values
-    NETWORK_MODULUS = (get_millis() - GENESIS_TIME) % BTC_TIME()
+    NETWORK_MODULUS = (get_millis() - GENESIS_TIME) % btc_time()
     f = open("NETWORK_MODULUS", "w")
     f.write("" + str(NETWORK_MODULUS) + "\n")
     f.close()
@@ -110,8 +109,8 @@ def NETWORK_MODULUS():
 
 def NETWORK_WEEBLE_WOBBLE():
     # :WEEBLE:WOBBLE: construction
-    NETWORK_WEEBLE_WOBBLE = (
-        str(":" + NETWORK_WEEBLE()) + ":" + str(NETWORK_WOBBLE() + ":")
+    NETWORK_WEEBLE_WOBBLE = str(
+        ":" + str(NETWORK_WEEBLE()) + ":" + str(NETWORK_WOBBLE()) + ":"
     )
     f = open("NETWORK_WEEBLE_WOBBLE", "w")
     f.write("" + str(NETWORK_WEEBLE_WOBBLE) + "\n")
@@ -122,7 +121,7 @@ def NETWORK_WEEBLE_WOBBLE():
 def NETWORK_WEEBLE():
     # (current_time - genesis time) yields time from bitcoin genesis block
     # dividing by number of blocks yields an average time per block
-    NETWORK_WEEBLE = int((get_millis() - GENESIS_TIME) / BTC_TIME())
+    NETWORK_WEEBLE = int((get_millis() - GENESIS_TIME) / btc_time())
     f = open("NETWORK_WEEBLE", "w")
     f.write("" + str(NETWORK_WEEBLE) + "\n")
     f.close()
@@ -133,7 +132,7 @@ def NETWORK_WOBBLE():
     # wobble is the remainder of the weeble_wobble calculation
     # source of deterministic entropy
     NETWORK_WOBBLE = int(
-        str(((get_millis() - 1231006505) / BTC_TIME()) - NETWORK_WEEBLE()).strip("0.")
+        str(((get_millis() - 1231006505) / btc_time()) - NETWORK_WEEBLE()).strip("0.")
     )
     f = open("NETWORK_WOBBLE", "w")
     f.write("" + str(NETWORK_WOBBLE) + "\n")
@@ -156,13 +155,12 @@ async def mempool_height():
 
 
 loop = asyncio.new_event_loop()
-loop = asyncio.get_event_loop()
+# loop = asyncio.get_event_loop()
 loop.run_until_complete(mempool_height())
-loop.run_until_complete(touch_time(BTC_TIME()))
-
+loop.run_until_complete(touch_time(btc_time()))
 
 if TIME_LOGGER:
-    logger.info("NETWORK_MODULUS:" + str(NETWORK_MODULUS()))
-    # logger.info("NETWORK_WEEBLE: " + str(NETWORK_WEEBLE()))
-    # logger.info("NETWORK_WOBBLE: " + str(NETWORK_WOBBLE()))
-    logger.info("NETWORK_WEEBLE_WOBBLE:" + str(NETWORK_WEEBLE_WOBBLE()))
+    logger.info(":NETWORK_MODULUS:" + str(NETWORK_MODULUS()) + ":")
+    logger.info(":NETWORK_WEEBLE:" + str(NETWORK_WEEBLE()) + ":")
+    logger.info(":NETWORK_WOBBLE:" + str(NETWORK_WOBBLE()) + ":")
+    logger.info(":NETWORK_WEEBLE_WOBBLE" + str(NETWORK_WEEBLE_WOBBLE()))
