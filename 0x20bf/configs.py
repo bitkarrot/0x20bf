@@ -1,8 +1,17 @@
 #!/usr/bin/env python3
+import argparse
 import os
 
 import psutil
+
 from logger import logger
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--log", help="enable logging", action="store_true")
+args = parser.parse_args()
+if args.log:
+    print("logging turned on")
+
 
 USER = psutil.Process().username()
 IS_MACOS = psutil.MACOS
