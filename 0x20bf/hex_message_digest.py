@@ -1,9 +1,11 @@
 import hashlib
 
-from configs import HEX_LOGGER, LOGGER
 from delimiter_stripper import delimiter_stripper
 from logger import logger
 from time_functions import btc_time, unix_time_millis
+
+LOGGER = True
+HEX_LOGGER = True
 
 
 def test_hash_lib_sha256():
