@@ -2,7 +2,8 @@
 import asyncio
 
 import aiohttp
-from configs import MEMPOOL_LOGGER, logger
+from logger import logger
+MEMPOOL_LOGGER = True
 
 
 async def fetch(session, url):
