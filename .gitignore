@@ -181,3 +181,4 @@ test_gnupg.log
 tests/touchfile
 0x20bf/debug.log
 BLOCKCYPHER_HEIGHT
+0x20bf/twitter.ini

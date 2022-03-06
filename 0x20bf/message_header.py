@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
-from configs import HEX_LOGGER, LOGGER, logger
+from logger import logger
 from hex_message_digest import hex_message_digest
 from time_functions import btc_time, unix_time_millis
+
+LOGGER = True
+HEX_LOGGER = True
 
 
 def message_header(GPGR, MESSAGE, GPGS, LOC):
