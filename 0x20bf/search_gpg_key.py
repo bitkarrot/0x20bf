@@ -1,5 +1,5 @@
-from time_functions import btc_unix_time_millis
 from logger import logger
+from time_functions import btc_unix_time_millis
 
 
 def search_gpg_key(gpg_key, api):
