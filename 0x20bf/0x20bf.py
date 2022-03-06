@@ -4,7 +4,7 @@ from configs import HEX_LOGGER, LOGGER, OLD_BLOCK_TIME, TWEET
 from logger import logger
 from search_gpgr import search_gpgr
 from search_gpgs import search_gpgs
-from time_functions import BTC_TIME, UNIX_TIME_MILLIS
+from time_functions import btc_time, unix_time_millis
 from twitter_api_keys import AT, ATS, CAK, CASK
 from TwitterAPI import TwitterAPI
 
@@ -124,8 +124,8 @@ def message_header():
         "https://github.com/0x20bf-org/0x20bf/blob/main/"
         + GPGR
         + DIGEST
-        + BTC_TIME()
-        + UNIX_TIME_MILLIS()
+        + btc_time()
+        + unix_time_millis()
         + GPGS
         + ".txt.gpg"
     )
@@ -136,9 +136,9 @@ def message_header():
         + ":"
         + DIGEST
         + ":"
-        + BTC_TIME()
+        + btc_time()
         + ":"
-        + UNIX_TIME_MILLIS()
+        + unix_time_millis()
         + ":"
         + GPGS
         + ":"
@@ -148,7 +148,7 @@ def message_header():
 
     if LOGGER:
         logger.info(HEADER)
-    # HEADER_STRUCTURE = str(":GPGR:DIGEST:BTC_TIME:UNIX_TIME_MILLIS:GPGS:LOC:")
+    # HEADER_STRUCTURE = str(":GPGR:DIGEST:btc_time:unix_time_millis:GPGS:LOC:")
     return HEADER
 
 
@@ -157,7 +157,7 @@ def send_message():
     # body = message_body()
     if LOGGER:
         logger.info(header)
-    if BTC_TIME() != OLD_BLOCK_TIME:
+    if btc_time() != OLD_BLOCK_TIME:
         if TWEET:
             request = api.request("statuses/update", {"status": header})
             if request.status_code == 200:
@@ -170,7 +170,7 @@ def send_message():
         logger.info("tweetblock_time() FAILURE")
 
 
-# logger.info(BTC_UNIX_TIME_MILLIS())
+# logger.info(BTC_unix_time_millis())
 
 GPGR = "4DC9817F"  # bitkarrot
 logger.info(GPGR)

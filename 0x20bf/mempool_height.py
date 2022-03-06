@@ -18,5 +18,6 @@ async def mempool_height():
         return height
 
 
-loop = asyncio.get_event_loop()
+loop = asyncio.new_event_loop()
+# loop = asyncio.get_event_loop()
 loop.run_until_complete(mempool_height())

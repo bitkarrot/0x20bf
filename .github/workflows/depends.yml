@@ -49,6 +49,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           architecture: x64
+
       - name: automate matrix
         run: |
           printenv
@@ -60,5 +61,11 @@ jobs:
         if: steps.cache-depends.outputs.cache-hit != 'true'
         run: |
           make initialize
+          make install-gnupg
+          make gnupg-test
           make depends
+      - name: make gnupg-test
+        if: steps.cache-depends.outputs.cache-hit != 'true'
+        run: |
+            make gnupg-test
 

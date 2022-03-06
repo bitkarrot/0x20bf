@@ -1,7 +1,9 @@
 import asyncio
 import time
-import blockcypher
 
+import blockcypher
+from configs import LOGGER
+from logger import logger
 from mempool_height import mempool_height
 
 millis = int(round(time.time() * 1000))
@@ -10,17 +12,18 @@ seconds = int(round(time.time()))
 try:
     block_time = blockcypher.get_latest_block_height(coin_symbol="btc")
     block_height = repr(block_time)
-    f = open("BLOCK_TIME", "w")
+    f = open("BLOCKCYPHER_HEIGHT", "w")
     f.write("" + block_height + "\n")
     f.close()
-    # print(block_time)
-    # print(block_height)
+    if LOGGER:
+        logger.info(block_time)
+        logger.info(block_height)
 except Exception:
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(mempool_height())
-    # logger.info(loop.run_until_complete(mempool_height()))
+    loop = asyncio.new_event_loop()
     block_height = loop.run_until_complete(mempool_height())
-    f = open("BLOCK_TIME", "w")
+    if LOGGER:
+        logger.info(str(block_height))
+    f = open("MEMPOOL_SPACE_HEIGHT", "w")
     f.write("" + block_height + "\n")
     f.close()
     pass

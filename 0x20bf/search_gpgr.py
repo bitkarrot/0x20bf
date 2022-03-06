@@ -1,6 +1,6 @@
 from configs import TWEET
 from logger import logger
-from time_functions import BTC_UNIX_TIME_MILLIS
+from time_functions import btc_unix_time_millis
 from twitter_api_keys import AT, ATS, CAK, CASK
 from TwitterAPI import TwitterAPI
 
@@ -17,7 +17,7 @@ def search_gpgr(GPGR):
         global r
         request = api.request("search/tweets", {"q": GPGR})
         try:
-            with open(GPGR + ":" + BTC_UNIX_TIME_MILLIS(), "w+") as f:
+            with open(GPGR + ":" + btc_unix_time_millis(), "w+") as f:
                 f.write(request.text)
                 f.close
         except Exception:

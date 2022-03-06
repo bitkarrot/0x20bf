@@ -1,8 +1,10 @@
 SHELL                                   := /bin/bash
-PWD 									?= pwd_unknown
-TIME 									:= $(shell date +%s)
+PWD                                     ?= pwd_unknown
+TIME                                    := $(shell date +%s)
 export TIME
 
+GPGBINARY                               := $(shell which gpg)
+export GPGBINARY
 PYTHON                                  := $(shell which python)
 export PYTHON
 PYTHON2                                 := $(shell which python2)
@@ -25,48 +27,52 @@ export PIP3
 endif
 
 ifeq ($(project),)
-PROJECT_NAME							:= $(notdir $(PWD))
+PROJECT_NAME                            := $(notdir $(PWD))
 else
-PROJECT_NAME							:= $(project)
+PROJECT_NAME                            := $(project)
 endif
 export PROJECT_NAME
 PYTHONPATH=$(PWD)/0x20bf
 export PYTHONPATH
+DEPENDSPATH=$(PWD)/depends
+export DEPENDSPATH
+BUILDPATH=$(PWD)/build
+export BUILDPATH
 ifeq ($(port),)
-PORT									:= 0
+PORT                                    := 0
 else
-PORT									:= $(port)
+PORT                                    := $(port)
 endif
 export PORT
 
 #GIT CONFIG
-GIT_USER_NAME							:= $(shell git config user.name)
+GIT_USER_NAME                           := $(shell git config user.name)
 export GIT_USER_NAME
 ifneq ($(USER),runner)
 USER:=--user
 else
 USER:=
 endif
-GH_USER_NAME							:= $(shell git config user.name)
+GH_USER_NAME                            := $(shell git config user.name)
 export GIT_USER_NAME
 
-GIT_USER_EMAIL							:= $(shell git config user.email)
+GIT_USER_EMAIL                          := $(shell git config user.email)
 export GIT_USER_EMAIL
-GIT_SERVER								:= https://github.com
+GIT_SERVER                              := https://github.com
 export GIT_SERVER
-GIT_SSH_SERVER							:= git@github.com
+GIT_SSH_SERVER                          := git@github.com
 export GIT_SSH_SERVER
-GIT_PROFILE								:= $(shell git config user.name)
+GIT_PROFILE                             := $(shell git config user.name)
 export GIT_PROFILE
-GIT_BRANCH								:= $(shell git rev-parse --abbrev-ref HEAD)
+GIT_BRANCH                              := $(shell git rev-parse --abbrev-ref HEAD)
 export GIT_BRANCH
-GIT_HASH								:= $(shell git rev-parse --short HEAD)
+GIT_HASH                                := $(shell git rev-parse --short HEAD)
 export GIT_HASH
-GIT_REPO_ORIGIN							:= $(shell git remote get-url origin)
+GIT_REPO_ORIGIN                         := $(shell git remote get-url origin)
 export GIT_REPO_ORIGIN
-GIT_REPO_NAME							:= $(PROJECT_NAME)
+GIT_REPO_NAME                           := $(PROJECT_NAME)
 export GIT_REPO_NAME
-GIT_REPO_PATH							:= $(HOME)/$(GIT_REPO_NAME)
+GIT_REPO_PATH                           := $(HOME)/$(GIT_REPO_NAME)
 export GIT_REPO_PATH
 
 BASENAME := $(shell basename -s .git `git config --get remote.origin.url`)
@@ -102,20 +108,71 @@ PRIVATE_ALLSPHINXOPTS = -d $(PRIVATE_BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(S
 # the i18n builder cannot share the environment and doctrees with the others
 I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
 
+ifneq ($(shell id -u),0)
+DASH_U:=-U
+else
+DASH_U:=
+endif
+export DASH_U
+
+
 .PHONY: -
 ##	:help
-
 -: help
 
 .PHONY: init
-.ONESHELL:
+
 ##	:init           initialize requirements
 init: report initialize requirements
-.PHONY: install
-.ONESHELL:
-##	:install        pip install -e .
+	# remove this artifact from gnupg tests
+	sudo rm -rf rokeys/.gitignore
+
+.PHONY: venv
+##	:venv           create python3 virtual environment
+venv:
+	test -d venv || virtualenv venv
+	( \
+	   source venv/bin/activate; \
+	   pip install -r requirements.txt; \
+	)
+	@echo ". venv/bin/activate"
+
+##	:test-venv      python3 ./tests/py.test
+test-venv: venv
+    # TODO: use tox config
+	. venv/bin/activate;
+	$(PYTHON3) ./tests/py.test;
+##	:test-gnupg     python3 ./tests/depends/gnupg/setup.py install
+##	:               python3 ./tests/depends/gnupg/test_gnupg.py
+test-gnupg: venv
+    # TODO: use tox config
+	. venv/bin/activate;
+	$(PYTHON3) ./tests/depends/gnupg/setup.py install;
+	$(PYTHON3) ./tests/depends/gnupg/test_gnupg.py;
+test-p2p: venv
+    # TODO: use tox config
+	. venv/bin/activate;
+	pushd tests/depends/p2p && python3 setup.py install && python3 examples/my_own_p2p_application.py && popd
+
+
+clean-venv:
+	rm -rf venv
+
+.PHONY: build install
+##	:build          python3 setup.py build
+build:
+	python3 setup.py build
 install:
+##	:install        python3 -m pip install -e .
+install: build
 	$(PYTHON3) -m $(PIP) install -e .
+
+ifneq ($(shell id -u),0)
+# TODO: install depends/p2p depends/gnupg
+	$(PYTHON3) -m $(PIP) install $(DASH_U) -e .
+else
+	$(PYTHON3) -m $(PIP) install $(DASH_U) -e .
+endif
 
 .PHONY: help
 help:
@@ -130,7 +187,10 @@ report:
 	@echo '        - TIME=${TIME}'
 	@echo '        - BASENAME=${BASENAME}'
 	@echo '        - PROJECT_NAME=${PROJECT_NAME}'
+	@echo '        - GPGBINARY=${GPGBINARY}'
 	@echo '        - PYTHONPATH=${PYTHONPATH}'
+	@echo '        - DEPENDSPATH=${DEPENDSPATH}'
+	@echo '        - BUILDPATH=${BUILDPATH}'
 	@echo '        - GIT_USER_NAME=${GIT_USER_NAME}'
 	@echo '        - GIT_USER_EMAIL=${GIT_USER_EMAIL}'
 	@echo '        - GIT_SERVER=${GIT_SERVER}'
@@ -143,49 +203,65 @@ report:
 	@echo '        - GIT_REPO_PATH=${GIT_REPO_PATH}'
 
 .PHONY: initialize
-.ONESHELL:
+
 ##	:initialize     run scripts/initialize
 initialize:
 	bash -c "./scripts/initialize"
 
 .PHONY: requirements reqs
-.ONESHELL:
+
 reqs: requirements
 ##	:requirements   pip install --user -r requirements.txt
 requirements:
-	$(PYTHON3) -m $(PIP) install $(USER) --upgrade pip
-	$(PYTHON3) -m $(PIP) install $(USER) -r requirements.txt
+	$(PYTHON3) -m $(PIP) install $(DASH_U) --upgrade pip
+	$(PYTHON3) -m $(PIP) install $(DASH_U) -r requirements.txt
 
-.PHONY:
+.PHONY: seeder
 .QUIET:
-.ONESHELL:
+
 ##	:seeder         make -C depends/seeder
 seeder:
 	make -C depends/seeder
 
+.PHONY: legit
+
+##	:legit          pushd depends/legit && cargo build --release
+legit:
+	pushd depends/legit && cargo build --release
+
 .PHONY: gogs
-.ONESHELL:
+
 ##	:gogs           make -C depends/gogs
 gogs:
 	make -C depends/gogs
 
-.PHONY: gnupg
-.ONESHELL:
-##	:gnupg          setup python-gnupg
-gnupg:
-	pushd $(PYTHONPATH)/gnupg && $(PYTHON3) $(PYTHONPATH)/gnupg/setup.py install && popd
+.PHONY: install-gnupg
+
+##	:install-gnupg  install python gnupg on host
+install-gnupg:
+	pushd $(DEPENDSPATH)/gnupg && $(PYTHON3) $(DEPENDSPATH)/gnupg/setup.py install && popd
+.PHONY: gnupg-test
+
+##	:gnupg-test     test depends/gnupg library
+gnupg-test:
+	pushd $(DEPENDSPATH)/gnupg && $(PYTHON3) $(DEPENDSPATH)/gnupg/test_gnupg.py
+.PHONY: install-p2p
+
+##	:install-p2p    install python p2p-network on host
+install-p2p:
+	pushd $(DEPENDSPATH)/p2p && $(PYTHON3) $(DEPENDSPATH)/p2p/setup.py install && popd
+
+
+
 .PHONY: twitter-api
-.ONESHELL:
-##	:twitter-api    setup TwitterAPI
-twitter-api:
-	pushd $(PYTHONPATH)/TwitterAPI && $(PYTHON3) $(PYTHONPATH)/TwitterAPI/setup.py install && popd
+
 
 .PHONY: depends
 ##	:depends        build depends
-depends: seeder gogs
+depends: seeder gogs legit
 
 .PHONY: git-add
-.ONESHELL:
+
 git-add: remove
 	@echo git-add
 
@@ -206,6 +282,11 @@ git-add: remove
 	#git add --ignore-errors BLOCK_TIP_HEIGHT
 	#git add --ignore-errors DIFFICULTY
 	#git add --ignore-errors TIME
+
+.PHONY: pre-commit
+##	:pre-commit     pre-commit run -a
+pre-commit:
+	pre-commit run -a
 
 .PHONY: docs
 ##	:docs           build docs from sources/*.md
@@ -228,26 +309,13 @@ docs:
 	git add --ignore-errors *.md
 	#git ls-files -co --exclude-standard | grep '\.md/$\' | xargs git
 
-.PHONY: remove
-remove:
-	rm -rf legit
-
-.PHONY: legit
-.ONESHELL:
-legit:
-
-	if [ -f ./legit/README.md ]; then make -C dotfiles ; else git clone -b master --depth 1 https://github.com/randymcmillan/legit ./legit; fi
-	#TODO make all
-	#make all -C legit
-	cd legit && ./make-legit.sh
-
 .PHONY: clean
-.ONESHELL:
+
 clean:
 	#bash -c "rm -rf $(BUILDDIR)"
 
 .PHONY: serve
-.ONESHELL:
+
 serve:
 	bash -c "$(PYTHON3) -m http.server $(PORT) -d . &"
 

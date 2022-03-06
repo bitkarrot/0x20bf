@@ -2,8 +2,14 @@
 ## [Contributing](./sources/CONTRIBUTING.md)
 
 Check linting and formatting
-`pre-commit run -a`
+
+```shell
+  pre-commit run -a
+```
 
 Build for distribution
-`python3 setup.py build`
+
+```shell
+  python3 setup.py build
+```
 
