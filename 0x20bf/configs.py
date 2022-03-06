@@ -1,16 +1,24 @@
 #!/usr/bin/env python3
 import argparse
+import logging
 import os
-
 import psutil
 
-from logger import logger
-
 parser = argparse.ArgumentParser()
-parser.add_argument("--log", help="enable logging", action="store_true")
+parser.add_argument( '-log',
+                     default='warning',
+                     help='Provide logging level. Example --log debug, default=warning' )
+
 args = parser.parse_args()
+
 if args.log:
-    print("logging turned on")
+    level_config = {'DEBUG': logging.DEBUG, 'INFO': logging.INFO, 'WARNING': logging.WARNING} 
+    log_level = level_config[parser.parse_args().log.upper()]
+    logging.basicConfig(level=log_level, format="%(asctime)s %(message)s", datefmt="%j.%Y %I:%M:%S %p")
+    msg = f'Logging now setup at {args.log.upper()}'
+    logging.info(msg)
+
+logger = logging.getLogger()
 
 
 USER = psutil.Process().username()
