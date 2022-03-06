@@ -3,9 +3,10 @@ import asyncio
 import time
 
 import blockcypher
-from configs import LOGGER
 from logger import logger
 from mempool_height import mempool_height
+
+LOGGER = True
 
 millis = int(round(time.time() * 1000))
 seconds = int(round(time.time()))
