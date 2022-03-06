@@ -3,6 +3,7 @@ import asyncio
 
 import aiohttp
 from logger import logger
+
 MEMPOOL_LOGGER = True
 
 

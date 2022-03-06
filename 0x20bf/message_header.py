@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-from logger import logger
 from hex_message_digest import hex_message_digest
+from logger import logger
 from time_functions import btc_time, unix_time_millis
 
 LOGGER = True
