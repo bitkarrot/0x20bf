@@ -13,9 +13,7 @@ from logger import logger
 config = configparser.ConfigParser()
 config.read("configs.ini")
 config.sections()
-config.get("DEFAULTSECT", "", fallback=False)
-config.get("LOGGERDEFAULTS", "", fallback=False)
-config.get("USERDEFAULTS", "", fallback=False)
+config.get("DEFAULTS", "", fallback=False)
 
 
 async def touch_time(time):
@@ -106,7 +104,7 @@ def NETWORK_MODULUS():
     # btc_time() block height message was contructed is known to GPGR and GPGS
     # TODO: add functions to reconstruct :WEEBLE:WOBBLE: based on these values
     NETWORK_MODULUS = (
-        get_millis() - int(config.get("DEFAULTSECT", "genesis_time"))
+        get_millis() - int(config.get("DEFAULTS", "genesis_time"))
     ) % btc_time()
     f = open("NETWORK_MODULUS", "w")
     f.write("" + str(NETWORK_MODULUS) + "\n")
@@ -129,7 +127,7 @@ def NETWORK_WEEBLE():
     # (current_time - genesis time) yields time from bitcoin genesis block
     # dividing by number of blocks yields an average time per block
     NETWORK_WEEBLE = int((
-        get_millis() - int(config.get("DEFAULTSECT", "genesis_time"))
+        get_millis() - int(config.get("DEFAULTS", "genesis_time"))
     ) / btc_time())
     f = open("NETWORK_WEEBLE", "w")
     f.write("" + str(NETWORK_WEEBLE) + "\n")
@@ -141,7 +139,7 @@ def NETWORK_WOBBLE():
     # wobble is the remainder of the weeble_wobble calculation
     # source of deterministic entropy
     NETWORK_WOBBLE = str(float((
-        get_millis() - int(config.get("DEFAULTSECT", "genesis_time"))
+        get_millis() - int(config.get("DEFAULTS", "genesis_time"))
     ) / btc_time()) % 1).strip("0.")
     f = open("NETWORK_WOBBLE", "w")
     f.write("" + str(NETWORK_WOBBLE) + "\n")
@@ -158,7 +156,7 @@ async def mempool_height():
     async with aiohttp.ClientSession() as session:
         url = "https://mempool.space/api/blocks/tip/height"
         height = await fetch(session, url)
-        if config.get("LOGGERDEFAULTS", "mempool_logger"):
+        if config.get("DEFAULTS", "mempool_logger"):
             logger.info(height)
         return height
 
@@ -168,7 +166,7 @@ loop = asyncio.new_event_loop()
 loop.run_until_complete(mempool_height())
 loop.run_until_complete(touch_time(btc_time()))
 
-if config.get("LOGGERDEFAULTS", "time_logger"):
+if config.get("DEFAULTS", "time_logger"):
     logger.info(":NETWORK_MODULUS:" + str(NETWORK_MODULUS()) + ":")
     logger.info(":NETWORK_WEEBLE:" + str(NETWORK_WEEBLE()) + ":")
     logger.info(":NETWORK_WOBBLE:" + str(NETWORK_WOBBLE()) + ":")
