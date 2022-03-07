@@ -122,13 +122,13 @@ export DASH_U
 
 .PHONY: init
 
-##	:init           initialize requirements
+##	:init                initialize requirements
 init: report initialize requirements
 	# remove this artifact from gnupg tests
 	sudo rm -rf rokeys/.gitignore
 
 .PHONY: venv
-##	:venv           create python3 virtual environment
+##	:venv                create python3 virtual environment
 venv:
 	test -d venv || virtualenv venv
 	( \
@@ -137,13 +137,13 @@ venv:
 	)
 	@echo ". venv/bin/activate"
 
-##	:test-venv      python3 ./tests/py.test
+##	:test-venv           python3 ./tests/py.test
 test-venv: venv
     # TODO: use tox config
 	. venv/bin/activate;
 	$(PYTHON3) ./tests/py.test;
-##	:test-gnupg     python3 ./tests/depends/gnupg/setup.py install
-##	:               python3 ./tests/depends/gnupg/test_gnupg.py
+##	:test-gnupg          python3 ./tests/depends/gnupg/setup.py install
+##	:                    python3 ./tests/depends/gnupg/test_gnupg.py
 test-gnupg: venv
     # TODO: use tox config
 	. venv/bin/activate;
@@ -159,16 +159,16 @@ clean-venv:
 	rm -rf venv
 
 .PHONY: build install
-##	:build          python3 setup.py build
+##	:build               python3 setup.py build
 build:
 	python3 setup.py build
 install:
-##	:install        python3 -m pip install -e .
+##	:install             python3 -m pip install -e .
 install: build
 	$(PYTHON3) -m $(PIP) install -e .
 
 ifneq ($(shell id -u),0)
-# TODO: install depends/p2p depends/gnupg
+# TODO: install          depends/p2p depends/gnupg
 	$(PYTHON3) -m $(PIP) install $(DASH_U) -e .
 else
 	$(PYTHON3) -m $(PIP) install $(DASH_U) -e .
@@ -179,7 +179,7 @@ help:
 	@sed -n 's/^##//p' ${MAKEFILE_LIST} | column -t -s ':' |  sed -e 's/^/ /'
 
 .PHONY: report
-##	:report         environment args
+##	:report              environment args
 report:
 	@echo ''
 	@echo '	[ARGUMENTS]	'
@@ -204,14 +204,14 @@ report:
 
 .PHONY: initialize
 
-##	:initialize     run scripts/initialize
+##	:initialize          run scripts/initialize
 initialize:
 	bash -c "./scripts/initialize"
 
 .PHONY: requirements reqs
 
 reqs: requirements
-##	:requirements   pip install --user -r requirements.txt
+##	:requirements        pip install --user -r requirements.txt
 requirements:
 	$(PYTHON3) -m $(PIP) install $(DASH_U) --upgrade pip
 	$(PYTHON3) -m $(PIP) install $(DASH_U) -r requirements.txt
@@ -219,37 +219,47 @@ requirements:
 .PHONY: seeder
 .QUIET:
 
-##	:seeder         make -C depends/seeder
+##	:seeder              make -C depends/seeder
 seeder:
 	make -C depends/seeder
 
 .PHONY: legit
 
-##	:legit          pushd depends/legit && cargo build --release
+##	:legit               pushd depends/legit && cargo build --release
 legit:
 	pushd depends/legit && cargo build --release
 
 .PHONY: gogs
 
-##	:gogs           make -C depends/gogs
+##	:gogs                make -C depends/gogs
 gogs:
 	make -C depends/gogs
 
 .PHONY: install-gnupg
 
-##	:install-gnupg  install python gnupg on host
+##	:install-gnupg       install python gnupg on host
 install-gnupg:
 	pushd $(DEPENDSPATH)/gnupg && $(PYTHON3) $(DEPENDSPATH)/gnupg/setup.py install && popd
 .PHONY: gnupg-test
 
-##	:gnupg-test     test depends/gnupg library
+##	:gnupg-test          test depends/gnupg library
 gnupg-test:
 	pushd $(DEPENDSPATH)/gnupg && $(PYTHON3) $(DEPENDSPATH)/gnupg/test_gnupg.py
 .PHONY: install-p2p
-
-##	:install-p2p    install python p2p-network on host
+##	:install-p2p         install python p2p-network on host
+##	:p2p                 install python p2p-network
+p2p: install-p2p
 install-p2p:
 	pushd $(DEPENDSPATH)/p2p && $(PYTHON3) $(DEPENDSPATH)/p2p/setup.py install && popd
+
+.PHONY: install-fastapi fastapi
+##	:fastapi             install python fastapi
+##	:install-fastapi     install python fastapi
+fastapi: install-fastapi
+install-fastapi:
+	pushd $(DEPENDSPATH)/fastapi && $(PYTHON3) -m $(PIP) check . && popd
+	pushd $(DEPENDSPATH)/fastapi && $(PYTHON3) -m $(PIP) install . && popd
+
 
 
 
@@ -257,8 +267,8 @@ install-p2p:
 
 
 .PHONY: depends
-##	:depends        build depends
-depends: seeder gogs legit
+##	:depends             build depends
+depends: seeder gogs legit install-gnupg install-fastapi
 
 .PHONY: git-add
 
@@ -284,12 +294,12 @@ git-add: remove
 	#git add --ignore-errors TIME
 
 .PHONY: pre-commit
-##	:pre-commit     pre-commit run -a
+##	:pre-commit          pre-commit run -a
 pre-commit:
 	pre-commit run -a
 
 .PHONY: docs
-##	:docs           build docs from sources/*.md
+##	:docs                build docs from sources/*.md
 docs:
 	@echo "##### [make](https://www.gnu.org/software/make/)" > sources/MAKE.md
 	bash -c "make help >> $(PWD)/sources/MAKE.md"
