@@ -18,6 +18,37 @@ PIP2                                    := $(notdir $(shell which pip2))
 export PIP2
 PIP3                                    := $(notdir $(shell which pip3))
 export PIP3
+ifeq ($(OS),Windows_NT)
+	CCFLAGS += -D WIN32
+	ifeq ($(PROCESSOR_ARCHITEW6432),AMD64)
+
+	else
+		ifeq ($(PROCESSOR_ARCHITECTURE),AMD64)
+
+		endif
+		ifeq ($(PROCESSOR_ARCHITECTURE),x86)
+
+		endif
+	endif
+else
+	UNAME_S := $(shell uname -s)
+	ifeq ($(UNAME_S),Linux)
+
+	endif
+	ifeq ($(UNAME_S),Darwin)
+
+	endif
+	UNAME_P := $(shell uname -p)
+	ifeq ($(UNAME_P),x86_64)
+
+	endif
+	ifneq ($(filter %86,$(UNAME_P)),)
+
+	endif
+	ifneq ($(filter arm%,$(UNAME_P)),)
+
+	endif
+endif
 
 ifeq ($(PYTHON3),/usr/local/bin/python3)
 PIP                                    := pip
@@ -116,12 +147,11 @@ endif
 export DASH_U
 
 
-.PHONY: -
+.PHONY: - help report
 ##	:help
--: help
+-: report help
 
-.PHONY: init
-
+.PHONY: init initialize requirements
 ##	:init                initialize requirements
 init: report initialize requirements
 	# remove this artifact from gnupg tests
@@ -185,9 +215,12 @@ report:
 	@echo '	[ARGUMENTS]	'
 	@echo '      args:'
 	@echo '        - TIME=${TIME}'
+	@echo '        - UNAME_S=${UNAME_S}'
 	@echo '        - BASENAME=${BASENAME}'
 	@echo '        - PROJECT_NAME=${PROJECT_NAME}'
 	@echo '        - GPGBINARY=${GPGBINARY}'
+	@echo '        - PYTHON3=${PYTHON3}'
+	@echo '        - PIP=${PIP}'
 	@echo '        - PYTHONPATH=${PYTHONPATH}'
 	@echo '        - DEPENDSPATH=${DEPENDSPATH}'
 	@echo '        - BUILDPATH=${BUILDPATH}'
@@ -201,6 +234,7 @@ report:
 	@echo '        - GIT_REPO_ORIGIN=${GIT_REPO_ORIGIN}'
 	@echo '        - GIT_REPO_NAME=${GIT_REPO_NAME}'
 	@echo '        - GIT_REPO_PATH=${GIT_REPO_PATH}'
+	@echo ''
 
 .PHONY: initialize
 

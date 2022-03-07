@@ -31,8 +31,6 @@ jobs:
         exclude:
           - os: ubuntu-latest
             python-version: ['2.7','3.6','3.7']
-          - os: ubuntu-20.04
-            python-version: ['2.7','3.6','3.7']
           - os: macos-latest
             python-version: ['2.7','3.6','3.7']
 
@@ -61,16 +59,17 @@ jobs:
           echo $GITHUB_WORKSPACE
           cd $GITHUB_WORKSPACE
           python3 -c "import sys; print(sys.version)"
-      - name: make init
-        run: |
           make
+      - name: make requirements install
+        run: |
           make requirements
           make install
           rm -rf rokeys/.gitignore
-          # setting up some "non-tests" in alphabetical order
       - name: 0x20bf.py
         run: |
           pushd 0x20bf && python3 0x20bf.py
+          # TODO: add more config/argparse tests here
+          # TODO: better pydoc compliance - enable pydoc in virtualenv.yml
       - name: hex_message_digest.py
         run: |
           pushd 0x20bf && python3 hex_message_digest.py
@@ -92,6 +91,8 @@ jobs:
       - name: touch_block_time.py
         run: |
           pushd 0x20bf && python3 touch_block_time.py
+          # TODO: use repos secrets to config twitter.ini
+          # and allow more twitterAPI tests
           #- name: tweet_block_time.py
           #  run: |
           #    ./0x20bf/tweet_block_time.py
