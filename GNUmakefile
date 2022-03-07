@@ -147,12 +147,11 @@ endif
 export DASH_U
 
 
-.PHONY: -
+.PHONY: - help report
 ##	:help
--: help
+-: report help
 
-.PHONY: init
-
+.PHONY: init initialize requirements
 ##	:init                initialize requirements
 init: report initialize requirements
 	# remove this artifact from gnupg tests
@@ -235,6 +234,7 @@ report:
 	@echo '        - GIT_REPO_ORIGIN=${GIT_REPO_ORIGIN}'
 	@echo '        - GIT_REPO_NAME=${GIT_REPO_NAME}'
 	@echo '        - GIT_REPO_PATH=${GIT_REPO_PATH}'
+	@echo ''
 
 .PHONY: initialize
 
