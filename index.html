@@ -237,6 +237,31 @@ id="example---ping-abridged-format-milliseconds---abridged-time-is-in-millisoeco
 - ping abridged format (milliseconds) - abridged <code>:TIME:</code> is
 in millisoeconds</h5>
 <p><code>:GPGR:GPGS:BTC:TIME:</code></p>
+<h3 id="time-functions">time functions</h3>
+<p><code>:NETWORK_MODULUS:</code></p>
+<h5 id="variables">variables:</h5>
+<p>genesis_time = 1231006505 (1/3/2009, 1:15:05 PM)</p>
+<p>millis = current UNIX time in milliseconds (example:
+1646634471416)</p>
+<p>bitcoin_network_age = (millis - genesis_time)</p>
+<p>NETWORK_MODULUS = (millis - genesis_time) % BTC_TIME</p>
+<pre><code>NETWORK_MODULUS = bitcoin_network_age % BTC_TIME
+or
+NETWORK_MODULUS = (millis - genesis_time) % BTC_TIME</code></pre>
+<h5 id="helper-functions"><a
+href="./sources/modulus_conversion_formulas.md">Helper
+Functions</a>:</h5>
+<pre><code>n = (millis - genesis_time - NETWORK_MODULUS)/BTC_TIME
+nBTC_TIME = (millis - genesis_time - NETWORK_MODULUS)
+millis = (genesis_time + nBTC_TIME + NETWORK_MODULUS)</code></pre>
+<hr />
+<h5 id="examples">Examples:</h5>
+<pre class="shell"><code>066.2022 01:35:44 AM :NETWORK_MODULUS:516881:
+066.2022 01:36:15 AM :NETWORK_MODULUS:548176:
+066.2022 01:36:36 AM :NETWORK_MODULUS:569069:</code></pre>
+<hr />
+<p><code>:NETWORK_WEEBLE:</code></p>
+<p><code>:NETWORK_WOBBLE:</code></p>
 <hr />
 <p>TODO: more message structure</p>
 <p>TODO: file structure</p>
@@ -276,6 +301,7 @@ pip install -e .</code></pre>
   install-gnupg       install python gnupg on host
   gnupg-test          test depends/gnupg library
   install-p2p         install python p2p-network on host
+  p2p                 install python p2p-network
   fastapi             install python fastapi
   install-fastapi     install python fastapi
   depends             build depends

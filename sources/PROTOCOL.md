@@ -71,6 +71,50 @@ We assume messages are sent in the blind: `--include-key-block` will be the defa
 ##### Example - ping abridged format (milliseconds) - abridged `:TIME:` is in millisoeconds
 `:GPGR:GPGS:BTC:TIME:`
 
+### time functions
+
+`:NETWORK_MODULUS:`
+
+##### variables:
+genesis_time = 1231006505 (1/3/2009, 1:15:05 PM)
+
+millis = current UNIX time in milliseconds (example: 1646634471416)
+
+bitcoin\_network\_age = (millis - genesis\_time)
+
+NETWORK\_MODULUS = (millis - genesis\_time) % BTC_TIME
+
+```
+NETWORK_MODULUS = bitcoin_network_age % BTC_TIME
+or
+NETWORK_MODULUS = (millis - genesis_time) % BTC_TIME
+```
+##### [Helper Functions](./sources/modulus_conversion_formulas.md):
+
+```
+n = (millis - genesis_time - NETWORK_MODULUS)/BTC_TIME
+nBTC_TIME = (millis - genesis_time - NETWORK_MODULUS)
+millis = (genesis_time + nBTC_TIME + NETWORK_MODULUS)
+```
+
+---
+
+##### Examples:
+
+```shell
+066.2022 01:35:44 AM :NETWORK_MODULUS:516881:
+066.2022 01:36:15 AM :NETWORK_MODULUS:548176:
+066.2022 01:36:36 AM :NETWORK_MODULUS:569069:
+```
+
+---
+
+`:NETWORK_WEEBLE:`
+
+`:NETWORK_WOBBLE:`
+
+
+
 ---
 
 TODO: more message structure
