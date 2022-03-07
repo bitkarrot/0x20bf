@@ -246,11 +246,13 @@ install-gnupg:
 gnupg-test:
 	pushd $(DEPENDSPATH)/gnupg && $(PYTHON3) $(DEPENDSPATH)/gnupg/test_gnupg.py
 .PHONY: install-p2p
-
 ##	:install-p2p         install python p2p-network on host
+##	:p2p                 install python p2p-network
+p2p: install-p2p
 install-p2p:
 	pushd $(DEPENDSPATH)/p2p && $(PYTHON3) $(DEPENDSPATH)/p2p/setup.py install && popd
 
+.PHONY: install-fastapi fastapi
 ##	:fastapi             install python fastapi
 ##	:install-fastapi     install python fastapi
 fastapi: install-fastapi
@@ -259,12 +261,14 @@ install-fastapi:
 	pushd $(DEPENDSPATH)/fastapi && $(PYTHON3) -m $(PIP) install . && popd
 
 
+
+
 .PHONY: twitter-api
 
 
 .PHONY: depends
 ##	:depends             build depends
-depends: seeder gogs legit
+depends: seeder gogs legit install-gnupg install-fastapi
 
 .PHONY: git-add
 
