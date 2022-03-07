@@ -16,6 +16,7 @@
  	  install-gnupg       install python gnupg on host
  	  gnupg-test          test depends/gnupg library
  	  install-p2p         install python p2p-network on host
+ 	  p2p                 install python p2p-network
  	  fastapi             install python fastapi
  	  install-fastapi     install python fastapi
  	  depends             build depends
