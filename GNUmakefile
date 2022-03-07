@@ -188,6 +188,8 @@ report:
 	@echo '        - BASENAME=${BASENAME}'
 	@echo '        - PROJECT_NAME=${PROJECT_NAME}'
 	@echo '        - GPGBINARY=${GPGBINARY}'
+	@echo '        - PYTHON3=${PYTHON3}'
+	@echo '        - PIP=${PIP}'
 	@echo '        - PYTHONPATH=${PYTHONPATH}'
 	@echo '        - DEPENDSPATH=${DEPENDSPATH}'
 	@echo '        - BUILDPATH=${BUILDPATH}'
