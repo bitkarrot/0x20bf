@@ -7,6 +7,7 @@ import time
 
 import aiohttp
 import blockcypher
+
 from logger import logger
 
 # REF: https://docs.python.org/3/library/configparser.html

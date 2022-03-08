@@ -5,10 +5,11 @@ import hashlib
 import sys
 
 import psutil
+from TwitterAPI import TwitterAPI
+
 from logger import logger
 from search_gpg_key import search_gpg_key
 from time_functions import btc_time, unix_time_millis
-from TwitterAPI import TwitterAPI
 
 global user
 global is_macos
