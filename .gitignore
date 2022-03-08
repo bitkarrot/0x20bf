@@ -171,8 +171,6 @@ NETWORK_MODULUS
 NETWORK_WEEBLE
 NETWORK_WEEBLE_WOBBLE
 NETWORK_WOBBLE
-depends/p2p
-depends/gnupg
 dist/
 p2pnetwork.egg-info/
 private_key.key
@@ -183,7 +181,4 @@ tests/touchfile
 0x20bf/debug.log
 BLOCKCYPHER_HEIGHT
 0x20bf/twitter.ini
-0x20bf/_0x20bf.py
-0x20bf/mempool_height.py
-0x20bf/time_functions.py
 depends/fastapi/**
