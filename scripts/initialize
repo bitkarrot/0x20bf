@@ -113,7 +113,7 @@ fi
 
     brew install gawk
     brew install boost boost-build flake8 black rust
-    brew install -f isort
+    brew install -f isort poetry
     # brew link --overwrite isort
 
 else
@@ -196,4 +196,7 @@ elif [[ "$OSTYPE" == "freebsd"* ]]; then
 else
     echo TODO add support for $OSTYPE
 fi
-
+# catch all for poetry
+if ! hash poetry 2>/dev/null; then
+    curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+fi

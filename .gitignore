@@ -163,6 +163,7 @@ OLD_BLOCK_TIME
 # python virtual environments
 env
 venv
+venv/*
 0x20bf.egg-info/
 0x20bf.egg-info/*
 *:*:*
@@ -170,8 +171,6 @@ NETWORK_MODULUS
 NETWORK_WEEBLE
 NETWORK_WEEBLE_WOBBLE
 NETWORK_WOBBLE
-depends/p2p
-depends/gnupg
 dist/
 p2pnetwork.egg-info/
 private_key.key
@@ -182,3 +181,4 @@ tests/touchfile
 0x20bf/debug.log
 BLOCKCYPHER_HEIGHT
 0x20bf/twitter.ini
+depends/fastapi/**

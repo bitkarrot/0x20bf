@@ -5,10 +5,19 @@ import hashlib
 import sys
 
 import psutil
+
+# from search_gpg_key import search_gpg_key
+# from time_functions import btc_time, unix_time_millis
+import time_functions as tf
+from delimiter_stripper import delimiter_stripper
 from logger import logger
-from search_gpg_key import search_gpg_key
-from time_functions import btc_time, unix_time_millis
-from TwitterAPI import TwitterAPI
+
+# import os
+
+# from TwitterAPI import TwitterAPI
+
+# from TwitterAPI import TwitterAPI
+
 
 global user
 global is_macos
@@ -43,30 +52,35 @@ global GOLDEN_RATIO
 
 global tweet
 
-# REF: https://docs.python.org/3/library/configparser.html
-config = configparser.ConfigParser()
-config.read("configs.ini")
-config.sections()
-config.get("DEFAULTS", "", fallback=False)
-
-
-if config.getboolean("DEFAULTS", "tweet"):
-    twitter_api = configparser.ConfigParser()
-    twitter_api.read("configs.ini")
-    twitter_api.sections()
-    twitter_api.get("twitter", "", fallback=0)
-    AT = twitter_api.get("twitter", "access_token")
-    ATS = twitter_api.get("twitter", "access_token_secret")
-    CAK = twitter_api.get("twitter", "consumer_api_key")
-    CASK = twitter_api.get("twitter", "consumer_api_secret_key")
-    api = TwitterAPI(CAK, CASK, AT, ATS)
-
-
-def DELIMITER_STRIPPER(string):
-    # avoiding incorrect SHA256 hashes
-    string.strip(":")
-    string.strip(".")
-    return string.strip(":")
+# # REF: https://docs.python.org/3/library/configparser.html
+#
+# # get the path to config.ini
+# sys.path.insert(0, '.')
+# sys.path.insert(1, '0x20bf')
+# sys.path.insert(2, '../0x20bf')
+# config_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config.ini')
+#
+# # check if the path is to a valid file
+# if not os.path.isfile(config_path):
+#     print('BadConfigError')  # not a standard python exception
+#
+# config = configparser.ConfigParser()
+# config.read(config_path)
+# # config.read("configs.ini")
+# config.sections()
+# config.get("DEFAULTS", "", fallback=False)
+#
+#
+# if config.getboolean("DEFAULTS", "tweet"):
+#     twitter_api = configparser.ConfigParser()
+#     twitter_api.read("configs.ini")
+#     twitter_api.sections()
+#     twitter_api.get("twitter", "", fallback=0)
+#     AT = twitter_api.get("twitter", "access_token")
+#     ATS = twitter_api.get("twitter", "access_token_secret")
+#     CAK = twitter_api.get("twitter", "consumer_api_key")
+#     CASK = twitter_api.get("twitter", "consumer_api_secret_key")
+#     api = TwitterAPI(CAK, CASK, AT, ATS)
 
 
 def test_hash_lib():
@@ -82,24 +96,20 @@ def test_hash_lib():
 
 
 def HEX_MESSAGE_TREE(recipient, sender):
-    recipient = DELIMITER_STRIPPER(recipient)
-    sender = DELIMITER_STRIPPER(sender)
+    recipient = delimiter_stripper(recipient)
+    sender = delimiter_stripper(sender)
 
     n_256 = hashlib.sha256()
-    if config.getboolean("DEFAULTS", "hex_logger"):
-        logger.info("n_256:")
-    if config.getboolean("DEFAULTS", "hex_logger"):
-        logger.info(n_256.hexdigest())
+    logger.info("n_256:")
+    logger.info(n_256.hexdigest())
     # empty string reserved for protocol
     assert n_256.hexdigest() == test_hash_lib()
 
     # SHA256() + GPGR
     n_256.update(bytes(recipient, "utf-8"))
     # if (hex_logger): logger.info(n_256.digest())
-    if config.getboolean("DEFAULTS", "hex_logger"):
-        logger.info("n_256 + recipient:")
-    if config.getboolean("DEFAULTS", "hex_logger"):
-        logger.info(n_256.hexdigest())
+    logger.info("n_256 + recipient:")
+    logger.info(n_256.hexdigest())
     # if (hex_logger): logger.info(n_256.digest_size)
     # if (hex_logger): logger.info(n_256.block_size)
 
@@ -107,60 +117,42 @@ def HEX_MESSAGE_TREE(recipient, sender):
     n_256.update(bytes(sender, "utf-8"))
     # if (hex_logger): logger.info(n_256.digest())
     # if (hex_logger): logger.info(n_256.hexdigest())
-    if config.getboolean("DEFAULTS", "hex_logger"):
-        logger.info("n_256 + recipient+sender:")
-        logger.info(n_256.hexdigest())
+    # if config.getboolean("DEFAULTS", "hex_logger"):
+    logger.info("n_256 + recipient+sender:")
+    logger.info(n_256.hexdigest())
     # if (hex_logger): logger.info(n_256.digest_size)
     # if (hex_logger): logger.info(n_256.block_size)
 
     # TODO: populate message tree
-    if config.getboolean("DEFAULTS", "hex_logger"):
-        logger.info(n_256.hexdigest())
+    # if config.getboolean("DEFAULTS", "hex_logger"):
+    logger.info(n_256.hexdigest())
 
     return n_256.hexdigest()
 
 
 def HEX_MESSAGE_DIGEST(recipient, message, sender):
-    recipient = DELIMITER_STRIPPER(recipient)
-    message = DELIMITER_STRIPPER(message)
-    sender = DELIMITER_STRIPPER(sender)
+    recipient = delimiter_stripper(recipient)
+    sender = delimiter_stripper(sender)
+    message = delimiter_stripper(message)
 
     n_256 = hashlib.sha256()
     # empty string reserved for protocol
     assert n_256.hexdigest() == test_hash_lib()
 
-    # if (hex_logger): logger.info("%s",n_256.digest())
-    # if (hex_logger): logger.info(n_256.hexdigest())
-    # if (hex_logger): logger.info(n_256.digest_size)
-    # if (hex_logger): logger.info(n_256.block_size)
-
     # SHA256() + GPGR
     n_256.update(bytes(recipient, "utf-8"))
-    # if (hex_logger): logger.info(n_256.digest())
-    if config.getboolean("DEFAULTS", "hex_logger"):
-        logger.info(n_256.hexdigest())
-    # if (hex_logger): logger.info(n_256.digest_size)
-    # if (hex_logger): logger.info(n_256.block_size)
+    logger.info(n_256.hexdigest())
 
     # SHA256() + GPGR+MESSAGE
     n_256.update(bytes(message, "utf-8"))
-    # if (hex_logger): logger.info(n_256.digest())
-    if config.getboolean("DEFAULTS", "hex_logger"):
-        logger.info(n_256.hexdigest())
-    # if (hex_logger): logger.info(n_256.digest_size)
-    # if (hex_logger): logger.info(n_256.block_size)
+    logger.info(n_256.hexdigest())
 
     # SHA256() + GPGR+MESSAGE+GPGS
     n_256.update(bytes(sender, "utf-8"))
-    # if (hex_logger): logger.info(n_256.digest())
-    if config.getboolean("DEFAULTS", "hex_logger"):
-        logger.info(n_256.hexdigest())
-    # if (hex_logger): logger.info(n_256.digest_size)
-    # if (hex_logger): logger.info(n_256.block_size)
+    logger.info(n_256.hexdigest())
 
     # TODO: populate message tree
-    if config.getboolean("DEFAULTS", "hex_logger"):
-        logger.info(n_256.hexdigest())
+    logger.info(n_256.hexdigest())
 
     return n_256.hexdigest()
 
@@ -173,8 +165,8 @@ def message_header():
         "https://github.com/0x20bf-org/0x20bf/blob/main/"
         + GPGR
         + DIGEST
-        + str(btc_time())
-        + str(unix_time_millis())
+        + str(tf.btc_time())
+        + str(tf.unix_time_millis())
         + GPGS
         + ".txt.gpg"
     )
@@ -185,9 +177,9 @@ def message_header():
         + ":"
         + DIGEST
         + ":"
-        + str(btc_time())
+        + str(tf.btc_time())
         + ":"
-        + str(unix_time_millis())
+        + str(tf.unix_time_millis())
         + ":"
         + GPGS
         + ":"
@@ -195,7 +187,7 @@ def message_header():
         + ":"
     )
 
-    if config.getboolean("DEFAULTS", "logger"):
+    if logger:
         logger.info(HEADER)
     # HEADER_STRUCTURE = str(":GPGR:DIGEST:btc_time:unix_time_millis:GPGS:LOC:")
     return HEADER
@@ -204,10 +196,10 @@ def message_header():
 def send_message(tweet, api):
     header = message_header()
     # body = message_body()
-    if config.getboolean("DEFAULTS", "logger"):
+    if logger:
         logger.info(header)
-    if btc_time() != 0:
-        if config.getboolean("DEFAULTS", "tweet"):
+    if tf.btc_time() != 0:
+        if tweet:
             request = api.request("statuses/update", {"status": header})
             if request.status_code == 200:
                 logger.info("api.request SUCCESS")
@@ -226,10 +218,6 @@ logger.info(GPGR)
 GPGS = "BB06757B"  # randymcmillan
 logger.info(GPGS)
 MESSAGE = "text human readable message"
-if config.getboolean("DEFAULTS", "hex_logger"):
-    logger.info(HEX_MESSAGE_DIGEST(GPGR, MESSAGE, GPGS))
-HEX_MESSAGE_TREE(GPGR, GPGS)
-HEX_MESSAGE_DIGEST(GPGR, MESSAGE, GPGS)
 
 
 def log_os():
@@ -255,6 +243,7 @@ def main(args):
     defaults = {
         "default_port": 8383,
         "tweet": False,
+        "text_message": False,
         "search": False,
         "logger": False,
         "os_logger": True,
@@ -297,46 +286,30 @@ def main(args):
     main_parser.add_argument("-t", "--tweet")
     main_parser.add_argument("-1", "--option1")
     main_parser.add_argument("-2", "--option2")
+    main_parser.add_argument("-tm", "--text_message")
     main_args = main_parser.parse_args(args)
     print(main_args.option1)
     print(main_args.option2)
     print(main_args.logger)
     print(main_args.tweet)
-    if main_args.option1 == "True":
-        print(main_args)
-        log_os()
-    if main_args.os_logger == "True":
-        os_logger = main_args.os_logger
-        print(os_logger)
-        log_os()
-    if main_args.tweet != "False":
-        if config.getboolean("DEFAULTS", "tweet"):
-            twitter_api = configparser.ConfigParser()
-            twitter_api.read("twitter.ini")
-            twitter_api.sections()
-            twitter_api.get("twitter", "", fallback=0)
-            AT = twitter_api.get("twitter", "access_token")
-            ATS = twitter_api.get("twitter", "access_token_secret")
-            CAK = twitter_api.get("twitter", "consumer_api_key")
-            CASK = twitter_api.get("twitter", "consumer_api_secret_key")
-            api = TwitterAPI(CAK, CASK, AT, ATS)
+    if main_args:
         tweet = main_args.tweet
-        print(tweet)
-        send_message(tweet, api)
-    if main_args.search != "False":
-        if config.getboolean("DEFAULTS", "tweet"):
-            twitter_api = configparser.ConfigParser()
-            twitter_api.read("configs.ini")
-            twitter_api.sections()
-            twitter_api.get("twitter", "", fallback=0)
-            AT = twitter_api.get("twitter", "access_token")
-            ATS = twitter_api.get("twitter", "access_token_secret")
-            CAK = twitter_api.get("twitter", "consumer_api_key")
-            CASK = twitter_api.get("twitter", "consumer_api_secret_key")
-            api = TwitterAPI(CAK, CASK, AT, ATS)
-            search_gpg_key(GPGR, api)
-            search_gpg_key(GPGS, api)
+        logger.info(tweet)
+        text_message = main_args.text_message
+        logger.info(text_message)
+        mempool_logger = main_args.mempool_logger
+        logger.info(mempool_logger)
+        hex_logger = main_args.hex_logger
+        if hex_logger:
+            logger.info(HEX_MESSAGE_DIGEST(GPGR, MESSAGE, GPGS))
+            HEX_MESSAGE_TREE(GPGR, GPGS)
+            HEX_MESSAGE_DIGEST(GPGR, MESSAGE, GPGS)
 
 
 if __name__ == "__main__":
+    GPGR = "4DC9817F"  # bitkarrot
+    logger.info(GPGR)
+    GPGS = "BB06757B"  # randymcmillan
+    logger.info(GPGS)
+    MESSAGE = "text human readable message"
     main(sys.argv[1:])
