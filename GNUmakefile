@@ -159,21 +159,28 @@ init: report initialize requirements
 
 .PHONY: venv
 ##	:venv                create python3 virtual environment
+##	:
+##	:(venv) - activate
+##	make:venv && . venv/bin/activate
 venv:
 	test -d venv || virtualenv venv
 	( \
-	   source venv/bin/activate; \
-	   pip install -r requirements.txt; \
-	)
+	   source venv/bin/activate; pip install -r requirements.txt; \
+	);
+	@echo "To activate (venv)"
+	@echo "try:"
 	@echo ". venv/bin/activate"
-
-##	:test-venv           python3 ./tests/py.test
-test-venv: venv
-    # TODO: use tox config
-	. venv/bin/activate;
-	$(PYTHON3) ./tests/py.test;
-##	:test-gnupg          python3 ./tests/depends/gnupg/setup.py install
+	@echo "or:"
+	@echo "make test-venv"
+##	:test-venv           python3 ./tests/test.py
+test-venv:
+	test -d venv || virtualenv venv --always-download
+	( \
+	   source venv/bin/activate; pip install -r requirements.txt; python3 tests/test.py \
+	);
+##	:test-gnupg          python3 ./tests/depends/gnupg/setup.py
 ##	:                    python3 ./tests/depends/gnupg/test_gnupg.py
+##	:
 test-gnupg: venv
     # TODO: use tox config
 	. venv/bin/activate;
