@@ -1,9 +1,25 @@
 #!/usr/bin/env python3
 import asyncio
+import configparser
+import os
 
 import aiohttp
 
 from logger import logger
+
+# get the path to config.ini
+config_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config.ini')
+
+# check if the path is to a valid file
+if not os.path.isfile(config_path):
+    print('BadConfigError')  # not a standard python exception
+
+config = configparser.ConfigParser()
+config.read(config_path)
+# config.read("configs.ini")
+config.sections()
+config.get("DEFAULTS", "", fallback=False)
+
 
 MEMPOOL_LOGGER = True
 
