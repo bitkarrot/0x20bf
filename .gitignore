@@ -163,6 +163,7 @@ OLD_BLOCK_TIME
 # python virtual environments
 env
 venv
+venv/*
 0x20bf.egg-info/
 0x20bf.egg-info/*
 *:*:*
@@ -182,3 +183,7 @@ tests/touchfile
 0x20bf/debug.log
 BLOCKCYPHER_HEIGHT
 0x20bf/twitter.ini
+0x20bf/_0x20bf.py
+0x20bf/mempool_height.py
+0x20bf/time_functions.py
+depends/fastapi/**
