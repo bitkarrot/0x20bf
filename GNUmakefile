@@ -180,7 +180,9 @@ test-venv:
 	);
 ##	:test-gnupg          python3 ./tests/depends/gnupg/setup.py
 ##	:                    python3 ./tests/depends/gnupg/test_gnupg.py
-##	:
+##	:test-clean-venv     rm -rf venv
+test-clean-venv:
+	rm -rf venv
 test-gnupg: venv
     # TODO: use tox config
 	. venv/bin/activate;

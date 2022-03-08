@@ -160,7 +160,7 @@ pip install -e .
  	      test-venv           python3 ./tests/test.py
  	      test-gnupg          python3 ./tests/depends/gnupg/setup.py
  	                          python3 ./tests/depends/gnupg/test_gnupg.py
- 	
+ 	      test-clean-venv     rm -rf venv
  	      build               python3 setup.py build
  	      install             python3 -m pip install -e .
  	      report              environment args
