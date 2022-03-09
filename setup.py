@@ -27,7 +27,7 @@ setup(
     name="0x20bf",
     version="0.0.1",
     author="randymcmillan, bitkarrot",
-    author_email="randy.lee.mcmillan@gmail.com, bitkarrot@bitcoin.org.hk",
+    author_email="randy.lee.mcmillan@gmail.com, me@bitkarrot.co",
     description=(
         str(
             "0x20bf: An internet standards track protocol for"
