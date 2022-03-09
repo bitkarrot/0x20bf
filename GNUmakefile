@@ -273,13 +273,11 @@ seeder:
 	make -C $(VENDORSPATH)/seeder
 
 .PHONY: legit
-
 ##	:legit               pushd vendors/legit && cargo build --release
 legit:
 	pushd $(VENDORSPATH)/legit && cargo build --release
 
 .PHONY: gogs
-
 ##	:gogs                make -C vendors/gogs
 gogs:
 	make -C $(VENDORSPATH)/gogs
