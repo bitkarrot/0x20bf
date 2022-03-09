@@ -308,11 +308,15 @@ gogs:
 .PHONY: depends
 ##	:
 ##	:depends             build depends
-depends: install-p2p install-gnupg install-fastapi
+depends: depends-p2p depends-gnupg depends-fastapi
 ##	:depends-gnupg-test  test 0x20bf/depends/gnupg library
+
 .PHONY: depends-gnupg-test
 depends-gnupg-test:
-	pushd $(DEPENDSPATH)/gnupg && $(PYTHON3) $(DEPENDSPATH)/gnupg/test_gnupg.py
+	$(PYTHON3) $(DEPENDSPATH)/gnupg/setup.py install;
+	$(PYTHON3) $(DEPENDSPATH)/gnupg/test_gnupg.py;
+
+	$(PYTHON3) $(DEPENDSPATH)/gnupg/test_gnupg.py
 
 .PHONY: install-gnupg
 
