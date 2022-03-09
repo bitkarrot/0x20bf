@@ -176,7 +176,10 @@ venv:
 test-venv:
 	test -d venv || virtualenv venv --always-download
 	( \
-	   source venv/bin/activate; pip install -r requirements.txt; python3 tests/test.py \
+	   source venv/bin/activate \
+	   ;pip install -r requirements.txt \
+	   ;python3 tests/test.py \
+	   ;python3 tests/test_0x20bf.py \
 	);
 ##	:test-gnupg          python3 ./tests/depends/gnupg/setup.py
 ##	:                    python3 ./tests/depends/gnupg/test_gnupg.py

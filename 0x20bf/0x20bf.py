@@ -10,7 +10,7 @@ import psutil
 # from time_functions import btc_time, unix_time_millis
 import time_functions as tf
 from delimiter_stripper import delimiter_stripper
-from logger import logger
+import logger as logger
 
 # import os
 
