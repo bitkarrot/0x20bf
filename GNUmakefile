@@ -67,6 +67,8 @@ PYTHONPATH=$(PWD)/0x20bf
 export PYTHONPATH
 DEPENDSPATH=$(PWD)/0x20bf/depends
 export DEPENDSPATH
+VENDORSPATH=$(PWD)/vendors
+export VENDORSPATH
 BUILDPATH=$(PWD)/build
 export BUILDPATH
 ifeq ($(port),)
@@ -235,6 +237,7 @@ report:
 	@echo '        - PIP=${PIP}'
 	@echo '        - PYTHONPATH=${PYTHONPATH}'
 	@echo '        - DEPENDSPATH=${DEPENDSPATH}'
+	@echo '        - VENDORSPATH=${VENDORSPATH}'
 	@echo '        - BUILDPATH=${BUILDPATH}'
 	@echo '        - GIT_USER_NAME=${GIT_USER_NAME}'
 	@echo '        - GIT_USER_EMAIL=${GIT_USER_EMAIL}'
@@ -267,19 +270,23 @@ requirements:
 
 ##	:seeder              make -C vendor/seeder
 seeder:
-	make -C vendor/seeder
+	make -C $(VENDORSPATH)/seeder
 
 .PHONY: legit
 
-##	:legit               pushd vendor/legit && cargo build --release
+##	:legit               pushd vendors/legit && cargo build --release
 legit:
-	pushd vendor/legit && cargo build --release
+	pushd $(VENDORSPATH)/legit && cargo build --release
 
 .PHONY: gogs
 
-##	:gogs                make -C depends/gogs
+##	:gogs                make -C vendors/gogs
 gogs:
-	make -C depends/gogs
+	make -C $(VENDORSPATH)/gogs
+
+.PHONY: vendors
+##	:vendors             make seeder legit gogs
+vendors: seeder legit gogs
 
 .PHONY: install-gnupg
 
