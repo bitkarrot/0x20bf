@@ -10,7 +10,7 @@ import psutil
 # from time_functions import btc_time, unix_time_millis
 import time_functions as tf
 from delimiter_stripper import delimiter_stripper
-import logger as logger
+from logger import logger
 
 # import os
 
@@ -214,9 +214,9 @@ def send_message(tweet, api):
 # logger.info(BTC_unix_time_millis())
 
 GPGR = "4DC9817F"  # bitkarrot
-logger.info(GPGR)
+# logger.info(GPGR)
 GPGS = "BB06757B"  # randymcmillan
-logger.info(GPGS)
+# logger.info(GPGS)
 MESSAGE = "text human readable message"
 
 
@@ -294,11 +294,15 @@ def main(args):
     print(main_args.tweet)
     if main_args:
         tweet = main_args.tweet
-        logger.info(tweet)
+        if tweet:
+            logger.info(tweet)
         text_message = main_args.text_message
-        logger.info(text_message)
+        if text_message:
+            logger.info(text_message)
         mempool_logger = main_args.mempool_logger
-        logger.info(mempool_logger)
+        if mempool_logger:
+            mempool_logger = main_args.mempool_logger
+        # logger.info(mempool_logger)
         hex_logger = main_args.hex_logger
         if hex_logger:
             logger.info(HEX_MESSAGE_DIGEST(GPGR, MESSAGE, GPGS))
@@ -308,8 +312,8 @@ def main(args):
 
 if __name__ == "__main__":
     GPGR = "4DC9817F"  # bitkarrot
-    logger.info(GPGR)
+    # logger.info(GPGR)
     GPGS = "BB06757B"  # randymcmillan
-    logger.info(GPGS)
+    # logger.info(GPGS)
     MESSAGE = "text human readable message"
     main(sys.argv[1:])

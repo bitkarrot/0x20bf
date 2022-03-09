@@ -8,11 +8,11 @@ import aiohttp
 from logger import logger
 
 # get the path to config.ini
-config_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config.ini')
+config_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "config.ini")
 
 # check if the path is to a valid file
 if not os.path.isfile(config_path):
-    print('BadConfigError')  # not a standard python exception
+    print("BadConfigError")  # not a standard python exception
 
 config = configparser.ConfigParser()
 config.read(config_path)
