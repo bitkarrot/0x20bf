@@ -176,9 +176,12 @@ venv:
 	@echo "try:"
 	@echo ". venv/bin/activate"
 	@echo "or:"
-	@echo "make test-venv"
-##	:test-venv           python3 ./tests/test.py
-test-venv:
+	@echo "make venv-test"
+##	:venv-clean     rm -rf venv
+venv-clean:
+	rm -rf venv
+##	:venv-test           python3 ./tests/test.py
+venv-test:
 	test -d venv || virtualenv venv --always-download
 	( \
 	   source venv/bin/activate \
@@ -186,11 +189,20 @@ test-venv:
 	   ;python3 tests/test.py \
 	   ;python3 tests/test_0x20bf.py \
 	);
+
+##	:venv-test-gnupg          test gnupg in venv
+venv-test-gnupg:
+	test -d venv || virtualenv venv --always-download
+	( \
+	   source venv/bin/activate \
+	   ;pip install -r requirements.txt \
+	   ;python3 tests/0x20bf/depends/gnupg/setup.py install \
+	   ;python3 tests/0x20bf/depends/gnupg/test_gnupg.py \
+	);
+
+
 ##	:test-gnupg          python3 ./tests/0x20bf/depends/gnupg/setup.py
 ##	:                            ./tests/0x20bf/depends/gnupg/test_gnupg.py
-##	:test-clean-venv     rm -rf venv
-test-clean-venv:
-	rm -rf venv
 test-gnupg: venv
     # TODO: use tox config
 	. venv/bin/activate;
@@ -293,37 +305,36 @@ legit:
 gogs:
 	make -C $(VENDORSPATH)/gogs
 
-.PHONY: install-gnupg
-
-##	:install-gnupg       install python gnupg on host
-install-gnupg:
-	pushd $(DEPENDSPATH)/gnupg && $(PYTHON3) $(DEPENDSPATH)/gnupg/setup.py install && popd
-.PHONY: depends-gnupg-test
-
-.PHONY: install-p2p
-##	:install-p2p         install python p2p-network
-p2p: install-p2p
-install-p2p:
-	pushd $(DEPENDSPATH)/p2p && $(PYTHON3) $(DEPENDSPATH)/p2p/setup.py install && popd
-
-.PHONY: install-fastapi fastapi
-##	:install-fastapi     install python fastapi
-fastapi: install-fastapi
-install-fastapi:
-	pushd $(DEPENDSPATH)/fastapi && $(PYTHON3) -m $(PIP) check . && popd
-	pushd $(DEPENDSPATH)/fastapi && $(PYTHON3) -m $(PIP) install . && popd
-
-
-.PHONY: twitter-api
-
-
 .PHONY: depends
+##	:
 ##	:depends             build depends
 depends: install-p2p install-gnupg install-fastapi
 ##	:depends-gnupg-test  test 0x20bf/depends/gnupg library
 .PHONY: depends-gnupg-test
 depends-gnupg-test:
 	pushd $(DEPENDSPATH)/gnupg && $(PYTHON3) $(DEPENDSPATH)/gnupg/test_gnupg.py
+
+.PHONY: install-gnupg
+
+##	:depends-gnupg       install python gnupg on host
+depends-gnupg:
+	pushd $(DEPENDSPATH)/gnupg && $(PYTHON3) $(DEPENDSPATH)/gnupg/setup.py install && popd
+.PHONY: depends-gnupg-test
+
+.PHONY: depends-p2p
+##	:depends-p2p         install python p2p-network
+p2p: depends-p2p
+depends-p2p:
+	pushd $(DEPENDSPATH)/p2p && $(PYTHON3) $(DEPENDSPATH)/p2p/setup.py install && popd
+
+.PHONY: depends-fastapi fastapi
+##	:depends-fastapi     install python fastapi
+fastapi: depends-fastapi
+depends-fastapi:
+	pushd $(DEPENDSPATH)/fastapi && $(PYTHON3) -m $(PIP) check . && popd
+	pushd $(DEPENDSPATH)/fastapi && $(PYTHON3) -m $(PIP) install . && popd
+
+
 
 .PHONY: git-add
 
