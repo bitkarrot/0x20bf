@@ -150,6 +150,8 @@ export DASH_U
 
 
 .PHONY: - help report
+##	make:[COMMAND]
+##	:
 ##	:help
 -: report help
 
@@ -160,10 +162,11 @@ init: report initialize requirements
 	sudo rm -rf rokeys/.gitignore
 
 .PHONY: venv
+##	:
 ##	:venv                create python3 virtual environment
 ##	:
-##	:(venv) - activate
 ##	make:venv && . venv/bin/activate
+##	:
 venv:
 	test -d venv || virtualenv venv
 	( \
@@ -184,7 +187,7 @@ test-venv:
 	   ;python3 tests/test_0x20bf.py \
 	);
 ##	:test-gnupg          python3 ./tests/0x20bf/depends/gnupg/setup.py
-##	:                    python3 ./tests/0x20bf/depends/gnupg/test_gnupg.py
+##	:                            ./tests/0x20bf/depends/gnupg/test_gnupg.py
 ##	:test-clean-venv     rm -rf venv
 test-clean-venv:
 	rm -rf venv
@@ -203,6 +206,7 @@ clean-venv:
 	rm -rf venv
 
 .PHONY: build install
+##	:
 ##	:build               python3 setup.py build
 build:
 	python3 setup.py build
@@ -228,27 +232,27 @@ report:
 	@echo ''
 	@echo '	[ARGUMENTS]	'
 	@echo '      args:'
-	@echo '        - TIME=${TIME}'
-	@echo '        - UNAME_S=${UNAME_S}'
-	@echo '        - BASENAME=${BASENAME}'
-	@echo '        - PROJECT_NAME=${PROJECT_NAME}'
-	@echo '        - GPGBINARY=${GPGBINARY}'
-	@echo '        - PYTHON3=${PYTHON3}'
-	@echo '        - PIP=${PIP}'
-	@echo '        - PYTHONPATH=${PYTHONPATH}'
-	@echo '        - DEPENDSPATH=${DEPENDSPATH}'
-	@echo '        - VENDORSPATH=${VENDORSPATH}'
-	@echo '        - BUILDPATH=${BUILDPATH}'
-	@echo '        - GIT_USER_NAME=${GIT_USER_NAME}'
-	@echo '        - GIT_USER_EMAIL=${GIT_USER_EMAIL}'
-	@echo '        - GIT_SERVER=${GIT_SERVER}'
-	@echo '        - GIT_PROFILE=${GIT_PROFILE}'
-	@echo '        - GIT_BRANCH=${GIT_BRANCH}'
-	@echo '        - GIT_HASH=${GIT_HASH}'
-	@echo '        - GIT_PREVIOUS_HASH=${GIT_PREVIOUS_HASH}'
-	@echo '        - GIT_REPO_ORIGIN=${GIT_REPO_ORIGIN}'
-	@echo '        - GIT_REPO_NAME=${GIT_REPO_NAME}'
-	@echo '        - GIT_REPO_PATH=${GIT_REPO_PATH}'
+	@echo '              TIME=${TIME}'
+	@echo '              UNAME_S=${UNAME_S}'
+	@echo '              BASENAME=${BASENAME}'
+	@echo '              PROJECT_NAME=${PROJECT_NAME}'
+	@echo '              GPGBINARY=${GPGBINARY}'
+	@echo '              PYTHON3=${PYTHON3}'
+	@echo '              PIP=${PIP}'
+	@echo '              PYTHONPATH=${PYTHONPATH}'
+	@echo '              DEPENDSPATH=${DEPENDSPATH}'
+	@echo '              VENDORSPATH=${VENDORSPATH}'
+	@echo '              BUILDPATH=${BUILDPATH}'
+	@echo '              GIT_USER_NAME=${GIT_USER_NAME}'
+	@echo '              GIT_USER_EMAIL=${GIT_USER_EMAIL}'
+	@echo '              GIT_SERVER=${GIT_SERVER}'
+	@echo '              GIT_PROFILE=${GIT_PROFILE}'
+	@echo '              GIT_BRANCH=${GIT_BRANCH}'
+	@echo '              GIT_HASH=${GIT_HASH}'
+	@echo '              GIT_PREVIOUS_HASH=${GIT_PREVIOUS_HASH}'
+	@echo '              GIT_REPO_ORIGIN=${GIT_REPO_ORIGIN}'
+	@echo '              GIT_REPO_NAME=${GIT_REPO_NAME}'
+	@echo '              GIT_REPO_PATH=${GIT_REPO_PATH}'
 	@echo ''
 
 .PHONY: initialize
@@ -264,6 +268,13 @@ reqs: requirements
 requirements:
 	$(PYTHON3) -m $(PIP) install $(DASH_U) --upgrade pip
 	$(PYTHON3) -m $(PIP) install $(DASH_U) -r requirements.txt
+
+
+
+.PHONY: vendors
+##	:vendors             make seeder legit gogs
+vendors: seeder legit gogs
+
 
 .PHONY: seeder
 .QUIET:
@@ -282,10 +293,6 @@ legit:
 gogs:
 	make -C $(VENDORSPATH)/gogs
 
-.PHONY: vendors
-##	:vendors             make seeder legit gogs
-vendors: seeder legit gogs
-
 .PHONY: install-gnupg
 
 ##	:install-gnupg       install python gnupg on host
@@ -293,18 +300,13 @@ install-gnupg:
 	pushd $(DEPENDSPATH)/gnupg && $(PYTHON3) $(DEPENDSPATH)/gnupg/setup.py install && popd
 .PHONY: depends-gnupg-test
 
-##	:depends-gnupg-test  test 0x20bf/depends/gnupg library
-depends-gnupg-test:
-	pushd $(DEPENDSPATH)/gnupg && $(PYTHON3) $(DEPENDSPATH)/gnupg/test_gnupg.py
 .PHONY: install-p2p
-##	:install-p2p         install python p2p-network on host
-##	:p2p                 install python p2p-network
+##	:install-p2p         install python p2p-network
 p2p: install-p2p
 install-p2p:
 	pushd $(DEPENDSPATH)/p2p && $(PYTHON3) $(DEPENDSPATH)/p2p/setup.py install && popd
 
 .PHONY: install-fastapi fastapi
-##	:fastapi             install python fastapi
 ##	:install-fastapi     install python fastapi
 fastapi: install-fastapi
 install-fastapi:
@@ -318,6 +320,10 @@ install-fastapi:
 .PHONY: depends
 ##	:depends             build depends
 depends: install-p2p install-gnupg install-fastapi
+##	:depends-gnupg-test  test 0x20bf/depends/gnupg library
+.PHONY: depends-gnupg-test
+depends-gnupg-test:
+	pushd $(DEPENDSPATH)/gnupg && $(PYTHON3) $(DEPENDSPATH)/gnupg/test_gnupg.py
 
 .PHONY: git-add
 
