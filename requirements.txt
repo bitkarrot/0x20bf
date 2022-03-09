@@ -21,3 +21,8 @@ mypy
 gnupg
 pytest
 configparser
+Jinja2>=3.0
+dnspython
+tornado
+pyflakes
+nose

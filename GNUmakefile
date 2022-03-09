@@ -265,15 +265,15 @@ requirements:
 .PHONY: seeder
 .QUIET:
 
-##	:seeder              make -C depends/seeder
+##	:seeder              make -C vendor/seeder
 seeder:
-	make -C depends/seeder
+	make -C vendor/seeder
 
 .PHONY: legit
 
-##	:legit               pushd depends/legit && cargo build --release
+##	:legit               pushd vendor/legit && cargo build --release
 legit:
-	pushd depends/legit && cargo build --release
+	pushd vendor/legit && cargo build --release
 
 .PHONY: gogs
 
@@ -286,10 +286,10 @@ gogs:
 ##	:install-gnupg       install python gnupg on host
 install-gnupg:
 	pushd $(DEPENDSPATH)/gnupg && $(PYTHON3) $(DEPENDSPATH)/gnupg/setup.py install && popd
-.PHONY: gnupg-test
+.PHONY: depends-gnupg-test
 
-##	:gnupg-test          test depends/gnupg library
-gnupg-test:
+##	:depends-gnupg-test  test 0x20bf/depends/gnupg library
+depends-gnupg-test:
 	pushd $(DEPENDSPATH)/gnupg && $(PYTHON3) $(DEPENDSPATH)/gnupg/test_gnupg.py
 .PHONY: install-p2p
 ##	:install-p2p         install python p2p-network on host
@@ -307,14 +307,12 @@ install-fastapi:
 	pushd $(DEPENDSPATH)/fastapi && $(PYTHON3) -m $(PIP) install . && popd
 
 
-
-
 .PHONY: twitter-api
 
 
 .PHONY: depends
 ##	:depends             build depends
-depends: seeder gogs legit install-gnupg install-fastapi
+depends: install-p2p install-gnupg install-fastapi
 
 .PHONY: git-add
 
