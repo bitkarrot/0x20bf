@@ -182,4 +182,4 @@ tests/touchfile
 BLOCKCYPHER_HEIGHT
 0x20bf/twitter.ini
 depends/fastapi/**
-sources/email/*
+0x20bf/sources/email*
