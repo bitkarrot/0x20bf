@@ -65,7 +65,7 @@ endif
 export PROJECT_NAME
 PYTHONPATH=$(PWD)/0x20bf
 export PYTHONPATH
-DEPENDSPATH=$(PWD)/depends
+DEPENDSPATH=$(PWD)/0x20bf/depends
 export DEPENDSPATH
 BUILDPATH=$(PWD)/build
 export BUILDPATH
@@ -181,20 +181,20 @@ test-venv:
 	   ;python3 tests/test.py \
 	   ;python3 tests/test_0x20bf.py \
 	);
-##	:test-gnupg          python3 ./tests/depends/gnupg/setup.py
-##	:                    python3 ./tests/depends/gnupg/test_gnupg.py
+##	:test-gnupg          python3 ./tests/0x20bf/depends/gnupg/setup.py
+##	:                    python3 ./tests/0x20bf/depends/gnupg/test_gnupg.py
 ##	:test-clean-venv     rm -rf venv
 test-clean-venv:
 	rm -rf venv
 test-gnupg: venv
     # TODO: use tox config
 	. venv/bin/activate;
-	$(PYTHON3) ./tests/depends/gnupg/setup.py install;
-	$(PYTHON3) ./tests/depends/gnupg/test_gnupg.py;
+	$(PYTHON3) ./tests/0x20bf/depends/gnupg/setup.py install;
+	$(PYTHON3) ./tests/0x20bf/depends/gnupg/test_gnupg.py;
 test-p2p: venv
     # TODO: use tox config
 	. venv/bin/activate;
-	pushd tests/depends/p2p && python3 setup.py install && python3 examples/my_own_p2p_application.py && popd
+	pushd tests/0x20bf/depends/p2p && python3 setup.py install && python3 examples/my_own_p2p_application.py && popd
 
 
 clean-venv:
@@ -210,7 +210,7 @@ install: build
 	$(PYTHON3) -m $(PIP) install -e .
 
 ifneq ($(shell id -u),0)
-# TODO: install          depends/p2p depends/gnupg
+# TODO: install          0x20bf/depends/p2p 0x20bf/depends/gnupg
 	$(PYTHON3) -m $(PIP) install $(DASH_U) -e .
 else
 	$(PYTHON3) -m $(PIP) install $(DASH_U) -e .
