@@ -12,12 +12,12 @@ jobs:
       id: cache-virtualenv
 
     - uses: syphar/restore-pip-download-cache@v1
-      if: steps.cache-virtualenv.outputs.cache-hit != 'true'
+      # if: steps.cache-virtualenv.outputs.cache-hit != 'true'
 
     - run: pip install -r requirements.txt
-      if: steps.cache-virtualenv.outputs.cache-hit != 'true'
+      # if: steps.cache-virtualenv.outputs.cache-hit != 'true'
 
-    - run: make init
+    - run: make init venv
 
   linter:
     needs: create-virtualenv
@@ -27,11 +27,7 @@ jobs:
     - uses: actions/setup-python@v2
     - uses: syphar/restore-virtualenv@v1
       id: cache-virtualenv
-    - run: make init
-    - run: flake8
-      #- run: pydocstyle
-    - run: isort .
-    - run: black .
+    - run: make init pre-commit
 
   make-init-venv-test-venv:
     needs: create-virtualenv
@@ -41,7 +37,7 @@ jobs:
     - uses: actions/setup-python@v2
     - uses: syphar/restore-virtualenv@v1
       id: cache-virtualenv
-    - run: make init venv test-venv
+    - run: make init venv venv-test venv-test-gnupg
 
   make-initialize-depends:
     needs: create-virtualenv

@@ -99,8 +99,7 @@ def NETWORK_MODULUS():
     # GENESIS_TIME is well known
     # btc_time() block height message was contructed is known to GPGR and GPGS
     # TODO: add functions to reconstruct :WEEBLE:WOBBLE: based on these values
-    NETWORK_MODULUS = (
-        get_millis() - genesis_time) % btc_time()
+    NETWORK_MODULUS = (get_millis() - genesis_time) % btc_time()
     f = open("NETWORK_MODULUS", "w")
     f.write("" + str(NETWORK_MODULUS) + "\n")
     f.close()
@@ -121,9 +120,7 @@ def NETWORK_WEEBLE_WOBBLE():
 def NETWORK_WEEBLE():
     # (current_time - genesis time) yields time from bitcoin genesis block
     # dividing by number of blocks yields an average time per block
-    NETWORK_WEEBLE = int(
-        (get_millis() - genesis_time) / btc_time()
-    )
+    NETWORK_WEEBLE = int((get_millis() - genesis_time) / btc_time())
     f = open("NETWORK_WEEBLE", "w")
     f.write("" + str(NETWORK_WEEBLE) + "\n")
     f.close()
@@ -133,7 +130,9 @@ def NETWORK_WEEBLE():
 def NETWORK_WOBBLE():
     # wobble is the remainder of the weeble_wobble calculation
     # source of deterministic entropy
-    NETWORK_WOBBLE = str(float((get_millis() - genesis_time) / btc_time() % 1)).strip("0.")
+    NETWORK_WOBBLE = str(float((get_millis() - genesis_time) / btc_time() % 1)).strip(
+        "0."
+    )
     f = open("NETWORK_WOBBLE", "w")
     f.write("" + str(NETWORK_WOBBLE) + "\n")
     f.close()
