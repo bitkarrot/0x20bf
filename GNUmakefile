@@ -180,6 +180,7 @@ venv:
 ##	:venv-clean	  rm -rf venv
 venv-clean:
 	rm -rf venv
+	rm -rf rokeys
 ##	:venv-test           python3 ./tests/test.py
 venv-test:
 	test -d venv || virtualenv venv --always-download
