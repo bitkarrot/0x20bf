@@ -17,7 +17,7 @@ on:
 
 jobs:
 
-  depends:
+  vendors:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:

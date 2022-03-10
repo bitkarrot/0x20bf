@@ -318,7 +318,11 @@ make  venv &amp;&amp; . venv/bin/activate
       depends-p2p         install python p2p-network
       depends-fastapi     install python fastapi
       pre-commit          pre-commit run -a
-      docs                build docs from sources/*.md</code></pre>
+
+      docs                build docs from sources/*.md
+
+      clean               venv-clean
+                          rm -rf build dist rokeys</code></pre>
 <h2 id="contributing"><a
 href="./sources/CONTRIBUTING.md">Contributing</a></h2>
 <p>Check linting and formatting</p>

@@ -30,4 +30,8 @@
  	      depends-p2p         install python p2p-network
  	      depends-fastapi     install python fastapi
  	      pre-commit          pre-commit run -a
+ 	
  	      docs                build docs from sources/*.md
+ 	
+ 	      clean               venv-clean
+ 	                          rm -rf build dist rokeys
