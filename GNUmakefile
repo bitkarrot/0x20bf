@@ -158,8 +158,6 @@ export DASH_U
 .PHONY: init initialize requirements
 ##	:init                initialize requirements
 init: report initialize requirements
-	# remove this artifact from gnupg tests
-	sudo rm -rf rokeys/.gitignore
 
 .PHONY: venv
 ##	:
@@ -179,7 +177,8 @@ venv:
 	@echo "make venv-test"
 ##	:venv-clean	  rm -rf venv
 venv-clean:
-	rm -rf venv
+	sudo -i rm -rf venv
+	sudo -i rm -rf rokeys
 ##	:venv-test           python3 ./tests/test.py
 venv-test:
 	test -d venv || virtualenv venv --always-download
@@ -369,30 +368,37 @@ pre-commit:
 	pre-commit run -a
 
 .PHONY: docs
+##	:
 ##	:docs                build docs from sources/*.md
 docs:
-	@echo "##### [make](https://www.gnu.org/software/make/)" > sources/MAKE.md
-	bash -c "make help >> $(PWD)/sources/MAKE.md"
-	bash -c 'cat $(PWD)/sources/HEADER.md                >  $(PWD)/README.md'
-	bash -c 'cat $(PWD)/sources/PROTOCOL.md              >> $(PWD)/README.md'
-	bash -c 'cat $(PWD)/sources/COMMANDS.md              >> $(PWD)/README.md'
-	bash -c 'cat $(PWD)/sources/GETTING_STARTED.md       >> $(PWD)/README.md'
-	bash -c 'cat $(PWD)/sources/MAKE.md                  >> $(PWD)/README.md'
-	bash -c 'cat $(PWD)/sources/CONTRIBUTING.md          >> $(PWD)/README.md'
-	bash -c 'cat $(PWD)/sources/FOOTER.md                >> $(PWD)/README.md'
+	@echo "##### [make](https://www.gnu.org/software/make/)" > docs/MAKE.md
+	bash -c "make help >> $(PWD)/docs/MAKE.md"
+	bash -c 'cat $(PWD)/0x20bf/sources/HEADER.md                >  $(PWD)/README.md'
+	bash -c 'cat $(PWD)/0x20bf/sources/PROTOCOL.md              >> $(PWD)/README.md'
+	bash -c 'cat $(PWD)/0x20bf/sources/COMMANDS.md              >> $(PWD)/README.md'
+	bash -c 'cat $(PWD)/0x20bf/sources/GETTING_STARTED.md       >> $(PWD)/README.md'
+	bash -c 'cat $(PWD)/0x20bf/sources/MAKE.md                  >> $(PWD)/README.md'
+	bash -c 'cat $(PWD)/0x20bf/sources/CONTRIBUTING.md          >> $(PWD)/README.md'
+	bash -c 'cat $(PWD)/0x20bf/sources/FOOTER.md                >> $(PWD)/README.md'
 	#brew install pandoc
 	bash -c "if hash pandoc 2>/dev/null; then echo; fi || brew install pandoc"
-	#bash -c 'pandoc -s README.md -o index.html  --metadata title="$(GH_USER_SPECIAL_REPO)" '
-	bash -c 'pandoc -s README.md -o index.html'
+	bash -c 'pandoc -s README.md -o index.html  --metadata title=$(BASENAME).org '
+	#bash -c 'pandoc -s README.md -o index.html'
 	#bash -c "if hash open 2>/dev/null; then open README.md; fi || echo failed to open README.md"
-	git add --ignore-errors sources/*.md
+	git add --ignore-errors $(PWD)/0x20bf/sources/*.md
 	git add --ignore-errors *.md
+	git add --ignore-errors *.html
 	#git ls-files -co --exclude-standard | grep '\.md/$\' | xargs git
 
 .PHONY: clean
+##	:
+##	:clean               venv-clean
+##	:                    rm -rf build dist rokeys
+clean: venv-clean
+	sudo rm -rf build dist
+    # remove this artifact from gnupg tests
+	sudo rm -rf rokeys/.gitignore
 
-clean:
-	#bash -c "rm -rf $(BUILDDIR)"
 
 .PHONY: serve
 
