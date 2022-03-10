@@ -293,26 +293,27 @@ pip install -e .</code></pre>
 
 make  venv &amp;&amp; . venv/bin/activate
 
-      test-venv           python3 ./tests/test.py
-      test-gnupg          python3 ./tests/0x20bf/depends/gnupg/setup.py
-                                  ./tests/0x20bf/depends/gnupg/test_gnupg.py
-      test-clean-venv     rm -rf venv
+      venv-clean      rm -rf venv
+      venv-test           python3 ./tests/test.py
+      venv-test-gnupg     test gnupg in venv
+      test-gnupg          python3 ./tests/.../setup.py
+                                  ./tests/.../test_gnupg.py
 
       build               python3 setup.py build
       install             python3 -m pip install -e .
       report              environment args
       initialize          run scripts/initialize
       requirements        pip install --user -r requirements.txt
+      vendors             make seeder legit gogs
       seeder              make -C vendor/seeder
       legit               pushd vendors/legit &amp;&amp; cargo build --release
       gogs                make -C vendors/gogs
-      vendors             make seeder legit gogs
-      install-gnupg       install python gnupg on host
-      install-p2p         install python p2p-network
-      install-fastapi     install python fastapi
-      fastapi
+
       depends             build depends
       depends-gnupg-test  test 0x20bf/depends/gnupg library
+      depends-gnupg       install python gnupg on host
+      depends-p2p         install python p2p-network
+      depends-fastapi     install python fastapi
       pre-commit          pre-commit run -a
       docs                build docs from sources/*.md</code></pre>
 <h2 id="contributing"><a

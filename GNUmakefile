@@ -153,7 +153,7 @@ export DASH_U
 ##	make:[COMMAND]
 ##	:
 ##	:help
--: report help
+-: help
 
 .PHONY: init initialize requirements
 ##	:init                initialize requirements
@@ -177,7 +177,7 @@ venv:
 	@echo ". venv/bin/activate"
 	@echo "or:"
 	@echo "make venv-test"
-##	:venv-clean     rm -rf venv
+##	:venv-clean	  rm -rf venv
 venv-clean:
 	rm -rf venv
 ##	:venv-test           python3 ./tests/test.py
@@ -190,7 +190,7 @@ venv-test:
 	   ;python3 tests/test_0x20bf.py \
 	);
 
-##	:venv-test-gnupg          test gnupg in venv
+##	:venv-test-gnupg	  test gnupg in venv
 venv-test-gnupg:
 	test -d venv || virtualenv venv --always-download
 	test -d rokeys && sudo rm -rf rokeys && echo retry ||:
@@ -201,10 +201,8 @@ venv-test-gnupg:
 	   ;python3 tests/0x20bf/depends/gnupg/test_gnupg.py \
 	);
 
-
-
-##	:test-gnupg          python3 ./tests/0x20bf/depends/gnupg/setup.py
-##	:                            ./tests/0x20bf/depends/gnupg/test_gnupg.py
+##	:test-gnupg          python3 ./tests/.../setup.py
+##	:                            ./tests/.../test_gnupg.py
 test-gnupg: venv
     # TODO: use tox config
 	. venv/bin/activate;
