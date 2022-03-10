@@ -383,8 +383,8 @@ docs:
 	bash -c 'cat $(PWD)/0x20bf/sources/FOOTER.md                >> $(PWD)/README.md'
 	#brew install pandoc
 	bash -c "if hash pandoc 2>/dev/null; then echo; fi || brew install pandoc"
-	#bash -c 'pandoc -s README.md -o index.html  --metadata title="$(GH_USER_SPECIAL_REPO)" '
-	bash -c 'pandoc -s README.md -o index.html'
+	bash -c 'pandoc -s README.md -o index.html  --metadata title=$(BASENAME).org '
+	#bash -c 'pandoc -s README.md -o index.html'
 	#bash -c "if hash open 2>/dev/null; then open README.md; fi || echo failed to open README.md"
 	git add --ignore-errors $(PWD)/0x20bf/sources/*.md
 	git add --ignore-errors *.md
