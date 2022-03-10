@@ -74,6 +74,7 @@ if os.path.__name__ == "ntpath":  # pragma: no cover
     def shell_quote(s):
         return '"%s"' % s
 
+
 else:
     # Section copied from sarge
 
