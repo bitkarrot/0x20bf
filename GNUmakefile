@@ -193,12 +193,14 @@ venv-test:
 ##	:venv-test-gnupg          test gnupg in venv
 venv-test-gnupg:
 	test -d venv || virtualenv venv --always-download
+	test -d rokeys && sudo rm -rf rokeys && echo retry ||:
 	( \
 	   source venv/bin/activate \
 	   ;pip install -r requirements.txt \
 	   ;python3 tests/0x20bf/depends/gnupg/setup.py install \
 	   ;python3 tests/0x20bf/depends/gnupg/test_gnupg.py \
 	);
+
 
 
 ##	:test-gnupg          python3 ./tests/0x20bf/depends/gnupg/setup.py
