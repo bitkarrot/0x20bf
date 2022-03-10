@@ -5,6 +5,10 @@ repos:
     rev: 20.8b1
     hooks:
       - id: black
+        args: ["0x20bf"]
+        args: ["0x20bf/depends"]
+        args: ["tests"]
+        args: ["."]
   - repo: https://gitlab.com/pycqa/flake8
     rev: 3.8.4
     hooks:

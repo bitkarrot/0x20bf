@@ -29,7 +29,7 @@ skip = ["depends/fastapi","venv", "build"]
 
 [tool.black]
 line-length = 88
-target-version = ['py38', 'py39']
+target-version = ['py38']
 include = '\.pyi?$'
 extend-exclude = '''
 /(
